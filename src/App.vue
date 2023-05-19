@@ -1,9 +1,19 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import storeCard from './components/storeCard.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <div class="flex justify-around flex-wrap">
+    <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE" />
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  </div>
+  
 </template>
 
 <style scoped>
