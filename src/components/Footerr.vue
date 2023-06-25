@@ -16,7 +16,6 @@
                     items-top
                     lg:items-center   
                     flex
-                    lg:flex 
                     flex-row
                     text-lg
                     lg:text-base
