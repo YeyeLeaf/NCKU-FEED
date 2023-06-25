@@ -2,12 +2,12 @@
 <template>
   <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 sticky ">
     <div class="lg:flex items-center text-white mr-6 ml-4">
-      <a href="#" class="hidden lg:block">
+      <a href="index.html" class="hidden lg:flex items-center">
             <picture>
               <img src="../assets/nckufeed_white.svg" class="lg:h-20 lg:mx-2 lg:pl-8">
             </picture>
+            <span class="font-montserrat font-bold text-2xl tracking-tight">NCKU FEED</span>
       </a>
-      <span class="font-montserrat font-bold text-2xl tracking-tight">NCKU FEED</span>
     </div>
     <div class="block lg:hidden mr-4">
       <button @click="isOpen = !isOpen" class="flex items-center px-3 py-2 border rounded text-white border-white hover:text-gray-300 hover:border-gray-300">

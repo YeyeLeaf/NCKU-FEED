@@ -1,5 +1,4 @@
 <script setup>
-import New from 'New.vue'
 defineProps({
     linkImg: String,
     altImg: String,

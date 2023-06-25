@@ -6,6 +6,9 @@ import Navbar2 from './components/Navbar2.vue'
 </script>
 
 <template>
+  
+  <!-- <Navbar1 /> -->
+   <Navbar2 />
   <div class="flex justify-around flex-wrap">
     <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE" />
   <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
@@ -15,9 +18,8 @@ import Navbar2 from './components/Navbar2.vue'
   <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
   <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
   <storeCard linkImg="src/assets/leaf.png" altImg="leaf" name="YEYEYE"/>
+  
   <Footer />
-  <Navbar1 />
-  <!-- <Navbar2 /> -->
   </div>
 </template>
 <style scoped>

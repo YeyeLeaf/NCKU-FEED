@@ -6,7 +6,7 @@
     <footer class="bg-[#525252] 
                     inset-x-0 
                     bottom-0 
-                    fixed 
+                    w-full
                     lg:h-20 
                     h-28
                     flex
@@ -21,7 +21,6 @@
                     text-lg
                     lg:text-base
                     transition-all 
-                    inline-block
                     lg:space-x-32">
                 <h1 class="font-bold pt-6 lg:pt-0"><a href="#">Feedback</a></h1>
                 <a href="#" class="lg:hidden mx-8">
