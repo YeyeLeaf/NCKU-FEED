@@ -1,5 +1,21 @@
 // 已登入
 
+<script >
+export default {
+  data() {
+    return {
+      isOpen: false
+    }
+  }
+}
+</script>
+
+<script setup>
+defineProps({
+    myImg: String,
+})
+</script>
+
 <template>
   <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 sticky ">
     <div class="lg:flex items-center text-white mr-6 ml-4">
@@ -36,19 +52,9 @@
             </a>
             <a href="#">
                 <picture>
-                   <img src="../assets/user.png" class="h-10 lg:h-12 mx-3 lg:mx-6">
+                   <img :src="myImg" class="h-10 lg:h-12 mx-3 lg:mx-6">
                 </picture>
             </a>
         </div>
   </nav>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      isOpen: false
-    }
-  }
-}
-</script>
