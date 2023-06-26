@@ -8,9 +8,9 @@ import PersonalInfo from './components/PersonalInfo.vue'
 
 <template>
 
-    <Navbar1 />
+    <Navbar1 myImg="src/assets/user.png"/>
     <div class="flex flex-wrap lg:justify-around justify-center">
-        <div class="block lg:hidden mt-12">
+        <div class="lg:hidden mt-12">
             <PersonalInfo myImg="src/assets/user_black.png" name="salmon"/>
         </div>
 
@@ -22,13 +22,14 @@ import PersonalInfo from './components/PersonalInfo.vue'
             <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
             <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
             <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
+            
         </div>
 
-        <div class="h-200 hidden lg:block"> 
+        <div class="h-200 hidden lg:flex"> 
             <div class="w-0.5 h-full bg-gray-400"></div>
         </div>
 
-        <div class="hidden lg:block mt-16">
+        <div class="hidden lg:flex mt-16">
             <PersonalInfo myImg="src/assets/user_black.png" name="salmon"/>
         </div>
 

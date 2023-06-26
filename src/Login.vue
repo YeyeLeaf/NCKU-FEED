@@ -1,5 +1,4 @@
 <script setup>
-import storeCard from './components/storeCard.vue'
 import Footer from './components/Footerr.vue'
 import Navbar1 from './components/Navbar1.vue'
 import Navbar2 from './components/Navbar2.vue'
@@ -12,7 +11,7 @@ import Navbar2 from './components/Navbar2.vue'
       <img src="./assets/background.png" class="absolute w-full h-full object-cover">
   </div>
   <Navbar2 /> 
-  <div class="relative flex justify-around flex-wrap space-y-48 mt-56">
+  <div class="relative flex justify-center flex-wrap items-center space-y-52 mt-52">
     <div class="bg-[#FF8E3C] rounded-3xl flex flex-col justify-center items-center py-10 lg:space-y-10 lg:px-28 space-y-6 px-8">
       <p class="text-white font-sans text-3xl lg:text-5xl font-semibold">登入</p>
       <h1 class="text-white font-sans lg:text-lg text-base">解鎖收藏餐廳、評論餐廳、發表食記......等等功能</h1>
