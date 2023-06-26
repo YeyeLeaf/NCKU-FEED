@@ -11,7 +11,7 @@ import PersonalInfo from './components/PersonalInfo.vue'
     <Navbar1 myImg="src/assets/user.png"/>
     <div class="flex flex-wrap lg:justify-around justify-center">
         <div class="lg:hidden mt-12">
-            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="編輯個人檔案"/>
+            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="追蹤"/>
         </div>
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
@@ -30,7 +30,7 @@ import PersonalInfo from './components/PersonalInfo.vue'
         </div>
 
         <div class="hidden lg:flex mt-16">
-            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="編輯個人檔案"/>
+            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="追蹤"/>
         </div>
 
 
