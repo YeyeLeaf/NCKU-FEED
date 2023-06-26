@@ -8,20 +8,20 @@ import RedButton from './RedButton.vue'
 
 <template>
 
-    <div class="flex flex-col space-y-8 lg:block hidden">
+    <div class="lg:flex flex-col space-y-8 items-center hidden">
         <img :src="myImg" class="w-36">
         <p class="text-3xl">{{ name }}</p>
-        <RedButton text="編輯個人檔案" class="" onclick="location.href='#'"/>
+        <RedButton text="編輯個人檔案" class="" onclick="location.href='personalEdit.html'"/>
 
     </div>
 
-    <div class="flex flex-wrap space-x-8 lg:hidden block">
+    <div class="flex flex-wrap space-x-8 lg:hidden">
         <div>
             <img :src="myImg" class="w-28">
         </div>
         <div class="flex flex-col justify-between">
             <p class="text-3xl">{{ name }}</p>
-            <RedButton text="編輯個人檔案" class="" onclick="location.href='#'"/>
+            <RedButton text="編輯個人檔案" class="" onclick="location.href='personalEdit.html'"/>
 
         </div>
 
