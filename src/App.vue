@@ -22,6 +22,7 @@ import Navbar2 from './components/Navbar2.vue'
   <Footer />
   </div>
 </template>
+
 <style scoped>
 /*hi*/
 </style>
