@@ -33,7 +33,7 @@ defineProps({
     </div>
 
     <!-- lg留著如果之後有需要讓他們排列在navbar就可以用 -->
-    <div :class="{'hidden': !isOpen}" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto lg:hidden">
+    <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden">
       <div class="text-base lg:flex-grow ">
         <a href="#" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
           個人頁面
@@ -44,7 +44,7 @@ defineProps({
       </div>
     </div>
 
-    <div class="hidden lg:block lg:flex mx-12">
+    <div class="hidden lg:flex mx-12">
             <a href="#">
                 <picture>
                    <img src="../assets/bookmark.png" class="h-10 lg:h-12 mx-3 lg:mx-6">
