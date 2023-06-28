@@ -5,6 +5,8 @@ defineProps({
     name: String,
     tag: Array,
 })
+
+defineEmits(['addOp']);
 </script>
 
 <template>
@@ -16,7 +18,7 @@ defineProps({
         <button class="bg-lightOrange rounded-full border border-Orange px-4 py-1 w-20">Tag 1</button>
         <div class="flex justify-between ">
             <button class="bg-Orange text-white p-1 rounded-md">詳細資料</button>
-            <button class="bg-darkRed text-white p-1 rounded-md" @click="$emit('addOption', name)">加入轉盤</button>   
+            <button class="bg-darkRed text-white p-1 rounded-md" @click="$emit('addOp')">加入轉盤</button>   
         </div>
         
     </div>

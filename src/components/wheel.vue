@@ -1,3 +1,95 @@
+<script setup>
+// 參考：https://zhuanlan.zhihu.com/p/345055564
+import { ref, onMounted, computed, onUpdated } from 'vue';
+
+const props = defineProps(['List']);
+
+// computed property that auto-updates when the prop changes
+const list = computed(() => props.List);
+const winner = ref(0); // 指定获奖下标 specified 为 true 时生效
+//const specified = ref(false); // 是否指定获奖结果，false 时为随机
+const loading = ref(false); // 抽奖执行状态，防止用户多次点击
+let panziElement = ref(null);
+
+
+onMounted(() => {
+  // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
+// var(--nums) 实现 CSS 动画根据奖品个数，动态改变
+   let root = document.querySelector(':root');
+   console.log(list.value.length);
+   root.style.setProperty('--nums', list.value.length);
+});
+onUpdated(() => {
+  let root = document.querySelector(':root');
+   console.log(list.value.length);
+   root.style.setProperty('--nums', list.value.length);
+        })
+function animationClass() {
+  //console.log(winner.value);
+// 对应 CSS 样式中定义的 class 属性值, 如果有更多的话可以继续添加
+switch (winner.value) {
+  case 0:
+    return 'wr0';
+  case 1:
+    return 'wr1';
+  case 2:
+    return 'wr2';
+  case 3:
+    return 'wr3';
+  case 4:
+    return 'wr4';
+  case 5:
+    return 'wr5';
+  case 6:
+    return 'wr6';
+  case 7:
+    return 'wr7';
+  case 8:
+    return 'wr8';
+  case 9:
+    return 'wr9';
+}
+}
+
+function start() {
+if (!loading.value) {
+  //console.log(list.value.length);
+  panziElement.value = document.querySelector('.panzi');
+  panziElement.value.classList.remove(animationClass());
+  //  if (specified.value) {
+  //    // 此处可指定后端返回的指定奖品
+  //    // winner.value = winner.value;
+  //    winCallback();
+  //  } else {
+    winner.value = random(0, list.value.length - 1);
+    winCallback();
+    // nextTick(() => {
+    //   winCallback();
+    // });
+  // }
+  loading.value = true;
+}
+}
+
+// 中奖返回方法
+function winCallback() {
+setTimeout(() => {
+  /* 此处是为了解决当下次抽中的奖励与这次相同，动画不重新执行的 */
+  /* 添加一个定时器，是为了解决动画属性的替换效果，实现动画的重新执行 */
+  panziElement.value.classList.add(animationClass());
+}, 0);
+// 因为动画时间为 3s ，所以这里3s后获取结果，其实结果早就定下了，只是何时显示，告诉用户
+setTimeout(() => {
+  loading.value = false;
+}, 3000);
+}
+
+// 随机一个整数的方法
+function random(min, max) {
+return parseInt(Math.random() * (max - min + 1) + min);
+}
+
+</script>
 <template>
     <div class="overall">
       <div class="zp-box">
@@ -16,125 +108,14 @@
             v-for="(i,index) in list"
             :key="index"
           >
-            <span class="title">{{i.title}}</span>
-            <!-- <div class="img">
-               <img src="@/assets/img/bck.jpg" alt />
-              img{{index}}
-            </div> -->
+            <span class="Name">{{i.Name}}</span>
           </div>
         </div>
         <div class="start-btn" @click="start()">Spin!</div>
       </div>
     </div>
   </template>
-  <script setup>
-  // 參考：https://zhuanlan.zhihu.com/p/345055564
-import { ref, onMounted } from 'vue';
-
-const winner = ref(2); // 指定获奖下标 specified 为 true 时生效
-//const specified = ref(false); // 是否指定获奖结果，false 时为随机
-const loading = ref(false); // 抽奖执行状态，防止用户多次点击
-let panziElement = ref(null);
-const list = ref([
-  {
-    title: '特等奖'
-  },
-  {
-    title: '一等奖'
-  },
-  {
-    title: '二等奖'
-  },
-  {
-    title: '三等奖'
-  },
-  {
-    title: '四等奖'
-  },
-  {
-    title: '五等奖'
-  },
-  {
-    title: '六等奖'
-  },
-  {
-    title: '七等奖'
-  },
-  {
-    title: '八等奖'
-  },
-  {
-    title: '九等奖'
-  }
-]);
-
-function animationClass() {
-  // 对应 CSS 样式中定义的 class 属性值, 如果有更多的话可以继续添加
-  switch (winner.value) {
-    case 0:
-      return 'wr0';
-    case 1:
-      return 'wr1';
-    case 2:
-      return 'wr2';
-    case 3:
-      return 'wr3';
-    case 4:
-      return 'wr4';
-    case 5:
-      return 'wr5';
-    case 6:
-      return 'wr6';
-    case 7:
-      return 'wr7';
-    case 8:
-      return 'wr8';
-    case 9:
-      return 'wr9';
-  }
-}
-
-function start() {
-  if (!loading.value) {
-    panziElement.value = document.querySelector('.panzi');
-    panziElement.value.classList.remove(animationClass());
-    // if (specified.value) {
-    //   // 此处可指定后端返回的指定奖品
-    //   // winner.value = winner.value;
-    //   winCallback();
-    // } else {
-      winner.value = random(0, list.value.length - 1);
-      winCallback();
-    //}
-    loading.value = true;
-  }
-}
-
-// 中奖返回方法
-function winCallback() {
-  setTimeout(() => {
-    /* 此处是为了解决当下次抽中的奖励与这次相同，动画不重新执行的 */
-    /* 添加一个定时器，是为了解决动画属性的替换效果，实现动画的重新执行 */
-    panziElement.value.classList.add(animationClass());
-  }, 0);
-  // 因为动画时间为 3s ，所以这里3s后获取结果，其实结果早就定下了，只是何时显示，告诉用户
-  setTimeout(() => {
-    loading.value = false;
-  }, 3000);
-}
-
-// 随机一个整数的方法
-function random(min, max) {
-  return parseInt(Math.random() * (max - min + 1) + min);
-}
-
-onMounted(() => {
-  // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
-  // var(--nums) 实现 CSS 动画根据奖品个数，动态改变
-  let root = document.querySelector(':root');
-  root.style.setProperty('--nums', list.value.length);
-});
-</script>
+ 
 
 
 
@@ -205,7 +186,7 @@ onMounted(() => {
   position: absolute;
 }
 
-.zp-box .panzi .jiang .title {
+.zp-box .panzi .jiang .Name {
   font-weight: bold;
   font-size: 18px;
   color: #b80c0c;
@@ -244,7 +225,7 @@ onMounted(() => {
 
 .zp-box .bck-box .bck:nth-child(2n + 1) {
   background: #ffad71;
-  box-shadow: 0 0 5px ff8e3c;
+  /*box-shadow: 0 0 5px #ff8e3c;*/
 }
 
 .zp-box .wr0,
