@@ -17,13 +17,13 @@ defineProps({
 </script>
 
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 sticky ">
+  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 sticky">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <a href="index.html" class="flex items-center">
             <picture class="hidden lg:flex">
               <img src="../assets/nckufeed_white.svg" class="lg:h-20 lg:mx-2 lg:pl-8">
             </picture>
-            <span class="font-montserrat font-bold text-2xl tracking-tight">NCKU FEED</span>
+            <span class="font-mono font-black text-3xl tracking-tight">NCKU FEED</span>
       </a>
     </div>
     <div class="block lg:hidden mr-4">
@@ -44,15 +44,15 @@ defineProps({
       </div>
     </div>
 
-    <div class="hidden lg:flex mx-12">
+    <div class="hidden lg:flex mx-12 items-center">
             <a href="#">
                 <picture>
-                   <img src="../assets/bookmark.png" class="h-10 lg:h-12 mx-3 lg:mx-6">
+                   <img src="../assets/bookmark.png" class="h-6 lg:h-8 mx-3 lg:mx-4">
                 </picture>
             </a>
             <a href="#">
                 <picture>
-                   <img :src="myImg" class="h-10 lg:h-12 mx-3 lg:mx-6">
+                   <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4">
                 </picture>
             </a>
         </div>

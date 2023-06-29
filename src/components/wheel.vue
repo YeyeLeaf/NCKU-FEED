@@ -1,6 +1,13 @@
 <script setup>
+$(document).ready(function () {
+  $('.list-title').click(function (e) { 
+    e.preventDefault();
+    $('.toggle-list').slideToggle();
+  });
+});
 // 參考：https://zhuanlan.zhihu.com/p/345055564
 import { ref, onMounted, computed, onUpdated } from 'vue';
+import RedButton from './RedButton.vue'
 
 const props = defineProps(['List']);
 
@@ -89,37 +96,54 @@ function random(min, max) {
 return parseInt(Math.random() * (max - min + 1) + min);
 }
 
+const deleteOp = (index) => {
+  props.List.splice(index, 1);
+}
 </script>
 <template>
-    <div class="overall">
-      <div class="zp-box">
-        <div class="panzi">
-          <div class="bck-box" :style="` transform: rotate(${-90+180/list.length}deg)`">
+  <div class="flex m-10 justify-around items-center">
+    <div class="bg-[#eff0f3] w-4/12 p-10">
+      <h2 class="list-title text-2xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
+    <hr class="border-2 border-[#ff8e3c]">
+      <ul class="toggle-list h-72 overflow-y-scroll">
+        <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
+          <p class="text-lg">{{ item.Name }}</p>
+          <RedButton text="刪除" @click="deleteOp(index)"/>
+        </li>
+      </ul>
+    </div>
+    
+      <div class="overall">
+        <div class="zp-box">
+          <div class="panzi">
+            <div class="bck-box" :style="` transform: rotate(${-90+180/list.length}deg)`">
+              <div
+                class="bck"
+                v-for="(i,index) in list"
+                :key="index"
+                :style="`transform: rotate(${-index*360/list.length}deg) skew(${-90 + 360/list.length}deg);`"
+              ></div>
+            </div>
             <div
-              class="bck"
+              class="jiang"
+              :style="`transform: rotate(${-index*360/list.length}deg) translateY(-7.5rem);`"
               v-for="(i,index) in list"
               :key="index"
-              :style="`transform: rotate(${-index*360/list.length}deg) skew(${-90 + 360/list.length}deg);`"
-            ></div>
+            >
+              <span class="Name">{{i.Name}}</span>
+            </div>
           </div>
-          <div
-            class="jiang"
-            :style="`transform: rotate(${-index*360/list.length}deg) translateY(-7.5rem);`"
-            v-for="(i,index) in list"
-            :key="index"
-          >
-            <span class="Name">{{i.Name}}</span>
-          </div>
+          <div class="start-btn" @click="start()">Spin!</div>
         </div>
-        <div class="start-btn" @click="start()">Spin!</div>
       </div>
-    </div>
+  </div>
   </template>
  
 
 
 
 <style  scoped>
+
 .zp-box {
   user-select: none;
   display: flex;
@@ -225,7 +249,6 @@ return parseInt(Math.random() * (max - min + 1) + min);
 
 .zp-box .bck-box .bck:nth-child(2n + 1) {
   background: #ffad71;
-  /*box-shadow: 0 0 5px #ff8e3c;*/
 }
 
 .zp-box .wr0,
