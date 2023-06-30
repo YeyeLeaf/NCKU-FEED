@@ -18,7 +18,6 @@ const winner = ref(0); // 指定获奖下标 specified 为 true 时生效
 const loading = ref(false); // 抽奖执行状态，防止用户多次点击
 let panziElement = ref(null);
 
-
 onMounted(() => {
   // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
 // var(--nums) 实现 CSS 动画根据奖品个数，动态改变
@@ -121,7 +120,7 @@ const deleteOp = (index) => {
                 class="bck"
                 v-for="(i,index) in list"
                 :key="index"
-                :style="`transform: rotate(${-index*360/list.length}deg) skew(${-90 + 360/list.length}deg);`"
+                :style="style"
               ></div>
             </div>
             <div
@@ -137,6 +136,7 @@ const deleteOp = (index) => {
         </div>
       </div>
   </div>
+  
   </template>
  
 
@@ -245,10 +245,12 @@ const deleteOp = (index) => {
 
 .zp-box .bck-box .bck:nth-child(2n) {
   background: #ffe0c9;
+  border: 1px solid red;
 }
 
 .zp-box .bck-box .bck:nth-child(2n + 1) {
   background: #ffad71;
+  border: 1px solid red;
 }
 
 .zp-box .wr0,

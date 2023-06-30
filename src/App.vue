@@ -4,6 +4,7 @@ import Footer from './components/Footerr.vue'
 import Navbar1 from './components/Navbar1.vue'
 import Navbar2 from './components/Navbar2.vue'
 import wheel from './components/wheel.vue'
+import searchBar from './components/searchBar.vue'
 import { ref } from 'vue'
 const listData = ref([]);
 const restaurant = ref([
@@ -31,10 +32,6 @@ const restaurant = ref([
 
 const add_to_wheel = (item) => {
   if(listData.value.length < 10){
-    // if(listData.value[0].Name === "Lucky Wheel!"){
-    //   listData.value[0] = item;
-    // }
-   //else 
    listData.value.push(item);
   }
   else{
@@ -55,7 +52,8 @@ const Switch = (index) => {
    <div class="flex justify-center">
     <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 py-3 text-xl font-bold text-[#525252]">{{ value }}</a>
    </div>
-    <wheel v-show="num==0" :List="listData"/>
+   <searchBar v-show="num==0"/>
+    <wheel v-show="num==1" :List="listData"/>
   <div class=" bg-[#eff0f3] p-5 m-10 rounded-3xl">
     <h2 class="list-title text-2xl font-bold text-center mb-5">餐廳列表</h2>
     <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
