@@ -6,6 +6,8 @@ import Navbar2 from './components/Navbar2.vue'
 import wheel from './components/wheel.vue'
 import searchBar from './components/searchBar.vue'
 import { ref } from 'vue'
+
+
 const listData = ref([]);
 const restaurant = ref([
   {

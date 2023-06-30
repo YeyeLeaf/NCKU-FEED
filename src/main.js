@@ -12,3 +12,4 @@ createApp(Login).mount('#login')
 createApp(PersonalEdit).mount('#personalEdit')
 createApp(MyUserPage).mount('#myUserPage')
 createApp(OtherUserPage).mount('#otherUserPage')
+
