@@ -14,7 +14,6 @@ const props = defineProps(['List']);
 // computed property that auto-updates when the prop changes
 const list = computed(() => props.List);
 const winner = ref(0); // 指定获奖下标 specified 为 true 时生效
-//const specified = ref(false); // 是否指定获奖结果，false 时为随机
 const loading = ref(false); // 抽奖执行状态，防止用户多次点击
 let panziElement = ref(null);
 
@@ -23,12 +22,11 @@ onMounted(() => {
   // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
 // var(--nums) 实现 CSS 动画根据奖品个数，动态改变
    let root = document.querySelector(':root');
-   console.log(list.value.length);
    root.style.setProperty('--nums', list.value.length);
 });
 onUpdated(() => {
   let root = document.querySelector(':root');
-  console.log(list.value.length);
+
   root.style.setProperty('--nums', list.value.length);
   let bck = $(".bck-box .bck");
     if(bck.length == 1){
@@ -47,7 +45,6 @@ onUpdated(() => {
   }
         })
 function animationClass() {
-  //console.log(winner.value);
 // 对应 CSS 样式中定义的 class 属性值, 如果有更多的话可以继续添加
 switch (winner.value) {
   case 0:
@@ -75,20 +72,10 @@ switch (winner.value) {
 
 function start() {
 if (!loading.value) {
-  //console.log(list.value.length);
   panziElement.value = document.querySelector('.panzi');
   panziElement.value.classList.remove(animationClass());
-  //  if (specified.value) {
-  //    // 此处可指定后端返回的指定奖品
-  //    // winner.value = winner.value;
-  //    winCallback();
-  //  } else {
-    winner.value = random(0, list.value.length - 1);
-    winCallback();
-    // nextTick(() => {
-    //   winCallback();
-    // });
-  // }
+  winner.value = random(0, list.value.length - 1);
+  winCallback();
   loading.value = true;
 }
 }
@@ -118,7 +105,7 @@ const deleteOp = (index) => {
 </script>
 <template>
   <div class="flex m-10 justify-around items-center">
-    <div class="bg-[#eff0f3] w-4/12 p-10">
+    <div class="bg-[#eff0f3] lg:w-4/12 p-10">
       <h2 class="list-title text-2xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
     <hr class="border-2 border-[#ff8e3c]">
       <ul class="toggle-list h-72 overflow-y-scroll">
@@ -128,7 +115,6 @@ const deleteOp = (index) => {
         </li>
       </ul>
     </div>
-    
       <div class="overall">
         <div class="zp-box">
           <div class="panzi">

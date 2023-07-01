@@ -50,7 +50,7 @@ defineProps({
                    <img src="../assets/bookmark.png" class="h-6 lg:h-8 mx-3 lg:mx-4">
                 </picture>
             </a>
-            <a href="#">
+            <a href="myUserPage.html">
                 <picture>
                    <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4">
                 </picture>

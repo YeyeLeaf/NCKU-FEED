@@ -35,7 +35,6 @@ const editFilter = (item, selected, index) => {
     if (selected === true) {
         for(let i = 0; i < result.value.length; i++){
             if(result.value[i] === item){
-                console.log("1");
                 result.value.splice(i, 1);
                 emit('delete-result', i);
             }
