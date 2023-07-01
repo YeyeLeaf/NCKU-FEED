@@ -45,19 +45,30 @@ const num = ref(0);
 const Switch = (index) => {
         num.value = index;
     }
+
+const filterResult = ref([]);
+
+const addResult = (item) => {
+  filterResult.value.push(item);
+}
+
+const deleteResult = (i) => {
+  filterResult.value.splice(i, 1);
+}
 </script>
 
 <template>
   
   <!-- <Navbar1 /> -->
-   <Navbar2 />
-   <div class="flex justify-center">
+  <Navbar2 />
+  <div class="flex justify-center">
     <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 py-3 text-xl font-bold text-[#525252]">{{ value }}</a>
-   </div>
-   <searchBar v-show="num==0"/>
-    <wheel v-show="num==1" :List="listData"/>
+  </div>
+  <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult"/></div>
+  <div v-show="num===1"><wheel :List="listData"/></div>
   <div class=" bg-[#eff0f3] p-5 m-10 rounded-3xl">
-    <h2 class="list-title text-2xl font-bold text-center mb-5">餐廳列表</h2>
+    <h2 class="list-title text-2xl font-bold text-center mb-5">所有商家</h2>
+    <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
     <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
     <div class="flex justify-center flex-wrap">
       <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" @addOp="add_to_wheel(item)"/>
