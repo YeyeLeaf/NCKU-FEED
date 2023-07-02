@@ -5,35 +5,46 @@ import Navbar1 from './components/Navbar1.vue'
 import Navbar2 from './components/Navbar2.vue'
 import wheel from './components/wheel.vue'
 import searchBar from './components/searchBar.vue'
-import { ref } from 'vue'
-
+import { ref, onUpdated, computed } from 'vue'
+import { user } from './class.js'
 
 const listData = ref([]);
 const restaurant = ref([
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "YEYEYE"
+    Name: "YEYEYE",
+    tag: ["中午", "韓"],
+    star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "YeyeLeaf"
+    Name: "YeyeLeaf",
+    tag: ["中午", "韓"],
+    star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "築間"
+    Name: "築間",
+    tag: ["中午"],
+    star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "星巴巴"
+    Name: "星巴巴",
+    tag: ["下午", "飲品"],
+    star: 4.5
   }
 ]);
 
 const add_to_wheel = (item) => {
   if(listData.value.length < 10){
+    for(let i = 0; i < listData.value.length; i++){
+      if(listData.value[i] === item) return;
+    }
    listData.value.push(item);
   }
   else{
@@ -44,14 +55,15 @@ const tab = ['餐廳搜尋', '選擇障礙轉盤'];
 const num = ref(0);
 const Switch = (index) => {
         num.value = index;
+        let panziElement = ref(null);
+        panziElement.value = document.querySelector('.panzi');
+        panziElement.value.style.animationPlayState = 'paused'; 
     }
-
+// filter
 const filterResult = ref([]);
-
 const addResult = (item) => {
   filterResult.value.push(item);
 }
-
 const deleteResult = (i) => {
   filterResult.value.splice(i, 1);
 }
@@ -71,7 +83,7 @@ const deleteResult = (i) => {
     <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
     <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
     <div class="flex justify-center flex-wrap">
-      <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" @addOp="add_to_wheel(item)"/>
+      <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" :tag="item.tag" :star="item.star" @addOp="add_to_wheel(item)"/>
     </div>
   </div>
   <Footer />

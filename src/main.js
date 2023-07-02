@@ -5,6 +5,7 @@ import Login from './Login.vue'
 import PersonalEdit from './PersonalEdit.vue'
 import MyUserPage from './MyUserPage.vue'
 import OtherUserPage from './OtherUserPage.vue'
+import { user } from './class.js'
 
 
 createApp(App).mount('#app')

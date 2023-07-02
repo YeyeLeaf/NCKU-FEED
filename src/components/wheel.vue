@@ -86,6 +86,7 @@ setTimeout(() => {
   /* 此处是为了解决当下次抽中的奖励与这次相同，动画不重新执行的 */
   /* 添加一个定时器，是为了解决动画属性的替换效果，实现动画的重新执行 */
   panziElement.value.classList.add(animationClass());
+  panziElement.value.style.animationPlayState = 'running';
 }, 0);
 // 因为动画时间为 3s ，所以这里3s后获取结果，其实结果早就定下了，只是何时显示，告诉用户
 setTimeout(() => {
