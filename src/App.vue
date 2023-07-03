@@ -5,6 +5,7 @@ import Navbar1 from './components/Navbar1.vue'
 import Navbar2 from './components/Navbar2.vue'
 import wheel from './components/wheel.vue'
 import searchBar from './components/searchBar.vue'
+import Preference from './components/Preference.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from './class.js'
 
@@ -73,17 +74,20 @@ const deleteResult = (i) => {
   
   <!-- <Navbar1 /> -->
   <Navbar2 />
-  <div class="flex justify-center">
-    <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 py-3 text-xl font-bold text-[#525252]">{{ value }}</a>
-  </div>
-  <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult"/></div>
-  <div v-show="num===1"><wheel :List="listData"/></div>
-  <div class=" bg-[#eff0f3] p-5 m-10 rounded-3xl">
-    <h2 class="list-title text-2xl font-bold text-center mb-5">所有商家</h2>
-    <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
-    <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
-    <div class="flex justify-center flex-wrap">
-      <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" :tag="item.tag" :star="item.star" @addOp="add_to_wheel(item)"/>
+  <Preference v-if="user.isPrefer == false"/>
+  <div v-if="user.isPrefer === true">
+    <div class="flex justify-center">
+      <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 py-3 text-xl font-bold text-[#525252]">{{ value }}</a>
+    </div>
+    <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult"/></div>
+    <div v-show="num===1"><wheel :List="listData"/></div>
+    <div class=" bg-[#eff0f3] p-5 m-10 rounded-3xl">
+      <h2 class="list-title text-2xl font-bold text-center mb-5">所有商家</h2>
+      <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
+      <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
+      <div class="flex justify-center flex-wrap">
+        <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" :tag="item.tag" :star="item.star" @addOp="add_to_wheel(item)"/>
+      </div>
     </div>
   </div>
   <Footer />
