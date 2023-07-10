@@ -5,11 +5,11 @@ const props = defineProps({
     linkImg: String,
     altImg: String,
     name: String,
-    tag: Array,
+    tags: Array,
     star: Number
 })
 
-const emit = defineEmits(['addOp', 'delete-collect', 'add-collect']);
+const emit = defineEmits(['addOp', 'delete-collect', 'add-collect', 'open-detail']);
 
 const isCollected = ref(false);
 
@@ -22,6 +22,12 @@ const collect = () => {
         }
     }
     else{
+        for(let i = 0; i < user.restaurant.length; i++){
+            if(user.restaurant[i] === props.name){
+                isCollected.value = !isCollected.value;
+                return;
+            }
+        }
         user.restaurant.push(props.name);
     }
     isCollected.value = !isCollected.value;
@@ -40,10 +46,10 @@ const collect = () => {
             <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ star }}&nbsp;<i class="fas fa-star"></i></button>
         </div>
         <div>
-            <button v-for="(item, index) in tag" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ item }}</button>
+            <button v-for="(item, index) in tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ item }}</button>
         </div>
         <div class="flex justify-between">
-            <button class="bg-Orange text-white p-1 rounded-md">詳細資料</button>
+            <button class="bg-Orange text-white p-1 rounded-md" @click="$emit('open-detail')">詳細資料</button>
             <button class="bg-darkRed text-white p-1 rounded-md AddPnazi" @click="$emit('addOp')">加入轉盤</button>   
         </div>
         

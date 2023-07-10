@@ -35,7 +35,7 @@ defineProps({
     <!-- lg留著如果之後有需要讓他們排列在navbar就可以用 -->
     <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden">
       <div class="text-base lg:flex-grow ">
-        <a href="#" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
+        <a href="myUserPage.html" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
           個人頁面
         </a>
         <a href="#" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
