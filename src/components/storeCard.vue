@@ -2,11 +2,7 @@
 import { ref, onMounted, onUpdated } from 'vue'
 import { user } from '../class.js'
 const props = defineProps({
-    linkImg: String,
-    altImg: String,
-    name: String,
-    tags: Array,
-    star: Number
+    infor: Object
 })
 
 const emit = defineEmits(['addOp', 'delete-collect', 'add-collect', 'open-detail']);
@@ -16,21 +12,22 @@ const isCollected = ref(false);
 const collect = () => {
     if(isCollected.value){
         for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.name){
+            if(user.restaurant[i] === props.infor.Name){
                 user.restaurant.splice(i, 1);
             }
         }
     }
     else{
         for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.name){
+            if(user.restaurant[i] === props.infor.Name){
                 isCollected.value = !isCollected.value;
                 return;
             }
         }
-        user.restaurant.push(props.name);
+        user.restaurant.push(props.infor.Name);
     }
     isCollected.value = !isCollected.value;
+    console.log(user.restaurant);
 }
 </script>
 
@@ -40,13 +37,13 @@ const collect = () => {
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
         </div>
-        <img :src="linkImg" :alt="altImg" class="h-48 w-full rounded-2xl bg-lightOrange "/>
+        <img :src="infor.img" :alt="infor.alt" class="h-48 w-full rounded-2xl bg-lightOrange "/>
         <div class="flex justify-between items-center">
-            <p class="text-xl">{{ name }}</p>
-            <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ star }}&nbsp;<i class="fas fa-star"></i></button>
+            <p class="text-xl">{{ infor.Name }}</p>
+            <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
         </div>
         <div>
-            <button v-for="(item, index) in tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ item }}</button>
+            <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ tag }}</button>
         </div>
         <div class="flex justify-between">
             <button class="bg-Orange text-white p-1 rounded-md" @click="$emit('open-detail')">詳細資料</button>

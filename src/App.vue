@@ -94,7 +94,7 @@ const openDetail = (item) => {
       <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
       <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
       <div class="flex justify-center flex-wrap">
-        <storeCard v-for="(item, index) in restaurant" :key="index" :linkImg="item.img" :altImg="item.alt" :name="item.Name" :tags="item.tags" :star="item.star" @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
+        <storeCard v-for="(item, index) in restaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
       </div>
     </div>
   </div>
