@@ -80,8 +80,8 @@ const openDetail = (item) => {
 
 <template>
   
-  <!-- <Navbar1 /> -->
-  <Navbar2 />
+  <Navbar1 myImg="src/assets/leaf.png"/>
+  <!-- <Navbar2 /> -->
   <!-- <Preference v-if="user.isPrefer == false"/> -->
   <div v-if="user.isPrefer === false" class="mt-20">
     <div class="flex justify-center">

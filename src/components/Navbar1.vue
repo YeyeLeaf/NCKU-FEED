@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 sticky">
+  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <a href="index.html" class="flex items-center">
             <picture class="hidden lg:flex">
@@ -52,7 +52,7 @@ defineProps({
             </a>
             <a href="myUserPage.html">
                 <picture>
-                   <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4">
+                   <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4 rounded-full">
                 </picture>
             </a>
         </div>

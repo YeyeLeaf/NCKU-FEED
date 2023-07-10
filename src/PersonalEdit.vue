@@ -6,7 +6,7 @@ import RedButton from './components/RedButton.vue'
 
 <template>
 
-<Navbar1 myImg="src/assets/user.png"/>
+<Navbar1 myImg="src/assets/leaf.png"/>
 
 <div class="flex justify-around flex-wrap lg:space-y-20 lg:mt-24 space-y-12 mt-12">
   <div class="bg-[#FF8E3C] rounded-3xl flex flex-col justify-center items-center lg:w-1/2 w-3/4 py-10 lg:space-y-6 lg:px-12 space-y-6 px-8">

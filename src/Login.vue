@@ -1,12 +1,9 @@
 <script setup>
 import Footer from './components/Footerr.vue'
-import Navbar1 from './components/Navbar1.vue'
 import Navbar2 from './components/Navbar2.vue'
 </script>
 
 <template>
-  
-  <!-- <Navbar1 /> -->
   <div class="bg-custom-background">
       <img src="./assets/background.png" class="absolute w-full h-full object-cover">
   </div>
