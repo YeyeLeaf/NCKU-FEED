@@ -36,7 +36,7 @@ const restaurant = ref([
   },
   {
     img: "src/assets/leaf.png",
-    alt: "leaf",
+    alt: "starbaba",
     Name: "星巴巴",
     tags: ["下午", "飲品"],
     star: 4.5
@@ -92,7 +92,7 @@ const openDetail = (item) => {
     <div class=" bg-[#eff0f3] p-5 m-10 rounded-3xl list">
       <h2 class="list-title text-2xl font-bold text-center mb-5">所有商家</h2>
       <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
-      <hr class="border-2 border-[#ff8e3c] w-11/12 text-center">
+      <hr class="border-2 border-[#ff8e3c] text-center">
       <div class="flex justify-center flex-wrap">
         <storeCard v-for="(item, index) in restaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
       </div>

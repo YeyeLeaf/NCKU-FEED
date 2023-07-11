@@ -9,7 +9,7 @@ import PersonalInfo from './components/PersonalInfo.vue'
 <template>
 
     <Navbar1 myImg="src/assets/leaf.png"/>
-    <div class="flex flex-wrap lg:justify-around justify-center">
+    <div class="flex flex-wrap lg:justify-around justify-center mt-20">
         <div class="lg:hidden mt-12">
             <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="追蹤"/>
         </div>
