@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import FeedName from './FeedName.vue'
+import FeedName_sm from './FeedName_sm.vue'
 import Comment  from './Comment.vue';
-defineProps({
+import { user } from '../class.js'
+const props = defineProps({
   infor: Object
 });
 $(document).ready(function () {
@@ -22,10 +23,33 @@ const Switch = (index) => {
         panziElement.value = document.querySelector('.panzi');
         panziElement.value.style.animationPlayState = 'paused'; 
     }
+
+const isCollected = ref(false);
+
+const collect = () => {
+    if(isCollected.value){
+        for(let i = 0; i < user.restaurant.length; i++){
+            if(user.restaurant[i] === props.infor.Name){
+                user.restaurant.splice(i, 1);
+            }
+        }
+    }
+    else{
+        for(let i = 0; i < user.restaurant.length; i++){
+            if(user.restaurant[i] === props.infor.Name){
+                isCollected.value = !isCollected.value;
+                return;
+            }
+        }
+        user.restaurant.push(props.infor.Name);
+    }
+    isCollected.value = !isCollected.value;
+    console.log(user.restaurant);
+}
 </script>
 <template>
-  <div class="bg-white fixed w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8">
-      <div class="w-6/12 p-1">
+  <div class="bg-white fixed w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
+      <div class="w-6/12 p-1 h-80">
         <img :src="infor.img" :alt="infor.alt" class="rounded-2xl h-44 w-full">
         <div class="flex justify-between items-center my-2">
           <h2 class="text-xl">{{ infor.Name }}</h2>
@@ -45,21 +69,22 @@ const Switch = (index) => {
             <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer  py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
           </div>
           <div>
-            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
-            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
+            <button v-if="isCollected === false" class="bg-[#b80c0c] text-white rounded-md w-24 p-1" @click="collect">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+            <button v-if="isCollected === true" class="bg-[#b80c0c] text-white rounded-md w-24 p-1" @click="collect">取消收藏&nbsp;<i class="fas fa-bookmark"></i></button>
           </div>
         </div>
-        <div class="border-b-2 border-t-2 border-[#FF8E3C]"></div>
-        <div v-show="num===0">
+        <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
+        <div v-show="num===0" class="h-76 overflow-y-auto">
           <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
           <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
           <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
         </div>
-        <div v-show="num===1">
-          <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-          <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-          <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-          <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
+        <div v-show="num===1" class="h-76 overflow-y-auto">
+          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
         </div>
       </div>
       <span class="absolute top-1 right-3 close cursor-pointer text-lg">x</span>

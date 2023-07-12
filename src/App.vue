@@ -98,7 +98,7 @@ const openDetail = (item) => {
       </div>
     </div>
   </div>
-  <storePage :infor="curr_restaurant" class="store-infor hidden"/>
+  <storePage :infor="curr_restaurant" class="store-infor hidden" @addOp="add_to_wheel(curr_restaurant)"/>
   <Footer />
 </template>
 

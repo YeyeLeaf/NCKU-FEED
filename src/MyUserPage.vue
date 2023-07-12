@@ -18,10 +18,10 @@ import PersonalInfo from './components/PersonalInfo.vue'
             <About info="測試：Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati qui enim odit magni, non illo nisi sunt autem nobis porro, nulla pariatur nemo asperiores itaque, aperiam natus voluptas a? Consequatur.
     Rem accusamus odio soluta laborum aspernatur, libero perspiciatis, quis sequi, dignissimos omnis asperiores praesentium? Consequuntur culpa voluptas necessitatibus sequi, doloribus tempora dolore mollitia, soluta enim, magni possimus."
             class="mb-8"/>
-            <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-            <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-            <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
-            <FeedName authorImg="src/assets/user_black.png" name="標題" comment="99" heart="100" class="mt-0"/>
+            <FeedName authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
             
         </div>
 
