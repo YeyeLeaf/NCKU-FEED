@@ -13,7 +13,7 @@ class PostData {
 
   submit() {
     axios
-      .post('https://jsonplaceholder.typicode.com/posts', { //等後端api
+      .post('http://localhost:3000/tasks', { //等後端api
         content: post.content.value,
         title: post.title.value
       })
@@ -25,7 +25,7 @@ class PostData {
       });
   }
 }
-
+//https://jsonplaceholder.typicode.com/posts
 const post= new PostData();
 
 const editorOptions = {
@@ -47,7 +47,7 @@ const editorOptions = {
     <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full text-3xl p-4 focus:outline-none">
     <QuillEditor theme="snow" v-model:content="post.content.value" :options="editorOptions" content-type="html" class="mx-auto my-0 min-h-screen"/>
   </div>
-  <RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" />
+  <router-link to="/diary"><RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" /></router-link>
 </template>
 
 <style scoped src="../post.css">

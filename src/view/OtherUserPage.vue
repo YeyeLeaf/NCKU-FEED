@@ -1,17 +1,13 @@
 <script setup>
-import Footer from './components/Footerr.vue'
-import Navbar1 from './components/Navbar1.vue'
-import About from './components/About.vue'
-import FeedName from './components/FeedName.vue'
-import PersonalInfo from './components/PersonalInfo.vue'
+import About from '../components/About.vue'
+import FeedName from '../components/FeedName.vue'
+import PersonalInfo from '../components/PersonalInfo.vue'
 </script>
 
 <template>
-
-    <Navbar1 myImg="src/assets/leaf.png"/>
-    <div class="flex flex-wrap lg:justify-evenly justify-center mt-20">
+    <div class="flex flex-wrap lg:justify-around justify-center mt-20">
         <div class="lg:hidden mt-12">
-            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="編輯個人檔案"/>
+            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="追蹤"/>
         </div>
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
@@ -26,19 +22,15 @@ import PersonalInfo from './components/PersonalInfo.vue'
         </div>
 
         <div class="h-200 hidden lg:flex"> 
-            <div class="w-0.5 h-full bg-gray-100"></div>
+            <div class="w-0.5 h-full bg-gray-400"></div>
         </div>
 
         <div class="hidden lg:flex mt-16">
-            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="編輯個人檔案"/>
+            <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="追蹤"/>
         </div>
-
-
-        <Footer />
     </div>
 
 </template>
 
 <style scoped>
-/*hi*/
 </style>
