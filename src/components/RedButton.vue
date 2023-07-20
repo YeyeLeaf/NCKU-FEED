@@ -17,6 +17,7 @@
                 transition-all
                 text-base lg:text-xl font-medium
                 text-center
+                cursor-pointer
                 ">
         <button onclick="v-bind:location.href='Onclick'" class="align-center">{{ text }}</button>
 

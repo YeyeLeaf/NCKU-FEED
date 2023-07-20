@@ -30,7 +30,7 @@ const signIn = async () => {
                     inset-x-0 
                     bottom-0 
                     fixed 
-                    lg:h-20
+                    lg:h-20 
                     h-28
                     flex
                     font-montserrat 
@@ -39,14 +39,12 @@ const signIn = async () => {
                     items-top
                     lg:items-center   
                     flex
-                    lg:flex 
                     flex-row
                     text-lg
                     lg:text-base
                     transition-all 
-                    inline-block
                     lg:space-x-32">
-                <h1 class="font-bold pt-6 lg:pt-0"><a href="#">Feedback</a></h1>
+                <h1 class="font-bold pt-6 lg:pt-0 text-base"><a href="#">Feedback</a></h1>
                 <a href="#" class="lg:hidden mx-8">
                     <picture>
                         <img src="../assets/nckufeed_white.svg" class="h-20">
@@ -54,7 +52,9 @@ const signIn = async () => {
                 </a>
                 <h1 class="font-bold pt-6 lg:pt-0"><a href="#">Contact us</a></h1>
                 <h1 class="font-bold hidden lg:block"><a href="#">Instructions</a></h1>
-                <button @click="signIn">Sign In</button>
+
+                <!-- sign in example button here -->
+                <button @click="signIn" style="background-color: aqua;">Sign In</button>
                 <!-- <h1 class="text-sm opacity-80 lg:pt-0 pt-20">© NCKU FEED, 2022. We love our users!</h1> -->
         </div>
     </footer>
