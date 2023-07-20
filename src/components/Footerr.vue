@@ -1,4 +1,27 @@
 <script setup>
+import { GoogleAuthProvider, signInWithPopup, getAdditionalUserInfo } from 'firebase/auth';
+import { auth } from '../firebase/firebaseConfig';
+
+const signIn = async () => {
+    const provider = await new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const additionalUserInfo = getAdditionalUserInfo(result);
+        const isNewUser = additionalUserInfo.isNewUser;
+        const user = result.user;
+        console.log(JSON.stringify(user))
+        // TODO: send user object to backend api, user's data can be retrieve from user object
+        if (isNewUser) {
+            // Add to database and go to preference page -> fetch POST api
+        } else {
+            // fetch login api and get jwt token -> fetch GET api
+        }
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // error handling
+    });
+};
 
 </script>
 
@@ -7,7 +30,7 @@
                     inset-x-0 
                     bottom-0 
                     fixed 
-                    lg:h-20 
+                    lg:h-20
                     h-28
                     flex
                     font-montserrat 
@@ -31,6 +54,7 @@
                 </a>
                 <h1 class="font-bold pt-6 lg:pt-0"><a href="#">Contact us</a></h1>
                 <h1 class="font-bold hidden lg:block"><a href="#">Instructions</a></h1>
+                <button @click="signIn">Sign In</button>
                 <!-- <h1 class="text-sm opacity-80 lg:pt-0 pt-20">© NCKU FEED, 2022. We love our users!</h1> -->
         </div>
     </footer>
