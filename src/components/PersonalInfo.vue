@@ -10,7 +10,7 @@ import RedButton from './RedButton.vue'
 <template>
 
     <div class="lg:flex flex-col space-y-8 items-center hidden">
-        <img :src="myImg" class="w-36">
+        <img :src="myImg" class="w-36 rounded-full">
         <p class="text-3xl">{{ name }}</p>
         <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
 

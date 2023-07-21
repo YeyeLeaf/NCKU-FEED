@@ -66,7 +66,7 @@ const collect = () => {
       <div class="w-7/12 p-1">
         <div class="flex justify-between items-center h-10 mb-1">
           <div>
-            <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer  py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
+            <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change: index === num }" class="cursor-pointer py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
           </div>
           <div>
             <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
@@ -75,16 +75,19 @@ const collect = () => {
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
-        <div v-show="num===0" class="h-76 overflow-y-auto">
-          <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-          <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-          <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-        </div>
-        <div v-show="num===1" class="h-76 overflow-y-auto">
-          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-          <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+        <div class="h-80 overflow-hidden">
+          <div v-show="num===0" class="max-h-full overflow-y-scroll">
+            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+          </div>
+          <div v-show="num===1" class="max-h-full overflow-y-scroll">
+            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+          </div>
         </div>
       </div>
       <span class="absolute top-1 right-3 close cursor-pointer text-lg">x</span>

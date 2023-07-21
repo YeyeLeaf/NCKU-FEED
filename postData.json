@@ -21,6 +21,11 @@
       "content": "<p>我真的很高興，終於把這鬼東西<strong>傳進JSON裡面了</strong></p><p><span style=\"color: rgb(250, 204, 204);\">我愛這個世界！</span></p><p><s>但我現在想睡覺了</s></p>",
       "title": "我好高興",
       "id": 1
+    },
+    {
+      "content": "<p>今天重構了專案，導入vue router來取代原本的a標籤，好處是可以讓畫面載入速度加快許多。</p><p>之後要來研究Vuex，因為今天剛好學到Redux的前面，靈光一閃想說該不會Vuex就是跟Redux差不多的東西吧，因為都有x（x</p><p>看使用Vuex會不會讓props與emit傳遞比較簡潔一點</p>",
+      "title": "今日進度",
+      "id": 2
     }
   ]
 }
