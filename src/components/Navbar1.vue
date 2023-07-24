@@ -9,7 +9,7 @@ const isOpen = ref(false);
 </script>
 
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
+  <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <router-link to="/" class="flex items-center">
         <picture class="hidden lg:flex">
