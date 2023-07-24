@@ -9,7 +9,7 @@ const isOpen = ref(false);
 </script>
 
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
+  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10 relative">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <router-link to="/" class="flex items-center">
         <picture class="hidden lg:flex">
@@ -25,17 +25,17 @@ const isOpen = ref(false);
     </div>
 
     <!-- lg留著如果之後有需要讓他們排列在navbar就可以用 -->
-    <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden">
+    <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden ">
       <div class="text-base lg:flex-grow ">
         <router-link to="/myUserPage" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
             個人頁面
         </router-link>
-        <router-link to="/" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">收藏清單</router-link>
+        <router-link to="/collect" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">收藏清單</router-link>
       </div>
     </div>
 
     <div class="hidden lg:flex mx-12 items-center">
-            <router-link to="/">
+            <router-link to="/collect">
                 <picture>
                    <img src="../assets/bookmark.png" class="h-6 lg:h-8 mx-3 lg:mx-4">
                 </picture>

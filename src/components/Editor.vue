@@ -43,8 +43,8 @@ const editorOptions = {
 
 </script>
 <template>
-  <div class="mt-20">
-    <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full text-3xl p-4 focus:outline-none">
+  <div>
+    <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full lg:text-3xl text-2xl p-4 focus:outline-none">
     <QuillEditor theme="snow" v-model:content="post.content.value" :options="editorOptions" content-type="html" class="mx-auto my-0 min-h-screen"/>
   </div>
   <router-link to="/diary"><RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" /></router-link>

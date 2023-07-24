@@ -17,7 +17,7 @@ axios.get('http://localhost:3000/tasks',{
 .catch((error) => console.log(error))
 </script>
 <template>
-  <div class="flex justify-evenly mt-20 min-h-screen">
+  <div class="flex justify-evenly min-h-screen">
     <div class="lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
       <div class="flex mb-6">
         <img src="src/assets/leaf.png" class="w-24 rounded-full mr-4">
