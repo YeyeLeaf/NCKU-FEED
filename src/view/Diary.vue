@@ -7,7 +7,7 @@ const post = ref({});
 const name = "yeye";
 axios.get('http://localhost:3000/tasks',{
     params: {
-        "id": 1
+        "id": 2
     }
 })
 .then((response) => {
@@ -17,14 +17,18 @@ axios.get('http://localhost:3000/tasks',{
 .catch((error) => console.log(error))
 </script>
 <template>
+<<<<<<< HEAD
   <div class="flex justify-evenly">
+=======
+  <div class="flex justify-evenly mt-20 min-h-screen">
+>>>>>>> upstream/main
     <div class="lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
       <div class="flex mb-6">
-        <img src="src/assets/user_black.png" class="w-24 rounded-full mr-4">
+        <img src="src/assets/leaf.png" class="w-24 rounded-full mr-4">
         <div class="flex flex-col justify-between">
-          <h1 class="text-2xl font-bold">{{ post.title }}</h1>
-          <div class="flex justify-between">
-            <p>2023-02-01</p>
+          <h1 class="text-3xl font-bold">{{ post.title }}</h1>
+          <div class="flex justify-between text-[#525252]">
+            <p class="mr-10">2023-07-17</p>
             <p>作者：{{ name }}</p>
           </div>
         </div>
@@ -35,7 +39,7 @@ axios.get('http://localhost:3000/tasks',{
       <div class="w-0.5 h-full bg-gray-100"></div>
     </div>
     <div class="hidden lg:flex mt-16">
-      <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="查看個人檔案"/>
+      <PersonalInfo myImg="src/assets/leaf.png" name="Yeye" content="查看個人檔案"/>
   </div>
   </div>
 </template>
