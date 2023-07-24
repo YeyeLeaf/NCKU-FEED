@@ -75,8 +75,16 @@ const collect = () => {
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
-        <div class="h-80 overflow-hidden">
+        <div class="h-80 overflow-hidden box-border">
           <div v-show="num===0" class="max-h-full overflow-y-scroll">
+            <form action="" class="flex p-2 z-10 align-top">
+              <img src="../assets/leaf.png" class="h-8 rounded-full">
+              <input type="text" placeholder="撰寫評論..." class="outline-none  border overflow-auto">
+              <div>
+                <button class="rounded-md bg-[#ff8e3c] text-white p-1 w-24 mr-10 mb-1">評分選項</button>
+                <button class="rounded-md bg-[#b80c0c] text-white p-1 w-24">送出</button>
+              </div>
+            </form>
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
@@ -97,5 +105,15 @@ const collect = () => {
 <style>
 .change {
   color: #525252;
+}
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #9c9c9c;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 </style>

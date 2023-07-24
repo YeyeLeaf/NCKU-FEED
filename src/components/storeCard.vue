@@ -6,7 +6,7 @@ const props = defineProps({
     infor: Object
 })
 
-const emit = defineEmits(['addOp', 'delete-collect', 'add-collect', 'open-detail']);
+const emit = defineEmits(['addOp', 'open-detail']);
 
 const isCollected = ref(false);
 
