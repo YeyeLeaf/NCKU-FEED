@@ -5,7 +5,7 @@ import PersonalInfo from '../../components/PersonalInfo.vue'
 </script>
 
 <template>
-    <div class="flex flex-wrap lg:justify-evenly justify-center mt-20">
+    <div class="flex flex-wrap lg:justify-evenly justify-center">
         <div class="lg:hidden mt-12">
             <PersonalInfo myImg="src/assets/user_black.png" name="salmon" content="編輯個人檔案"/>
         </div>

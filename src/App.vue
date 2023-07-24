@@ -7,5 +7,5 @@ import Footer from './components/Footerr.vue';
   <!-- <Navbar1 myImg="src/assets/leaf.png" /> -->
   <Navbar2 />
   <router-view></router-view>
-  <Footer />
+  <Footer class="relative"/>
 </template>

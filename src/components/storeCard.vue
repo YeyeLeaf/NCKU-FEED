@@ -33,7 +33,7 @@ const collect = () => {
 </script>
 
 <template>
-    <div class="mx-6 rounded-2xl shadow-md shadow-gray-300 p-4 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-52">
+    <div class="mx-4 lg:mx-6 rounded-2xl shadow-md shadow-gray-300 p-4 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-52">
         <div class="absolute top-6 left-6 text-[#b80c0c] cursor-pointer" @click="collect">
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
