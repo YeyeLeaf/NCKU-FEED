@@ -33,7 +33,8 @@ const signIn = async () => {
                     h-28
                     flex
                     font-montserrat 
-                    text-white">
+                    text-white
+                    footer">
         <div class=" mx-auto
                     items-top
                     lg:items-center   

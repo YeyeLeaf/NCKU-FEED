@@ -6,7 +6,7 @@ import RedButton from './RedButton.vue'
 </script>
 
 <template>
-    <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10 relative">
+    <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10 relative">
         <div class="lg:flex items-center text-white mr-6 ml-4">
             <router-link to="/" class="flex items-center">
                 <picture class="hidden lg:flex">
