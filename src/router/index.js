@@ -6,6 +6,7 @@ import PersonalEdit from '../view/auth/PersonalEdit.vue';
 import OtherUserPage from '../view/OtherUserPage.vue';
 import DiaryEditor from '../view/auth/DiaryEditor.vue';
 import Diary from '../view/Diary.vue';
+import Collect from '../view/auth/Collect.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,6 +18,7 @@ const router = createRouter({
     { path: '/userPage', component: OtherUserPage },
     { path: '/diaryEditor', component: DiaryEditor },
     { path: '/diary', component: Diary },
+    { path: '/collect', component: Collect },
   ],
 });
 export default router;
