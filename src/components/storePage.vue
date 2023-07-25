@@ -80,7 +80,7 @@ const collect = () => {
             <form action="" class="flex p-4 z-10 justify-between">
               <div class="flex">
                 <img src="../assets/leaf.png" class="h-8 rounded-full mr-3">
-                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16" placeholder="撰寫評論...（上限150字）"></textarea>
+                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-3/4" placeholder="撰寫評論...（上限150字）"></textarea>
               </div>
               <div>
                 <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full">評分選項</button>
@@ -108,7 +108,7 @@ const collect = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .change {
   color: #525252;
 }

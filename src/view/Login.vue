@@ -29,8 +29,7 @@ const signIn = async () => {
       <img src="../assets/background.png" class="absolute top-0 w-full h-full object-cover">
   </div> -->
   <div class="bg-custom-background flex">
-      <img src="../assets/loco.png" class="absolute w-2/5 object-cover no-border lg:mt-32 mt-96">
-      <img src="../assets/nckufeed.png" class="absolute w-12 lg:w-16 object-cover no-border top-28 right-0">
+      <img src="../assets/login.svg" class="absolute w-full object-cover no-border lg:mt-28 mt-96">
   </div>
   <div class="relative flex justify-center flex-wrap items-center lg:mt-52 lg:mb-48 mt-52 mb-40">
     <div class="flex flex-col justify-center items-center py-10 lg:space-y-10 lg:px-28 space-y-6 px-8">
