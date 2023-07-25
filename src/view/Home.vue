@@ -2,7 +2,6 @@
 import storeCard from '../components/storeCard.vue'
 import wheel from '../components/wheel.vue'
 import searchBar from '../components/searchBar.vue'
-import Preference from '../components/Preference.vue'
 import storePage from '../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../class.js'
@@ -76,8 +75,7 @@ const openDetail = (item) => {
 </script>
 
 <template>
-  <!-- <Preference v-if="user.isPrefer == false"/> -->
-  <div v-if="user.isPrefer === false" class="">
+  <div>
     <div class="flex justify-center">
       <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 p-2 text-xl font-bold text-[#525252]">{{ value }}</a>
     </div>

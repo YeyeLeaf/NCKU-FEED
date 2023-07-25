@@ -5,7 +5,7 @@ import { user } from '../../class.js'
 </script>
 
 <template>
-  <div class="flex justify-around flex-wrap lg:mt-32 lg:mb-24 mt-20 mb-20">
+  <div class="flex justify-around flex-wrap mt-12 mb-12">
     <div class="border flex flex-col lg:w-1/2 w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
       <div class="flex justify-start space-x-10">
         <img src="../../assets/user_black.png" class="lg:w-32 w-24 rounded-full no-border">
