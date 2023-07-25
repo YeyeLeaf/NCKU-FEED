@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import RedButton from './RedButton.vue'
-import { user } from '../class.js'
+import RedButton from '../../components/RedButton.vue'
+import { user } from '../../class.js'
 const options = ref([
   "美式料理", "台灣美食", "速食", "泰式料理", "湯品", "披薩", "甜點", "街頭美食", "手搖飲", "咖啡廳", "燒烤", "印度料理", "港式料理", "素食", "早餐", "韓式料理", "義式料理", "海鮮"]);
 </script>

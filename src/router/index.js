@@ -7,6 +7,7 @@ import OtherUserPage from '../view/OtherUserPage.vue';
 import DiaryEditor from '../view/auth/DiaryEditor.vue';
 import Diary from '../view/Diary.vue';
 import Collect from '../view/auth/Collect.vue';
+import Preference from '../view/auth/Preference.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -19,6 +20,7 @@ const router = createRouter({
     { path: '/diaryEditor', component: DiaryEditor },
     { path: '/diary', component: Diary },
     { path: '/collect', component: Collect },
+    { path: '/preference', component: Preference },
   ],
 });
 export default router;

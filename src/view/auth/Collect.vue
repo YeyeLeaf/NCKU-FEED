@@ -60,7 +60,7 @@ const openDetail = (item) => {
 <template>
   <div v-if="user.isPrefer === false" >
     <div class=" bg-[#eff0f3] p-5 lg:m-10 m-5 rounded-3xl list">
-      <h2 class="list-title text-2xl font-bold text-center mb-5">所有商家</h2>
+      <h2 class="list-title text-2xl font-bold text-center mb-5">收藏清單</h2>
       <hr class="border-2 border-[#ff8e3c] text-center">
       <div class="flex justify-center flex-wrap">
         <storeCard v-for="(item, index) in restaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>

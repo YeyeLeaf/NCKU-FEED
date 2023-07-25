@@ -77,7 +77,7 @@ const collect = () => {
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
         <div class="h-80 overflow-hidden box-border">
           <div v-show="num===0" class="max-h-full overflow-y-scroll">
-            <form action="" class="flex p-4 z-10 justify-between">
+            <form action="" class="flex z-10 align-top p-4">
               <div class="flex">
                 <img src="../assets/leaf.png" class="h-8 rounded-full mr-3">
                 <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-3/4" placeholder="撰寫評論...（上限150字）"></textarea>
@@ -115,6 +115,9 @@ const collect = () => {
 ::-webkit-scrollbar {
   width: 11px;
   height: 11px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar:hover {
   background-color: #ececec;
 }
 ::-webkit-scrollbar-thumb {

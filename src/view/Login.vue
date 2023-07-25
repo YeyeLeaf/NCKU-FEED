@@ -1,6 +1,10 @@
 <script setup>
 import { GoogleAuthProvider, signInWithPopup, getAdditionalUserInfo } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const signIn = async () => {
     const provider = await new GoogleAuthProvider();
@@ -9,12 +13,35 @@ const signIn = async () => {
         const additionalUserInfo = getAdditionalUserInfo(result);
         const isNewUser = additionalUserInfo.isNewUser;
         const user = result.user;
-        console.log(JSON.stringify(user))
+        console.log(JSON.stringify(user));
+        // console.log({"uid": user.uid,
+        //       "name": user.displayName,
+        //       "email": user.email,
+        //       "profile_photo": user.photoURL});
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
+          axios
+            .post('http://localhost:5000/user', { //等後端api
+              "uid": user.uid,
+              "name": user.displayName,
+              "email": user.email,
+              "profile_photo": user.photoURL
+            })
+            .then((response) => {
+              console.log(response);
+              console.log({"uid": user.uid,
+              "name": user.displayName,
+              "email": user.email,
+              "profile_photo": user.photoURL});
+              router.push('/preference');
+            })
+            .catch((error) => {
+              console.error(error);
+            });
             // Add to database and go to preference page -> fetch POST api
         } else {
             // fetch login api and get jwt token -> fetch GET api
+            router.push('/');
         }
     }).catch((error) => {
         const errorCode = error.code;
@@ -31,7 +58,7 @@ const signIn = async () => {
   <div class="bg-custom-background flex">
       <img src="../assets/login.svg" class="absolute w-full object-cover no-border lg:mt-28 mt-96">
   </div>
-  <div class="relative flex justify-center flex-wrap items-center lg:mt-52 lg:mb-48 mt-52 mb-40">
+  <div class="relative flex justify-center flex-wrap items-center lg:mt-36 lg:mb-36 mt-52 mb-40">
     <div class="flex flex-col justify-center items-center py-10 lg:space-y-10 lg:px-28 space-y-6 px-8">
       <p class="text-black font-sans text-5xl lg:text-6xl font-semibold">CAN'T WAIT TO EAT!</p>
       <button class="bg-white text-gray-700 items-center flex" @click="signIn">
