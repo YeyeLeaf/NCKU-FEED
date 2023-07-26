@@ -20,6 +20,7 @@ const signIn = async () => {
         //       "profile_photo": user.photoURL});
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
+          // Add to database and go to preference page -> fetch POST api
           axios
             .post('http://localhost:5000/user', { //等後端api
               "uid": user.uid,
@@ -38,9 +39,27 @@ const signIn = async () => {
             .catch((error) => {
               console.error(error);
             });
-            // Add to database and go to preference page -> fetch POST api
         } else {
             // fetch login api and get jwt token -> fetch GET api
+            try {
+              const request = new
+              Request("http://localhost:5000/user", {
+                method: "POST",
+                body: JSON.stringify({
+                  "uid": user.uid,
+                })
+              })
+              request.json().then((data) => {
+                console.log(data);
+              });
+              // const response = axios.get('http://localhost:5000/user',{
+              //   params: {
+              //     "uid": user.uid,
+              //   },
+              // });
+            } catch (error) {
+              console.error(error);
+            }
             router.push('/');
         }
     }).catch((error) => {
@@ -56,7 +75,7 @@ const signIn = async () => {
       <img src="../assets/background.png" class="absolute top-0 w-full h-full object-cover">
   </div> -->
   <div class="bg-custom-background flex">
-      <img src="../assets/login.svg" class="absolute w-full object-cover no-border lg:mt-28 mt-96">
+      <img src="../assets/login.svg" class="absolute w-full object-cover no-border lg:mt-20 mt-96">
   </div>
   <div class="relative flex justify-center flex-wrap items-center lg:mt-36 lg:mb-36 mt-52 mb-40">
     <div class="flex flex-col justify-center items-center py-10 lg:space-y-10 lg:px-28 space-y-6 px-8">
