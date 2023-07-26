@@ -4,6 +4,8 @@ import { auth } from '../firebase/firebaseConfig';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
+import { isLogining, changeNavbar } from '../eventBus.js';
+
 const router = useRouter();
 
 const signIn = async () => {
@@ -35,6 +37,7 @@ const signIn = async () => {
               "email": user.email,
               "profile_photo": user.photoURL});
               router.push('/preference');
+              changeNavbar();
             })
             .catch((error) => {
               console.error(error);
@@ -61,6 +64,7 @@ const signIn = async () => {
               console.error(error);
             }
             router.push('/');
+            changeNavbar();
         }
     }).catch((error) => {
         const errorCode = error.code;
@@ -68,17 +72,16 @@ const signIn = async () => {
         // error handling
     });
 };
+
 </script>
 
 <template>
-  <!-- <div class="bg-custom-background">
-      <img src="../assets/background.png" class="absolute top-0 w-full h-full object-cover">
-  </div> -->
-  <div class="bg-custom-background flex">
-      <img src="../assets/login.svg" class="absolute w-full object-cover no-border lg:mt-20 mt-96">
-  </div>
-  <div class="relative flex justify-center flex-wrap items-center lg:mt-36 lg:mb-36 mt-52 mb-40">
-    <div class="flex flex-col justify-center items-center py-10 lg:space-y-10 lg:px-28 space-y-6 px-8">
+  <div class="absolute w-full lg:top-80 top-96">
+      <img src="../assets/login.svg" class="object-cover no-border">
+   </div>
+  <!-- lg:mt-56 lg:mb-40 mt-52 mb-40 -->
+  <div class="relative flex justify-center flex-wrap items-center h-screen">  
+    <div class="flex flex-col justify-center items-center lg:space-y-10 lg:px-28 space-y-6 px-8">
       <p class="text-black font-sans text-5xl lg:text-6xl font-semibold">CAN'T WAIT TO EAT!</p>
       <button class="bg-white text-gray-700 items-center flex" @click="signIn">
         <div class="flex lg:mx-12 mx-6 space-x-4">

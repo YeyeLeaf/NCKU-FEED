@@ -81,7 +81,7 @@ const openDetail = (item) => {
     </div>
     <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult"/></div>
     <div v-show="num===1"><wheel :List="listData"/></div>
-    <div class=" bg-[#eff0f3] p-5 lg:m-10 m-5 rounded-3xl list">
+    <div class=" bg-[#eff0f3] py-5 px-2 lg:m-10 m-6 rounded-3xl list">
       <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5">所有商家</h2>
       <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
       <hr class="border-2 border-[#ff8e3c] text-center">
