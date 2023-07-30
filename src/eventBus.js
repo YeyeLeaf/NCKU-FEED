@@ -9,7 +9,6 @@ export function setJwtToCookie(jwtToken, expirationDays) {
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + expirationDays);
 
-  // 将 JWT 存储到 Cookie，使用 'jwtToken' 作为 Cookie 名称
   document.cookie = `jwtToken=${jwtToken}; expires=${expirationDate.toUTCString()}; path=/`;
 }
 export function getJwtFromCookie() {
