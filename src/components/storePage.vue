@@ -79,7 +79,7 @@ const collect = () => {
           <div v-show="num===0" class="max-h-full overflow-y-scroll">
             <form action="" class="flex z-10 align-top p-4">
               <div class="flex">
-                <img src="../assets/leaf.png" class="h-8 rounded-full mr-3">
+                <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
                 <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-3/4" placeholder="撰寫評論...（上限150字）"></textarea>
               </div>
               <div>
@@ -93,7 +93,7 @@ const collect = () => {
           </div>
           <div v-show="num===1" class="max-h-full overflow-y-scroll">
             <div class="flex p-4">
-              <img src="../assets/leaf.png" class="h-8 rounded-full mr-3">
+              <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2">撰寫食記</router-link>
             </div>
             <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>

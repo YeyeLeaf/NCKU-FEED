@@ -12,7 +12,7 @@ defineProps({
 <template>
     <div class="flex lg:w-full mb-2 justify-between shadow-md shadow-slate-300 rounded-md p-4 border-2 border-slate-100 cursor-pointer">
             <div class="flex space-x-8 items-center">
-                <img :src="authorImg" class="w-20">
+                <img :src="authorImg" class="w-20 rounded-full">
                 <p class="text-2xl hidden lg:flex">{{ name }}</p>
             </div>
             <div class="flex flex-col lg:justify-end justify-between">

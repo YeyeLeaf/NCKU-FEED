@@ -3,7 +3,7 @@ import { GoogleAuthProvider, signInWithPopup, getAdditionalUserInfo } from 'fire
 import { auth } from '../firebase/firebaseConfig';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-
+import { user } from '../class.js'
 import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie } from '../eventBus.js';
 
 const router = useRouter();
@@ -14,24 +14,22 @@ const signIn = async () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const additionalUserInfo = getAdditionalUserInfo(result);
         const isNewUser = additionalUserInfo.isNewUser;
-        const user = result.user;
-        console.log(JSON.stringify(user));
+        const userInfo = result.user;
+        user.nickName = userInfo.displayName;
+        user.profilePhoto = userInfo.photoURL;
+        console.log(JSON.stringify(userInfo));
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
           // Add to database and go to preference page -> fetch POST api
           axios
             .post('http://localhost:5000/user', { //等後端api
-              "uid": user.uid,
-              "name": user.displayName,
-              "email": user.email,
-              "profile_photo": user.photoURL
+              "uid": userInfo.uid,
+              "name": userInfo.displayName,
+              "email": userInfo.email,
+              "profile_photo": userInfo.photoURL
             })
             .then((response) => {
               console.log(response);
-              console.log({"uid": user.uid,
-              "name": user.displayName,
-              "email": user.email,
-              "profile_photo": user.photoURL});
               router.push('/preference');
               changeNavbar();
             })
@@ -42,7 +40,7 @@ const signIn = async () => {
             // fetch login api and get jwt token -> fetch GET api
             const getUserData = async () => {
               const params = new URLSearchParams();
-              params.append("uid", user.uid); // 将用户的 uid 添加为查询参数
+              params.append("uid", userInfo.uid); // 将用户的 uid 添加为查询参数
 
               await fetch("http://localhost:5000/user?" + params.toString(), {
                 method: "GET"

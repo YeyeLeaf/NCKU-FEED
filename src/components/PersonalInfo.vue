@@ -18,7 +18,7 @@ import RedButton from './RedButton.vue'
 
     <div class="flex flex-wrap space-x-8 lg:hidden">
         <div>
-            <img :src="myImg" class="w-28">
+            <img :src="myImg" class="w-28 rounded-full">
         </div>
         <div class="flex flex-col justify-between">
             <p class="text-3xl">{{ name }}</p>
