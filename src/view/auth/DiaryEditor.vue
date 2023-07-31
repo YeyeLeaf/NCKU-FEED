@@ -1,6 +1,8 @@
 <script setup>
 import Editor from '../../components/Editor.vue'
+import { confirmAccess } from '../../eventBus.js';
 
+confirmAccess();
 $(document).ready(function () {
   $(window).scrollTop(0);
   $('.store-infor').hide();

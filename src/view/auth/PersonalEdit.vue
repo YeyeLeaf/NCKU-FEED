@@ -2,6 +2,9 @@
 import RedButton from '../../components/RedButton.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../../class.js'
+import { confirmAccess } from '../../eventBus.js';
+
+confirmAccess();
 </script>
 
 <template>

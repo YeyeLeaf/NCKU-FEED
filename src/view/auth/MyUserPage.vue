@@ -3,6 +3,9 @@ import About from '../../components/About.vue'
 import FeedName from '../../components/FeedName.vue'
 import PersonalInfo from '../../components/PersonalInfo.vue'
 import { user } from '../../class.js'
+import { confirmAccess } from '../../eventBus.js';
+
+confirmAccess();
 </script>
 
 <template>

@@ -3,7 +3,9 @@ import storeCard from '../../components/storeCard.vue'
 import storePage from '../../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../../class.js'
+import { confirmAccess } from '../../eventBus.js';
 
+confirmAccess();
 const listData = ref([]);
 const curr_restaurant = ref({});
 const restaurant = ref([
