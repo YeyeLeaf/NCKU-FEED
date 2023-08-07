@@ -14,49 +14,33 @@ defineProps({
 const isOpen = ref(false);
 const router = useRouter();
 
-const updateFirebase = async () =>{
-  signOut(auth).then(() => {
-    
-  }).catch((error) => {
-    // An error happened.
-  });
-}
-
 const logOut = async () => {
-  try {
-    const jwt = getJwtFromCookie();
-
-    if (jwt) {
-      const signOutResponse = await fetch('http://localhost:5000/logout', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${jwt}`,
-        },
-      });
-
-      if (signOutResponse.ok) {
-        deleteCookie(jwt);
-        updateFirebase();
-        changeNavbar();
-        router.push('/');
-        console.log('Successfully signed out.');
-      } else {
-        console.error('Failed to sign out with JetCheck.');
-      }
-    } else {
-      console.warn('No JWT found in the cookie. Already signed out?');
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/logout", {
+    method: "GET",
+    headers: {
+    "Authorization": `Bearer ${token}`
     }
-  } catch (error) {
-    console.error('An error occurred during sign out:', error);
-  }
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then(() => {
+    // delete JWT from Cookie
+    deleteCookie(token);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  router.push('/');
+  changeNavbar();
 };
-
-
-
 </script>
 
 <template>
-  <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10 relative">
+  <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 top-0 inset-x-0 z-10 relative">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <router-link to="/" class="flex items-center">
         <picture class="hidden lg:flex">
@@ -84,13 +68,13 @@ const logOut = async () => {
 
     <div class="hidden lg:flex mx-12 items-center space-x-12 mr-16">
             <router-link to="/collect">
-                <picture>
-                   <img src="../assets/bookmark.png" class="h-6 lg:h-8">
-                </picture>
+  <picture>
+     <img src="../assets/bookmark.png" class="h-6 lg:h-8">
+  </picture>
             </router-link>
             <router-link to="/myUserPage">
-              <picture>
-                <img :src="myImg" class="h-6 lg:h-8 rounded-full">
+<picture>
+  <img :src="myImg" class="h-6 lg:h-8 rounded-full">
              </picture>
             </router-link>
             <RedButton text="登出" class="" @click="logOut"/>
