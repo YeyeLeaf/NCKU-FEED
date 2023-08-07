@@ -1,11 +1,58 @@
 // 已登入
 <script setup>
 import { ref } from 'vue';
+import { isLogining, changeNavbar,setJwtToCookie, getJwtFromCookie,deleteCookie} from '../eventBus.js';
+import RedButton from './RedButton.vue'
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase/firebaseConfig';
+import { useRouter } from 'vue-router';
+
 defineProps({
     myImg: String,
 });
 
 const isOpen = ref(false);
+const router = useRouter();
+
+const updateFirebase = async () =>{
+  signOut(auth).then(() => {
+    
+  }).catch((error) => {
+    // An error happened.
+  });
+}
+
+const logOut = async () => {
+  try {
+    const jwt = getJwtFromCookie();
+
+    if (jwt) {
+      const signOutResponse = await fetch('http://localhost:5000/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${jwt}`,
+        },
+      });
+
+      if (signOutResponse.ok) {
+        deleteCookie(jwt);
+        updateFirebase();
+        changeNavbar();
+        router.push('/');
+        console.log('Successfully signed out.');
+      } else {
+        console.error('Failed to sign out with JetCheck.');
+      }
+    } else {
+      console.warn('No JWT found in the cookie. Already signed out?');
+    }
+  } catch (error) {
+    console.error('An error occurred during sign out:', error);
+  }
+};
+
+
+
 </script>
 
 <template>
@@ -31,20 +78,22 @@ const isOpen = ref(false);
             個人頁面
         </router-link>
         <router-link to="/collect" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">收藏清單</router-link>
+        <button class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4" @click="logOut">登出</button>
       </div>
     </div>
 
-    <div class="hidden lg:flex mx-12 items-center">
+    <div class="hidden lg:flex mx-12 items-center space-x-12 mr-16">
             <router-link to="/collect">
                 <picture>
-                   <img src="../assets/bookmark.png" class="h-6 lg:h-8 mx-3 lg:mx-4">
+                   <img src="../assets/bookmark.png" class="h-6 lg:h-8">
                 </picture>
             </router-link>
             <router-link to="/myUserPage">
               <picture>
-                <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4 rounded-full">
+                <img :src="myImg" class="h-6 lg:h-8 rounded-full">
              </picture>
             </router-link>
+            <RedButton text="登出" class="" @click="logOut"/>
         </div>
   </nav>
 </template>
