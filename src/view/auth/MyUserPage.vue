@@ -6,6 +6,7 @@ import { user } from '../../class.js'
 import { confirmAccess } from '../../eventBus.js';
 
 confirmAccess();
+
 </script>
 
 <template>

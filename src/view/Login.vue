@@ -40,7 +40,7 @@ const signIn = async () => {
             // fetch login api and get jwt token -> fetch GET api
             const getUserData = async () => {
               const params = new URLSearchParams();
-              params.append("uid", userInfo.uid); // 将用户的 uid 添加为查询参数
+              params.append("uid", userInfo.uid); 
 
               await fetch("http://localhost:5000/user?" + params.toString(), {
                 method: "GET"

@@ -3,7 +3,7 @@ import Navbar1 from './components/Navbar1.vue';
 import Navbar2 from './components/Navbar2.vue';
 import Footer from './components/Footerr.vue';
 import { isLogining } from './eventBus.js';
-import { user } from './class.js'
+import { user } from './class.js';
 </script>
 
 
