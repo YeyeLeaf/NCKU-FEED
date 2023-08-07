@@ -14,6 +14,7 @@ const signIn = async () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const additionalUserInfo = getAdditionalUserInfo(result);
         const isNewUser = additionalUserInfo.isNewUser;
+        console.log(isNewUser);
         const userInfo = result.user;
         user.nickName = userInfo.displayName;
         user.profilePhoto = userInfo.photoURL;
