@@ -16,8 +16,7 @@ confirmAccess();
         </div>
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
-            <About info="測試：Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati qui enim odit magni, non illo nisi sunt autem nobis porro, nulla pariatur nemo asperiores itaque, aperiam natus voluptas a? Consequatur.
-    Rem accusamus odio soluta laborum aspernatur, libero perspiciatis, quis sequi, dignissimos omnis asperiores praesentium? Consequuntur culpa voluptas necessitatibus sequi, doloribus tempora dolore mollitia, soluta enim, magni possimus."
+            <About :info="user.selfIntro"
             class="mb-8"/>
             <FeedName :authorImg="user.profilePhoto" name="標題" :comment="99" :heart="100" class="mt-0"/>
         </div>

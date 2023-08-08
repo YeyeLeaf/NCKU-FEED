@@ -1,12 +1,12 @@
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 class User {
-  constructor(){
-    this.nickName = "";
-    this.selfIntro = "";
-    this.profilePhoto = "";
+  constructor() {
+    this.nickName = '';
+    this.selfIntro = '';
+    this.profilePhoto = '';
     this.restaurant = [];
     this.preference = [];
-    this.isPrefer = false;
+    this.id = '';
   }
 }
-export const user = reactive(new User); 
+export const user = reactive(new User());

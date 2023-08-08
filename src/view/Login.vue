@@ -16,8 +16,6 @@ const signIn = async () => {
         const isNewUser = additionalUserInfo.isNewUser;
         console.log(isNewUser);
         const userInfo = result.user;
-        user.nickName = userInfo.displayName;
-        user.profilePhoto = userInfo.photoURL;
         console.log(JSON.stringify(userInfo));
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
@@ -57,6 +55,12 @@ const signIn = async () => {
                   setJwtToCookie(result.access_token, 7);
                   const test = getJwtFromCookie();
                   console.log("TEST"+test);
+                  //store user's data
+                  user.nickName = result.user_info.nick_name;
+                  user.profilePhoto = result.user_info.profile_photo;
+                  user.restaurant = result.user_info.restaurant_id;
+                  user.selfIntro = result.user_info.self_intro;
+                  user.id = result.user_info.uid;
                 })
                 .catch(function (error) {
                   console.log(error);
