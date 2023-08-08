@@ -48,8 +48,8 @@ const collect = () => {
 }
 </script>
 <template>
-  <div class="bg-white fixed w-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
-      <div class="w-6/12 p-1 h-80">
+  <div class="bg-white fixed w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
+      <div class="w-5/12 p-1 h-80">
         <img :src="infor.img" :alt="infor.alt" class="rounded-2xl h-44 w-full">
         <div class="flex justify-between items-center my-2">
           <h2 class="text-xl">{{ infor.Name }}</h2>
@@ -75,13 +75,27 @@ const collect = () => {
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
-        <div class="h-80 overflow-hidden">
+        <div class="h-80 overflow-hidden box-border">
           <div v-show="num===0" class="max-h-full overflow-y-scroll">
+            <form action="" class="flex z-10 align-top p-4">
+              <div class="flex">
+                <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
+                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-3/4" placeholder="撰寫評論...（上限150字）"></textarea>
+              </div>
+              <div>
+                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full">評分選項</button>
+                <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full">送出</button>
+              </div>
+            </form>
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
             <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
           </div>
           <div v-show="num===1" class="max-h-full overflow-y-scroll">
+            <div class="flex p-4">
+              <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
+              <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2">撰寫食記</router-link>
+            </div>
             <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
             <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
             <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
@@ -94,8 +108,22 @@ const collect = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .change {
   color: #525252;
+}
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar:hover {
+  background-color: #ececec;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #9c9c9c;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 </style>

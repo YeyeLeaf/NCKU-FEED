@@ -1,15 +1,46 @@
 // 已登入
 <script setup>
 import { ref } from 'vue';
+import { isLogining, changeNavbar,setJwtToCookie, getJwtFromCookie,deleteCookie} from '../eventBus.js';
+import RedButton from './RedButton.vue'
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase/firebaseConfig';
+import { useRouter } from 'vue-router';
+
 defineProps({
     myImg: String,
 });
 
 const isOpen = ref(false);
+const router = useRouter();
+
+const logOut = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/logout", {
+    method: "GET",
+    headers: {
+    "Authorization": `Bearer ${token}`
+    }
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then(() => {
+    // delete JWT from Cookie
+    deleteCookie(token);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  router.push('/');
+  changeNavbar();
+};
 </script>
 
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
+  <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 top-0 inset-x-0 z-10 relative">
     <div class="lg:flex items-center text-white mr-6 ml-4">
       <router-link to="/" class="flex items-center">
         <picture class="hidden lg:flex">
@@ -25,26 +56,28 @@ const isOpen = ref(false);
     </div>
 
     <!-- lg留著如果之後有需要讓他們排列在navbar就可以用 -->
-    <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden">
+    <div :class="{'hidden': !isOpen}" class="w-full flex-grow lg:flex lg:items-center lg:w-auto lg:hidden ">
       <div class="text-base lg:flex-grow ">
         <router-link to="/myUserPage" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
             個人頁面
         </router-link>
-        <router-link to="/" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">收藏清單</router-link>
+        <router-link to="/collect" class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">收藏清單</router-link>
+        <button class="block mt-4 ml-4 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4" @click="logOut">登出</button>
       </div>
     </div>
 
-    <div class="hidden lg:flex mx-12 items-center">
-            <router-link to="/">
-                <picture>
-                   <img src="../assets/bookmark.png" class="h-6 lg:h-8 mx-3 lg:mx-4">
-                </picture>
+    <div class="hidden lg:flex mx-12 items-center space-x-12 mr-16">
+            <router-link to="/collect">
+  <picture>
+     <img src="../assets/bookmark.png" class="h-6 lg:h-8">
+  </picture>
             </router-link>
             <router-link to="/myUserPage">
-              <picture>
-                <img :src="myImg" class="h-6 lg:h-8 mx-3 lg:mx-4 rounded-full">
+<picture>
+  <img :src="myImg" class="h-6 lg:h-8 rounded-full">
              </picture>
             </router-link>
+            <RedButton text="登出" class="" @click="logOut"/>
         </div>
   </nav>
 </template>

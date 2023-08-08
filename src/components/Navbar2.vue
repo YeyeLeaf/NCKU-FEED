@@ -6,7 +6,7 @@ import RedButton from './RedButton.vue'
 </script>
 
 <template>
-    <nav class="flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10">
+    <nav class="navbar flex items-center justify-between flex-wrap bg-[#FF8E3C] p-4 lg:p-0 fixed top-0 inset-x-0 z-10 relative">
         <div class="lg:flex items-center text-white mr-6 ml-4">
             <router-link to="/" class="flex items-center">
                 <picture class="hidden lg:flex">
@@ -17,7 +17,7 @@ import RedButton from './RedButton.vue'
         </div>
         <div class="lg:flex item-center">
             <h1 class="pt-1 text-white font-sans text-lg hidden lg:block">登入以收藏餐廳與發表食記</h1>
-            <router-link to="/login"><RedButton text="登入" class="mx-4 lg:mx-20"/></router-link>
+            <router-link to="/login"><RedButton text="登入" class="mx-4 lg:mx-20" /></router-link>
         </div>
 
       </nav>

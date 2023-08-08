@@ -29,12 +29,12 @@ const signIn = async () => {
     <footer class="bg-[#525252] 
                     inset-x-0 
                     bottom-0 
-                    fixed 
                     lg:h-20 
                     h-28
                     flex
                     font-montserrat 
-                    text-white">
+                    text-white
+                    footer">
         <div class=" mx-auto
                     items-top
                     lg:items-center   
@@ -54,7 +54,7 @@ const signIn = async () => {
                 <h1 class="font-bold hidden lg:block"><a href="#">Instructions</a></h1>
 
                 <!-- sign in example button here -->
-                <button @click="signIn" style="background-color: aqua;">Sign In</button>
+                <!-- <button @click="signIn" style="background-color: aqua;">Sign In</button> -->
                 <!-- <h1 class="text-sm opacity-80 lg:pt-0 pt-20">© NCKU FEED, 2022. We love our users!</h1> -->
         </div>
     </footer>

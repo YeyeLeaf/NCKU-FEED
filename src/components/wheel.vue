@@ -105,17 +105,7 @@ const deleteOp = (index) => {
 
 </script>
 <template>
-  <div class="flex m-10 justify-around items-center">
-    <div class="bg-[#eff0f3] lg:w-4/12 p-10">
-      <h2 class="list-title text-2xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
-    <hr class="border-2 border-[#ff8e3c]">
-      <ul class="toggle-list h-72 overflow-y-scroll">
-        <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
-          <p class="text-lg">{{ item.Name }}</p>
-          <RedButton text="刪除" @click="deleteOp(index)"/>
-        </li>
-      </ul>
-    </div>
+  <div class="flex m-10 justify-around items-center flex-col lg:flex-row space-y-8">
       <div class="overall">
         <div class="zp-box">
           <div class="panzi">
@@ -138,6 +128,16 @@ const deleteOp = (index) => {
           <div class="start-btn" @click="start()">Spin!</div>
         </div>
       </div>
+      <div class="bg-[#eff0f3] lg:w-4/12 p-10 w-full">
+        <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
+        <hr class="border-2 border-[#ff8e3c]">
+          <ul class="toggle-list h-72 overflow-y-scroll">
+            <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
+              <p class="text-lg">{{ item.Name }}</p>
+              <RedButton text="刪除" @click="deleteOp(index)"/>
+            </li>
+          </ul>
+      </div>
   </div>
   </template>
  
@@ -145,7 +145,20 @@ const deleteOp = (index) => {
 
 
 <style  scoped>
-
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar:hover {
+  background-color: #ececec;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #9c9c9c;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
 .zp-box {
   user-select: none;
   display: flex;
