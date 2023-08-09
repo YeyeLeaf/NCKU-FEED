@@ -4,7 +4,7 @@ import { auth } from '../firebase/firebaseConfig';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { user } from '../class.js'
-import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie } from '../eventBus.js';
+import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie, getUidFromCookie } from '../eventBus.js';
 
 const router = useRouter();
 
@@ -52,8 +52,8 @@ const signIn = async () => {
                 .then((result) => {
                   console.log(result);
                   // JWT to Cookie
-                  setJwtToCookie(result.access_token, 7);
-                  const test = getJwtFromCookie();
+                  setJwtToCookie(result.access_token, result.user_info.uid, 7);
+                  const test = getUidFromCookie();
                   console.log("TEST"+test);
                   //store user's data
                   user.nickName = result.user_info.nick_name;
