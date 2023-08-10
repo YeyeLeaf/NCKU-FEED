@@ -4,7 +4,7 @@ import { auth } from '../firebase/firebaseConfig';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { user } from '../class.js'
-import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie } from '../eventBus.js';
+import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie, getUidFromCookie } from '../eventBus.js';
 
 const router = useRouter();
 
@@ -16,8 +16,6 @@ const signIn = async () => {
         const isNewUser = additionalUserInfo.isNewUser;
         console.log(isNewUser);
         const userInfo = result.user;
-        user.nickName = userInfo.displayName;
-        user.profilePhoto = userInfo.photoURL;
         console.log(JSON.stringify(userInfo));
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
@@ -33,6 +31,19 @@ const signIn = async () => {
               console.log(response);
               router.push('/preference');
               changeNavbar();
+            })
+            .then((result) => {
+                  console.log(result);
+                  // JWT to Cookie
+                  setJwtToCookie(result.data.access_token, result.data.user_info.uid, 7);
+                  const test = getUidFromCookie();
+                  console.log("TEST"+test);
+                  //store user's data
+                  user.nickName = result.data.user_info.nick_name;
+                  user.profilePhoto = result.data.user_info.profile_photo;
+                  user.restaurant = result.data.user_info.restaurant_id;
+                  user.selfIntro = result.data.user_info.self_intro;
+                  user.id = result.data.user_info.uid;
             })
             .catch((error) => {
               console.error(error);
@@ -54,9 +65,15 @@ const signIn = async () => {
                 .then((result) => {
                   console.log(result);
                   // JWT to Cookie
-                  setJwtToCookie(result.access_token, 7);
-                  const test = getJwtFromCookie();
+                  setJwtToCookie(result.access_token, result.user_info.uid, 7);
+                  const test = getUidFromCookie();
                   console.log("TEST"+test);
+                  //store user's data
+                  user.nickName = result.user_info.nick_name;
+                  user.profilePhoto = result.user_info.profile_photo;
+                  user.restaurant = result.user_info.restaurant_id;
+                  user.selfIntro = result.user_info.self_intro;
+                  user.id = result.user_info.uid;
                 })
                 .catch(function (error) {
                   console.log(error);
