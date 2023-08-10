@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
       .catch(function (error) {
         console.log(error);
       });
-    //changeNavbar();
     isLogining.value = true;
   }
   next();

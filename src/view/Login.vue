@@ -32,6 +32,19 @@ const signIn = async () => {
               router.push('/preference');
               changeNavbar();
             })
+            .then((result) => {
+                  console.log(result);
+                  // JWT to Cookie
+                  setJwtToCookie(result.data.access_token, result.data.user_info.uid, 7);
+                  const test = getUidFromCookie();
+                  console.log("TEST"+test);
+                  //store user's data
+                  user.nickName = result.data.user_info.nick_name;
+                  user.profilePhoto = result.data.user_info.profile_photo;
+                  user.restaurant = result.data.user_info.restaurant_id;
+                  user.selfIntro = result.data.user_info.self_intro;
+                  user.id = result.data.user_info.uid;
+            })
             .catch((error) => {
               console.error(error);
             });

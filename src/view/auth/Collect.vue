@@ -60,7 +60,7 @@ const openDetail = (item) => {
 </script>
 
 <template>
-  <div v-if="user.isPrefer === false" >
+  <div>
     <div class=" bg-[#eff0f3] p-5 lg:m-10 m-5 rounded-3xl list">
       <h2 class="list-title text-2xl font-bold text-center mb-5">收藏清單</h2>
       <hr class="border-2 border-[#ff8e3c] text-center">
