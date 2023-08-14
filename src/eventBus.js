@@ -54,3 +54,26 @@ export function confirmAccess() {
   const router = useRouter();
   if (!getJwtFromCookie()) router.push('/');
 }
+
+// truncate text
+export function textTruncation(text,maxLength){
+  const pattern = /[^\u4e00-\u9fa5]/g;
+  if (text.length > maxLength){
+    const temp = text.slice(0,maxLength);
+    const matches = temp.match(pattern);
+    if (!matches){
+      return text.slice(0, maxLength) + "...";
+    }
+    else{
+      if (matches.length > Math.round(maxLength/2)){
+        return text.slice(0, maxLength+4) + "...";
+      }
+      else{
+        return text.slice(0, maxLength) + "...";
+      }
+
+    }
+    
+  }
+  return text;
+}

@@ -131,31 +131,7 @@ const openDetail = (item) => {
   $('.store-infor').siblings().css('opacity', '0.5');
   $('body').css('overflow', 'hidden');
 }
-// get recommend list
-const getRecommendList = async () => {
-  const token = getJwtFromCookie();  
-  await fetch("http://localhost:5000/recommend", {
-    method: "GET",
-    headers: {
-    "Authorization": `Bearer ${token}`,
-    'Content-Type': 'application/json'
-    },
-  })
-  .then((response) => {
-    if (response.status === 200) {
-      return response.json();
-    }
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-};
-if(getJwtFromCookie()){
-  getRecommendList();
-}
+
 </script>
 
 <template>
@@ -167,7 +143,7 @@ if(getJwtFromCookie()){
     <div v-show="num===1"><wheel :List="listData"/></div>
     <div class=" bg-[#eff0f3] py-5 px-2 lg:m-10 m-6 rounded-3xl list">
       <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5">所有商家</h2>
-      <p class="text-lg font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
+      <p class="text-lg lg:text-xl font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
       <hr class="border-2 border-[#ff8e3c] text-center">
       <div class="flex justify-center flex-wrap">
         <storeCard v-for="(item, index) in recommendRestaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
