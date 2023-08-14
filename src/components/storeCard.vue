@@ -38,9 +38,9 @@ const collect = () => {
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
         </div>
-        <img :src="infor.img" :alt="infor.alt" class="h-auto w-full rounded-2xl bg-lightOrange "/>
+        <img src="src/assets/leaf.png" class="h-auto w-full rounded-2xl bg-lightOrange "/>
         <div class="flex justify-between items-center">
-            <p class="text-xl">{{ infor.Name }}</p>
+            <p class="text-xl">{{ infor.name }}</p>
             <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
         </div>
         <div>
