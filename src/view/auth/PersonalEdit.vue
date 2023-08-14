@@ -11,8 +11,6 @@ confirmAccess();
 
 const router = useRouter();
 
-const username = user.nickName;
-
 let imageUpload = null;
 
 const handleFileChange = async (event) => {
@@ -66,10 +64,9 @@ const updateUserInfo = async () => {
 <template>
   <div class="h-screen flex flex-wrap justify-center items-center">
       <div class="border flex flex-col lg:w-1/2 w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
-        <div class="flex justify-start space-x-10">
-         <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border rounded-full" style="border-radius: 9999px">
+        <div class="flex justify-start items-center space-x-10">
+         <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border" style="border-radius: 9999px">
           <div class="flex-col flex items-start justify-center space-y-2">
-            <h class="text-3xl">{{ username }}</h>
             <input type="file" @change="handleFileChange"/>
             <h class="text-base text-gray-500 btn-secondary-outline">點擊以更換頭像</h>
           </div>
@@ -93,8 +90,8 @@ const updateUserInfo = async () => {
   
   <style scoped>
   
-  /* @import url('../../../paper.css');
-   */
+  /* @import url('../../../paper.css'); */
+   
   </style>
   
   

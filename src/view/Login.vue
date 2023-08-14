@@ -16,7 +16,7 @@ const signIn = async () => {
         const isNewUser = additionalUserInfo.isNewUser;
         console.log(isNewUser);
         const userInfo = result.user;
-        console.log(JSON.stringify(userInfo));
+        //console.log(JSON.stringify(userInfo));
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
           // Add to database and go to preference page -> fetch POST api
@@ -28,22 +28,19 @@ const signIn = async () => {
               "profile_photo": userInfo.photoURL
             })
             .then((response) => {
-              console.log(response);
-              router.push('/preference');
-              changeNavbar();
-            })
-            .then((result) => {
-                  console.log(result);
-                  // JWT to Cookie
-                  setJwtToCookie(result.data.access_token, result.data.user_info.uid, 7);
+              console.log(response.data.access_token);
+              // JWT to Cookie
+              setJwtToCookie(response.data.access_token, response.data.user_info.uid, 7);
                   const test = getUidFromCookie();
                   console.log("TEST"+test);
                   //store user's data
-                  user.nickName = result.data.user_info.nick_name;
-                  user.profilePhoto = result.data.user_info.profile_photo;
-                  user.restaurant = result.data.user_info.restaurant_id;
-                  user.selfIntro = result.data.user_info.self_intro;
-                  user.id = result.data.user_info.uid;
+                  user.nickName = response.data.user_info.nick_name;
+                  user.profilePhoto = response.data.user_info.profile_photo;
+                  user.restaurant = response.data.user_info.restaurant_id;
+                  user.selfIntro = response.data.user_info.self_intro;
+                  user.id = response.data.user_info.uid;
+                  router.push('/preference');
+                  changeNavbar();
             })
             .catch((error) => {
               console.error(error);

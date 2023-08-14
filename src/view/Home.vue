@@ -5,6 +5,7 @@ import searchBar from '../components/searchBar.vue'
 import storePage from '../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../class.js'
+import { getJwtFromCookie } from '../eventBus.js'
 
 const listData = ref([]);
 const curr_restaurant = ref({});
@@ -71,6 +72,31 @@ const openDetail = (item) => {
   $('.store-infor').css("display", "flex");
   $('.store-infor').siblings().css('opacity', '0.5');
   $('body').css('overflow', 'hidden');
+}
+// get recommend list
+const getRecommendList = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/recommend", {
+    method: "GET",
+    headers: {
+    "Authorization": `Bearer ${token}`,
+    'Content-Type': 'application/json'
+    },
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+if(getJwtFromCookie()){
+  getRecommendList();
 }
 </script>
 

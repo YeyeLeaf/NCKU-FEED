@@ -11,7 +11,7 @@ import RedButton from './RedButton.vue'
 
     <div class="lg:flex flex-col space-y-8 items-center hidden">
         <img :src="myImg" class="w-36 rounded-full">
-        <p class="text-3xl">{{ name }}</p>
+        <p class="text-3xl text-center">{{ name }}</p>
         <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
 
     </div>
@@ -21,7 +21,7 @@ import RedButton from './RedButton.vue'
             <img :src="myImg" class="w-28 rounded-full">
         </div>
         <div class="flex flex-col justify-between">
-            <p class="text-3xl">{{ name }}</p>
+            <p class="text-3xl text-center">{{ name }}</p>
             <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
         </div>
 

@@ -10,7 +10,7 @@ confirmAccess();
 </script>
 
 <template>
-    <div class="flex flex-wrap lg:justify-evenly justify-center">
+    <div class="flex flex-nowrap lg:justify-evenly justify-center">
         <div class="lg:hidden mt-12">
             <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案"/>
         </div>
@@ -25,7 +25,7 @@ confirmAccess();
             <div class="w-0.5 h-full bg-gray-100"></div>
         </div>
 
-        <div class="hidden lg:flex mt-16">
+        <div class="hidden lg:flex mt-16 w-[15%]">
             <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案"/>
         </div>
     </div>
