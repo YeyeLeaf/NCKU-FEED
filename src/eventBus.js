@@ -77,3 +77,7 @@ export function textTruncation(text,maxLength){
   }
   return text;
 }
+
+export function isScrollingToBottom() {
+  return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+}
