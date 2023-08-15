@@ -122,7 +122,7 @@ const deleteOp = (index) => {
               v-for="(i,index) in list"
               :key="index"
             >
-              <span class="Name">{{i.Name}}</span>
+              <span class="Name">{{i.name}}</span>
             </div>
           </div>
           <div class="start-btn" @click="start()">Spin!</div>
@@ -133,7 +133,7 @@ const deleteOp = (index) => {
         <hr class="border-2 border-[#ff8e3c]">
           <ul class="toggle-list h-72 overflow-y-scroll">
             <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
-              <p class="text-lg">{{ item.Name }}</p>
+              <p class="text-lg">{{ item.name }}</p>
               <RedButton text="刪除" @click="deleteOp(index)"/>
             </li>
           </ul>

@@ -3,7 +3,7 @@ import storeCard from '../../components/storeCard.vue'
 import storePage from '../../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../../class.js'
-import { confirmAccess } from '../../eventBus.js';
+import { confirmAccess} from '../../eventBus.js';
 
 confirmAccess();
 const listData = ref([]);
@@ -12,28 +12,28 @@ const restaurant = ref([
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "YEYEYE",
+    name: "YEYEYE",
     tags: ["中午", "韓"],
     star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "YeyeLeaf",
+    name: "YeyeLeaf",
     tags: ["中午", "韓"],
     star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "leaf",
-    Name: "築間",
+    name: "築間",
     tags: ["中午"],
     star: 4.5
   },
   {
     img: "src/assets/leaf.png",
     alt: "starbaba",
-    Name: "星巴巴",
+    name: "星巴巴",
     tags: ["下午", "飲品"],
     star: 4.5
   }

@@ -2,6 +2,8 @@
 import { ref, onMounted, onUpdated } from 'vue'
 import { user } from '../class.js'
 import Star from './Star.vue'
+import { textTruncation } from '../eventBus';
+
 const props = defineProps({
     infor: Object
 })
@@ -33,18 +35,19 @@ const collect = () => {
 </script>
 
 <template>
-    <div class="mx-4 lg:mx-6 rounded-2xl shadow-md shadow-gray-300 p-4 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-52">
-        <div class="absolute top-6 left-6 text-[#b80c0c] cursor-pointer" @click="collect">
+    <div class="mx-4 rounded-2xl shadow-md shadow-gray-300 p-5 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-72">
+        <div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer" @click="collect">
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
         </div>
-        <img :src="infor.img" :alt="infor.alt" class="h-auto w-full rounded-2xl bg-lightOrange "/>
+        <img src="src/assets/leaf.png" class="lg:h-48 h-52 w-full rounded-2xl bg-lightOrange "/>
         <div class="flex justify-between items-center">
-            <p class="text-xl">{{ infor.Name }}</p>
+            <p class="hidden lg:flex lg:text-xl">{{ textTruncation(infor.name,8) }}</p>
+            <p class="text-lg lg:hidden">{{ textTruncation(infor.name,9) }}</p>
             <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
         </div>
-        <div>
-            <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ tag }}</button>
+        <div class="flex overflow-x-scroll whitespace-nowrap">
+            <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2"># {{ tag }}</button>
         </div>
         <div class="flex justify-between">
             <button class="bg-Orange text-white p-1 rounded-md" @click="$emit('open-detail')">詳細資料</button>

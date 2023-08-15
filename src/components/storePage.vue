@@ -48,20 +48,24 @@ const collect = () => {
 }
 </script>
 <template>
-  <div class="bg-white fixed w-[800px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
-      <div class="w-5/12 p-1 h-80">
-        <img :src="infor.img" :alt="infor.alt" class="rounded-2xl h-44 w-full">
-        <div class="flex justify-between items-center my-2">
-          <h2 class="text-xl">{{ infor.Name }}</h2>
-          <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
+  <div class="bg-white fixed w-[800px] h-[550px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
+      <div class="w-5/12 p-1 pr-4">
+        <img src="src/assets/leaf.png" class="rounded-2xl h-56 w-full mb-2">
+        <div class="h-60 overflow-y-scroll">
+          <div class="flex justify-between items-center mt-2">
+            <h2 class="text-xl">{{ infor.name }}</h2>
+            <button class="whitespace-nowrap bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
+          </div>
+          <div class="flex overflow-x-scroll whitespace-nowrap">
+              <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2"># {{ tag }}</button>
+          </div>
+          <ul>
+          <li class="mb-2"><i class="fas fa-clock w-4" style="color: #525252;"></i>&nbsp;星期一 10:00~22:00</li>
+          </ul>
+          <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
+          <p class="my-2"><i class="fas fa-phone-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.phone_number }}</p>
+          <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
         </div>
-        <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ tag }}</button>
-        <ul>
-          <li class="my-2"><i class="fas fa-clock w-4" style="color: #525252;"></i>&nbsp;星期一 10:00~22:00</li>
-        </ul>
-        <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;704台南市北區勝利路206巷8號</a>
-        <p class="my-2"><i class="fas fa-phone-alt w-4" style="color: #525252;"></i>&nbsp;06 275 7575</p>
-        <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：facebook.com</a>
       </div>
       <div class="w-7/12 p-1">
         <div class="flex justify-between items-center h-10 mb-1">
@@ -75,8 +79,8 @@ const collect = () => {
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
-        <div class="h-80 overflow-hidden box-border">
-          <div v-show="num===0" class="max-h-full overflow-y-scroll">
+        <div class="box-border">
+          <div v-show="num===0" class="max-h-full">
             <form action="" class="flex z-10 align-top p-4">
               <div class="flex">
                 <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
@@ -87,20 +91,26 @@ const collect = () => {
                 <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full">送出</button>
               </div>
             </form>
-            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-            <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+            <div class="overflow-y-scroll h-80 mt-2">
+              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
+            </div>
           </div>
-          <div v-show="num===1" class="max-h-full overflow-y-scroll">
+          <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2">撰寫食記</router-link>
             </div>
-            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-            <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <div class="overflow-y-scroll h-[44vh] mt-2">
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            </div>
           </div>
         </div>
       </div>

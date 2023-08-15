@@ -8,6 +8,7 @@ import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie, getUidFromC
 
 const router = useRouter();
 
+
 const signIn = async () => {
     const provider = await new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((result) => {
@@ -77,17 +78,17 @@ const signIn = async () => {
                 });
             };
             getUserData();
-            router.push('/');
             changeNavbar();
+            router.push('/');
        }});
 };
+
+
 
 </script>
 
 <template>
-  <div class="absolute w-full lg:top-80 top-96">
-      <img src="../assets/login.svg" class="object-cover no-border">
-   </div>
+  <div class="home"></div>
   <!-- lg:mt-56 lg:mb-40 mt-52 mb-40 -->
   <div class="relative flex justify-center flex-wrap items-center h-screen">  
     <div class="flex flex-col justify-center items-center lg:space-y-10 lg:px-28 space-y-6 px-8">
@@ -106,5 +107,13 @@ const signIn = async () => {
 <style scoped>
 
 @import url('../../paper.css');
+.home{
+  width: 100%;
+  min-height: 100vh;
+  background: url("../assets/login.svg") center center no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+}
+
 </style>
 
