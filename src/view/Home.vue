@@ -22,7 +22,7 @@ const getRecommend = async ()=>{
         }
     })
     .then((result) => {
-      recommendList.value.push(result.random_recommendation);
+      recommendList.value = recommendList.value.concat(result.random_recommendation);
 
     })
     .catch(function (error) {
@@ -31,11 +31,10 @@ const getRecommend = async ()=>{
 
   }
   else{
-    const token = getJwtFromCookie();  
     await fetch("http://localhost:5000/recommend/"+pages , {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            "Authorization": `Bearer ${user.access_token}`,
             'Content-Type': 'application/json'
           }
     })
@@ -47,6 +46,7 @@ const getRecommend = async ()=>{
     })
     .then((result) => {
        recommendList.value = recommendList.value.concat(result.recommendation);
+
     })
     .catch(function (error) {
           console.log(error);
@@ -58,8 +58,7 @@ getRecommend();
 window.addEventListener('scroll', async () => {
   if (isScrollingToBottom()) {
     try {
-      if (pages<=11){
-        console.log(recommendList);
+      if (pages<=11 && isLogining){
         getRecommend();
       }
       else{
@@ -75,36 +74,7 @@ window.addEventListener('scroll', async () => {
 
 const listData = ref([]);
 const curr_restaurant = ref({});
-const restaurant = ref([
-  {
-    img: "src/assets/leaf.png",
-    alt: "leaf",
-    Name: "YEYEYE",
-    tags: ["中午", "韓"],
-    star: 4.5
-  },
-  {
-    img: "src/assets/leaf.png",
-    alt: "leaf",
-    Name: "YeyeLeaf",
-    tags: ["中午", "韓"],
-    star: 4.5
-  },
-  {
-    img: "src/assets/leaf.png",
-    alt: "leaf",
-    Name: "築間",
-    tags: ["中午"],
-    star: 4.5
-  },
-  {
-    img: "src/assets/leaf.png",
-    alt: "starbaba",
-    Name: "星巴巴",
-    tags: ["下午", "飲品"],
-    star: 4.5
-  }
-]);
+
 const add_to_wheel = (item) => {
   if(listData.value.length < 10){
     for(let i = 0; i < listData.value.length; i++){
