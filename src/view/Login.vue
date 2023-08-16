@@ -40,6 +40,7 @@ const signIn = async () => {
                   user.restaurant = response.data.user_info.restaurant_id;
                   user.selfIntro = response.data.user_info.self_intro;
                   user.id = response.data.user_info.uid;
+                  user.access_token = response.data.access_token;
                   router.push('/preference');
                   changeNavbar();
             })
@@ -72,14 +73,18 @@ const signIn = async () => {
                   user.restaurant = result.user_info.restaurant_id;
                   user.selfIntro = result.user_info.self_intro;
                   user.id = result.user_info.uid;
+                  user.access_token = result.access_token;
+                  
                 })
                 .catch(function (error) {
                   console.log(error);
                 });
             };
-            getUserData();
-            changeNavbar();
-            router.push('/');
+            (async () => {
+              await getUserData();
+              changeNavbar();
+              router.push('/');
+            })();
        }});
 };
 
