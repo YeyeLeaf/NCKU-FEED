@@ -9,6 +9,7 @@ import RedButton from './RedButton.vue'
 
 <template>
 
+    <!-- 大螢幕 -->
     <div class="lg:flex flex-col space-y-8 items-center hidden">
         <img :src="myImg" class="w-36 rounded-full">
         <p class="text-3xl text-center">{{ name }}</p>
@@ -16,6 +17,7 @@ import RedButton from './RedButton.vue'
 
     </div>
 
+    <!-- 小螢幕 -->
     <div class="flex flex-wrap space-x-8 lg:hidden">
         <div>
             <img :src="myImg" class="w-28 rounded-full">

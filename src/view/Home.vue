@@ -5,19 +5,11 @@ import searchBar from '../components/searchBar.vue'
 import storePage from '../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../class.js'
-import { isLogining ,getJwtFromCookie} from '../eventBus'
+import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
 
-// to be fixed : 推薦餐廳會先跑空的出來，然後按一下其他任意鍵才會出現完整的 應該是順序問題 因為已確定recommendRes有存到餐廳
-let recommendRestaurant = [{
-  address: "",
-  name: "",
-  open_hour:  [],
-  phone_number: "",
-  service: [],
-  star: 3.9,
-  tags: [],
-  website: ""
-}];
+const recommendList = ref([]);
+
+let pages=1;
 
 const getRecommend = async ()=>{ 
   if (!isLogining.value){
@@ -30,8 +22,7 @@ const getRecommend = async ()=>{
         }
     })
     .then((result) => {
-        recommendRestaurant=result.random_recommendation;
-        console.log(recommendRestaurant);
+      recommendList.value.push(result.random_recommendation);
 
     })
     .catch(function (error) {
@@ -41,28 +32,45 @@ const getRecommend = async ()=>{
   }
   else{
     const token = getJwtFromCookie();  
-    await fetch("http://localhost:5000/recommend/4" , {
+    await fetch("http://localhost:5000/recommend/"+pages , {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,
             'Content-Type': 'application/json'
           }
     })
+    
     .then((response) => {
           if (response.status === 200) {
             return response.json();
           }
     })
     .then((result) => {
-          recommendRestaurant=result.recommendation;
-          console.log(recommendRestaurant);
+       recommendList.value = recommendList.value.concat(result.recommendation);
     })
     .catch(function (error) {
           console.log(error);
     });
+    pages+=1;
   }
 }
 getRecommend();
+window.addEventListener('scroll', async () => {
+  if (isScrollingToBottom()) {
+    try {
+      if (pages<=11){
+        console.log(recommendList);
+        getRecommend();
+      }
+      else{
+        pages=1;
+      }
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
+  }
+});
+
 
 
 const listData = ref([]);
@@ -97,7 +105,6 @@ const restaurant = ref([
     star: 4.5
   }
 ]);
-
 const add_to_wheel = (item) => {
   if(listData.value.length < 10){
     for(let i = 0; i < listData.value.length; i++){
@@ -146,7 +153,7 @@ const openDetail = (item) => {
       <p class="text-lg lg:text-xl font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
       <hr class="border-2 border-[#ff8e3c] text-center">
       <div class="flex justify-center flex-wrap">
-        <storeCard v-for="(item, index) in recommendRestaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
+        <storeCard v-for="(item, index) in recommendList" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
       </div>
     </div>
   </div>
