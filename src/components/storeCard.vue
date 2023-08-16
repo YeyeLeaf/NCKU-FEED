@@ -2,7 +2,7 @@
 import { ref, onMounted, onUpdated } from 'vue'
 import { user } from '../class.js'
 import Star from './Star.vue'
-import { textTruncation } from '../eventBus';
+import { textTruncation, isLogining, getJwtFromCookie } from '../eventBus';
 
 const props = defineProps({
     infor: Object
@@ -12,25 +12,68 @@ const emit = defineEmits(['addOp', 'open-detail']);
 
 const isCollected = ref(false);
 
+const addCollect = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/user", {
+    method: "PUT",
+    headers: {
+    "Authorization": `Bearer ${token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
+const delCollect = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/user", {
+    method: "DELETE",
+    headers: {
+    "Authorization": `Bearer ${token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
 const collect = () => {
-    if(isCollected.value){
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                user.restaurant.splice(i, 1);
-            }
-        }
-    }
+    if(!isLogining.value) alert("登入以使用收藏功能");
     else{
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                isCollected.value = !isCollected.value;
-                return;
-            }
+        if(!isCollected.value){
+            console.log(props.infor)
+            addCollect();
         }
-        user.restaurant.push(props.infor.Name);
+        else{
+            delCollect();
+        }
+        isCollected.value = !isCollected.value;
     }
-    isCollected.value = !isCollected.value;
-    console.log(user.restaurant);
 }
 </script>
 
@@ -56,3 +99,20 @@ const collect = () => {
         
     </div>
 </template>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar:hover {
+  background-color: #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 10px;
+  background: #ffe0c9;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+</style>
