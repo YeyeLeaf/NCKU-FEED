@@ -36,6 +36,7 @@ const logOut = async () => {
   });
   router.push('/');
   changeNavbar();
+  location.reload()
 };
 </script>
 
