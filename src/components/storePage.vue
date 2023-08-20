@@ -56,7 +56,7 @@ const collect = () => {
             <h2 class="text-xl">{{ infor.name }}</h2>
             <button class="whitespace-nowrap bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
           </div>
-          <div class="flex overflow-x-scroll whitespace-nowrap">
+          <div class="flex overflow-x-scroll whitespace-nowrap mt-2">
               <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2"># {{ tag }}</button>
           </div>
           <ul>
@@ -73,9 +73,9 @@ const collect = () => {
             <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change: index === num }" class="cursor-pointer py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
           </div>
           <div>
-            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
-            <button v-if="isCollected === false" class="bg-[#b80c0c] text-white rounded-md w-24 p-1" @click="collect">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
-            <button v-if="isCollected === true" class="bg-[#b80c0c] text-white rounded-md w-24 p-1" @click="collect">取消收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1 hover:bg-[#ed0000]" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
+            <button v-if="isCollected === false" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000]" @click="collect">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+            <button v-if="isCollected === true" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000]" @click="collect">取消收藏&nbsp;<i class="fas fa-bookmark"></i></button>
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
@@ -88,7 +88,7 @@ const collect = () => {
               </div>
               <div>
                 <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full">評分選項</button>
-                <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full">送出</button>
+                <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]">送出</button>
               </div>
             </form>
             <div class="overflow-y-scroll h-80 mt-2">
@@ -101,7 +101,7 @@ const collect = () => {
           <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
-              <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2">撰寫食記</router-link>
+              <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
             <div class="overflow-y-scroll h-[44vh] mt-2">
               <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>

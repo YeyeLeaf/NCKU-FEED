@@ -91,6 +91,7 @@ setTimeout(() => {
 // 因为动画时间为 3s ，所以这里3s后获取结果，其实结果早就定下了，只是何时显示，告诉用户
 setTimeout(() => {
   loading.value = false;
+  alert("選中 "+list.value[winner.value].name+" !");
 }, 3000);
 }
 
@@ -122,17 +123,18 @@ const deleteOp = (index) => {
               v-for="(i,index) in list"
               :key="index"
             >
-              <span class="Name">{{i.name}}</span>
+              <span class="Name">{{index}}</span>
             </div>
           </div>
           <div class="start-btn" @click="start()">Spin!</div>
         </div>
       </div>
-      <div class="bg-[#eff0f3] lg:w-4/12 p-10 w-full">
+      <div class="bg-[#eff0f3] lg:w-1/2 p-10 w-full">
         <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
         <hr class="border-2 border-[#ff8e3c]">
           <ul class="toggle-list h-72 overflow-y-scroll">
             <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
+              <p class="text-lg">{{ index }}</p>
               <p class="text-lg">{{ item.name }}</p>
               <RedButton text="刪除" @click="deleteOp(index)"/>
             </li>
