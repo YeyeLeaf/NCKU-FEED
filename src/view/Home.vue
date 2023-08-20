@@ -8,9 +8,7 @@ import { user } from '../class.js'
 import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
 
 const recommendList = ref([]);
-
 let pages=1;
-
 const getRecommend = async ()=>{ 
   if (!isLogining.value){
     await fetch("http://localhost:5000/randomRecommend" , {
@@ -58,7 +56,7 @@ getRecommend();
 window.addEventListener('scroll', async () => {
   if (isScrollingToBottom()) {
     try {
-      if (pages<=11 && isLogining){
+      if (pages<=11 && isLogining.value){
         getRecommend();
       }
       else{

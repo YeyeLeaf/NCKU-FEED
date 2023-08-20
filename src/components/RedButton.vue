@@ -19,6 +19,7 @@
                 text-center
                 cursor-pointer
                 whitespace-nowrap
+                hover:bg-[#ed0000]
                 ">
         <button onclick="v-bind:location.href='Onclick'" class="align-center">{{ text }}</button>
 

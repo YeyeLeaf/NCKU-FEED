@@ -79,11 +79,13 @@ const collect = () => {
 
 <template>
     <div class="mx-4 rounded-2xl shadow-md shadow-gray-300 p-5 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-72">
-        <div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer" @click="collect">
+        <div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer z-10" @click="collect">
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
         </div>
-        <img src="src/assets/leaf.png" class="lg:h-48 h-52 w-full rounded-2xl bg-lightOrange "/>
+        <div class="overflow-hidden rounded-2xl">
+            <img src="src/assets/leaf.png" class="lg:h-48 h-52 w-full rounded-2xl hover:scale-110 transition-transform"/>
+        </div>
         <div class="flex justify-between items-center">
             <p class="hidden lg:flex lg:text-xl">{{ textTruncation(infor.name,8) }}</p>
             <p class="text-lg lg:hidden">{{ textTruncation(infor.name,9) }}</p>
@@ -94,7 +96,7 @@ const collect = () => {
         </div>
         <div class="flex justify-between">
             <button class="bg-Orange text-white p-1 rounded-md" @click="$emit('open-detail')">詳細資料</button>
-            <button class="bg-darkRed text-white p-1 rounded-md AddPnazi" @click="$emit('addOp')">加入轉盤</button>   
+            <button class="bg-darkRed text-white p-1 rounded-md AddPnazi hover:bg-[#ed0000]" @click="$emit('addOp')">加入轉盤</button>   
         </div>
         
     </div>

@@ -63,7 +63,7 @@ const updateUserInfo = async () => {
 
 <template>
   <div class="h-screen flex flex-wrap justify-center items-center">
-      <div class="border flex flex-col lg:w-1/2 w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
+      <div class="border flex flex-col w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
         <div class="flex justify-start items-center space-x-10">
          <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border" style="border-radius: 9999px">
           <div class="flex-col flex items-start justify-center space-y-2">

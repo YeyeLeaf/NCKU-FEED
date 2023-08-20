@@ -81,3 +81,11 @@ export function textTruncation(text,maxLength){
 export function isScrollingToBottom() {
   return window.innerHeight + window.scrollY >= document.body.offsetHeight;
 }
+
+// page loader (hamburger)
+function loader(){
+  document.querySelector('.loader-container').classList.add('fade-out');
+}
+export function fadeOut(){
+  setInterval(loader,2000);
+}
