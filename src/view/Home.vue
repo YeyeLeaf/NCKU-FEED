@@ -67,9 +67,6 @@ window.addEventListener('scroll', async () => {
     }
   }
 });
-
-
-
 const listData = ref([]);
 const curr_restaurant = ref({});
 
@@ -109,13 +106,14 @@ const openDetail = (item) => {
 
 </script>
 
+
 <template>
   <div>
     <div class="flex justify-center">
       <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 p-2 text-xl font-bold text-[#525252]">{{ value }}</a>
     </div>
     <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult"/></div>
-    <div v-show="num===1"><wheel :List="listData"/></div>
+    <div v-show="num===1"><wheel :List="listData" :RecommendList="recommendList"/></div>
     <div class=" bg-[#eff0f3] py-5 px-2 lg:m-10 m-6 rounded-3xl list">
       <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5">所有商家</h2>
       <p class="text-lg lg:text-xl font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>
