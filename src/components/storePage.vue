@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue'
-import FeedName_sm from './FeedName_sm.vue'
+import { ref } from 'vue';
+import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
-import { user } from '../class.js'
+import { user } from '../class.js';
+import { isLogining } from '../eventBus';
 const props = defineProps({
   infor: Object
 });
+
 $(document).ready(function () {
   $('.close').click(function (e) { 
     e.preventDefault();
@@ -25,26 +27,79 @@ const Switch = (index) => {
     }
 
 const isCollected = ref(false);
+const alreadyCollect = () => {
+    console.log(props.infor._id);
+    console.log(user.restaurant);
+    if(user.restaurant.includes(props.infor._id)){
+      console.log("HI");
+      isCollected.value = true;
+      console.log(isCollected.value);
+    }
+}
+alreadyCollect();
+
+const addCollect = async () => {
+  await fetch("http://localhost:5000/user", {
+    method: "PUT",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    user.restaurant = result.restaurants_id;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
+const delCollect = async () => {
+  await fetch("http://localhost:5000/user", {
+    method: "DELETE",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    user.restaurant = result.restaurants_id;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
 
 const collect = () => {
-    if(isCollected.value){
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                user.restaurant.splice(i, 1);
-            }
-        }
-    }
+    if(!isLogining.value) alert("登入以使用收藏功能");
     else{
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                isCollected.value = !isCollected.value;
-                return;
-            }
+      if(user.restaurant.includes(props.infor._id)){
+            delCollect();
+            isCollected.value = false;
         }
-        user.restaurant.push(props.infor.Name);
+      else{
+            addCollect();
+            isCollected.value = true;
+      }
     }
-    isCollected.value = !isCollected.value;
-    console.log(user.restaurant);
 }
 </script>
 <template>

@@ -1,9 +1,8 @@
 <script setup>
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { user } from '../class.js'
 import Star from './Star.vue'
 import { textTruncation, isLogining, getJwtFromCookie } from '../eventBus';
-
 const props = defineProps({
     infor: Object
 })
@@ -11,7 +10,14 @@ const props = defineProps({
 const emit = defineEmits(['addOp', 'open-detail']);
 
 const isCollected = ref(false);
-
+const alreadyCollect = () => {
+  if(isLogining.value){
+    if(user.restaurant.includes(props.infor._id)){
+      isCollected.value = true;
+    }
+  }
+}
+alreadyCollect();
 const addCollect = async () => {
   const token = getJwtFromCookie();  
   await fetch("http://localhost:5000/user", {
@@ -31,6 +37,7 @@ const addCollect = async () => {
   })
   .then((result) => {
     console.log(result);
+    user.restaurant = result.restaurants_id;
   })
   .catch(function (error) {
     console.log(error);
@@ -56,6 +63,8 @@ const delCollect = async () => {
   })
   .then((result) => {
     console.log(result);
+    user.restaurant = result.restaurants_id;
+    console.log(user.restaurant);
   })
   .catch(function (error) {
     console.log(error);
@@ -65,24 +74,39 @@ const delCollect = async () => {
 const collect = () => {
     if(!isLogining.value) alert("登入以使用收藏功能");
     else{
-        if(!isCollected.value){
-            console.log(props.infor)
-            addCollect();
-        }
-        else{
+      console.log(user.restaurant);
+      if(user.restaurant.includes(props.infor._id)){
             delCollect();
+            isCollected.value = false;
         }
-        isCollected.value = !isCollected.value;
+      else{
+            addCollect();
+            isCollected.value = true;
+      }
     }
 }
+
+const updateStatus = () => {
+  if(!isLogining.value) alert("登入以使用收藏功能");
+    else{
+      console.log(user.restaurant);
+      if(user.restaurant.includes(props.infor._id)){
+            isCollected.value = false;
+        }
+      else{
+            isCollected.value = true;
+      }
+    }
+}
+
 </script>
 
 <template>
     <div class="mx-4 rounded-2xl shadow-md shadow-gray-300 p-5 flex flex-col justify-between my-6 bg-white box-border relative w-72 storeCard">
-        <div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer z-10" @click="collect">
+        <!--<div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer z-10" @click="collect">
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
-        </div>
+        </div>-->
         <div class="overflow-hidden rounded-2xl w-full">
             <img src="src/assets/leaf.png" class="w-full h-full rounded-2xl hover:scale-110 transition-transform"/>
         </div>

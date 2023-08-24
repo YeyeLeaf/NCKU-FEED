@@ -21,6 +21,7 @@ const getRecommend = async ()=>{
     })
     .then((result) => {
       recommendList.value = recommendList.value.concat(result.random_recommendation);
+      console.log(recommendList.value[0]);
 
     })
     .catch(function (error) {
@@ -43,7 +44,8 @@ const getRecommend = async ()=>{
           }
     })
     .then((result) => {
-       recommendList.value = recommendList.value.concat(result.recommendation);
+      recommendList.value = recommendList.value.concat(result.recommendation);
+      console.log(recommendList.value[0]);
 
     })
     .catch(function (error) {
@@ -123,7 +125,7 @@ const openDetail = (item) => {
       </div>
     </div>
   </div>
-  <storePage :infor="curr_restaurant" class="store-infor hidden" @addOp="add_to_wheel(curr_restaurant)"/>
+  <storePage :infor="curr_restaurant" class="store-infor hidden" @addOp="add_to_wheel(curr_restaurant)" :key="curr_restaurant._id"/>
 </template>
 
 <style scoped>
