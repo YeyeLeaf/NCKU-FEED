@@ -103,10 +103,10 @@ const collect = () => {
 }
 </script>
 <template>
-  <div class="bg-white fixed w-[800px] h-[550px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl p-8 box-border">
-      <div class="w-5/12 p-1 pr-4">
-        <img src="src/assets/leaf.png" class="rounded-2xl h-56 w-full mb-2">
-        <div class="h-60 overflow-y-scroll">
+  <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage">
+      <div class="p-1 leftSide flex items-center">
+        <img src="src/assets/leaf.png" class="rounded-2xl mb-2">
+        <div class="resInfo">
           <div class="flex justify-between items-center mt-2">
             <h2 class="text-xl">{{ infor.name }}</h2>
             <button class="whitespace-nowrap bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
@@ -119,10 +119,10 @@ const collect = () => {
           </ul>
           <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
           <p class="my-2"><i class="fas fa-phone-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.phone_number }}</p>
-          <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
+          <a href="" class="mt-2 cursor-pointer hover:underline"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
         </div>
       </div>
-      <div class="w-7/12 p-1">
+      <div class="p-1 rightSide">
         <div class="flex justify-between items-center h-10 mb-1">
           <div>
             <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change: index === num }" class="cursor-pointer py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
@@ -136,17 +136,17 @@ const collect = () => {
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
         <div class="box-border">
           <div v-show="num===0" class="max-h-full">
-            <form action="" class="flex z-10 align-top p-4">
+            <form action="" class="flex z-10 align-top p-4 justify-between">
               <div class="flex">
                 <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
-                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-3/4" placeholder="撰寫評論...（上限150字）"></textarea>
+                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）"></textarea>
               </div>
               <div>
-                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full">評分選項</button>
+                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600">評分選項</button>
                 <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]">送出</button>
               </div>
             </form>
-            <div class="overflow-y-scroll h-80 mt-2">
+            <div class="mt-2">
               <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
               <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
               <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
@@ -158,7 +158,7 @@ const collect = () => {
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
-            <div class="overflow-y-scroll h-[44vh] mt-2">
+            <div class="mt-2">
               <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
               <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
               <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
@@ -190,5 +190,94 @@ const collect = () => {
   background: #9c9c9c;
   border: 2px solid transparent;
   background-clip: padding-box;
+}
+
+/* 電腦 */
+@media only screen and (max-width: 1500px) {
+  .storePage{
+    width: 67%;
+    height: 70%;
+    flex-direction: row;
+    padding: 2rem;
+  }
+  .storePage .leftSide{
+    width: 55%;
+    padding-right: 2%;
+    flex-direction: column;
+  }
+  .resInfo{
+    overflow-y: scroll;
+  }
+  .storePage .leftSide img{
+    width: 100%;
+    height: 50%;
+  }
+  .rightSide{
+    width: 100%;
+    overflow-y: scroll;
+  }
+  
+}
+
+/* 橫式平板 */
+@media only screen and (max-width: 1050px) {
+  .storePage{
+    width: 75%;
+    height: 66%;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+  .storePage .leftSide{
+    width: 100%;
+    height: 60%;
+    padding-right: 1%;
+    flex-direction: row;
+  }
+  .storePage .leftSide img{
+    width: 50%;
+    height: 100%;
+    margin-right: 3%;
+  }
+  .rightSide{
+    overflow-y: visible;
+  }
+}
+
+
+/* 手機 */ /* 直式平板 */
+@media only screen and (max-width: 800px) {
+  .storePage{
+    width: 80%;
+    height: 80%;
+    flex-direction: column;
+    padding: 2rem;
+    font-size: 15px;
+  }
+  .storePage .leftSide{
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+  }
+  .storePage .leftSide img{
+    width: 60%;
+  }
+  .resInfo{
+    overflow-y: visible;
+  }
+}
+
+@media only screen and (max-width: 500px){
+
+  .storePage{
+    padding: 1rem;
+    font-size: 13px
+  }
+  .storePage .leftSide img{
+    width: 100%;
+    height: 50%;
+  }
+  h2{
+    font-size:large;
+  }
 }
 </style>

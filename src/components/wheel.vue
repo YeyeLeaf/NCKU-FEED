@@ -1,4 +1,6 @@
 <script setup>
+import { textTruncation } from '../eventBus'
+
 $(document).ready(function () {
   $('.list-title').click(function (e) { 
     e.preventDefault();
@@ -9,7 +11,7 @@ $(document).ready(function () {
 import { ref, onMounted, computed, onUpdated } from 'vue';
 import RedButton from './RedButton.vue'
 
-const props = defineProps(['List']);
+const props = defineProps(['List','RecommendList']);
 
 // computed property that auto-updates when the prop changes
 const list = computed(() => props.List);
@@ -17,6 +19,8 @@ const winner = ref(0); // 指定获奖下标 specified 为 true 时生效
 const loading = ref(false); // 抽奖执行状态，防止用户多次点击
 let panziElement = ref(null);
 
+const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+let selectedNumber = ref(0);
 
 onMounted(() => {
   // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
@@ -103,10 +107,24 @@ return parseInt(Math.random() * (max - min + 1) + min);
 const deleteOp = (index) => {
   props.List.splice(index, 1);
 }
+const randomSelectRes = () =>{
+  if (selectedNumber.value>10 || selectedNumber.value <2 ){
+    alert("請選擇2-10的數！");
+    return;
+  }
+  props.List.splice(0, props.List.length);
+  console.log(props.List);
+  for (let i=0;i<selectedNumber.value;i++){
+    let r = random(0, props.RecommendList.length);
+    props.List.push(props.RecommendList[r]);
+  }
+
+}
 
 </script>
+
 <template>
-  <div class="flex m-10 justify-around items-center flex-col lg:flex-row space-y-8">
+  <div class="flex m-10 justify-around items-center flex-col lg:flex-row space-y-8 mb-5">
       <div class="overall">
         <div class="zp-box">
           <div class="panzi">
@@ -135,12 +153,27 @@ const deleteOp = (index) => {
           <ul class="toggle-list h-72 overflow-y-scroll">
             <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
               <p class="text-lg">{{ index }}</p>
-              <p class="text-lg">{{ item.name }}</p>
+              <p class="text-lg hidden lg:flex">{{ textTruncation(item.name,14) }}</p>
+              <p class="text-base flex lg:hidden">{{ textTruncation(item.name,10) }}</p>
               <RedButton text="刪除" @click="deleteOp(index)"/>
             </li>
           </ul>
       </div>
   </div>
+  <div class="flex items-center justify-center lg:flex-row flex-col mx-10">
+    <div class="">
+      <i class="fas fa-pizza-slice text-yellow-400 lg:text-5xl text-3xl mr-3 mb-3"></i>
+      <h class="lg:text-xl text-base mr-10">還是無法決定要吃什麼嗎？ 馬上從你的推薦清單中隨機選出餐廳放入轉盤！</h>
+    </div>
+    <div class="flex items-center justify-center mt-2"> 
+      <select v-model="selectedNumber" class="mr-5 focus:ring-indigo-500 focus:border-indigo-500 border rounded-md shadow-sm">
+      <option selected>請選擇餐廳數量</option>
+      <option v-for="number in numbers" :key="number" v-bind:value="number" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">{{ number }}</option>
+      </select>
+      <RedButton text="產生" @click="randomSelectRes()"/>
+    </div>
+  </div>
+  
   </template>
  
 
