@@ -15,9 +15,11 @@
                 py-1
                 hover:bg-[#b54747]
                 transition-all
-                text-base lg:text-xl font-medium
+                text-base lg:text-lg font-medium
                 text-center
                 cursor-pointer
+                whitespace-nowrap
+                hover:bg-[#ed0000]
                 ">
         <button onclick="v-bind:location.href='Onclick'" class="align-center">{{ text }}</button>
 

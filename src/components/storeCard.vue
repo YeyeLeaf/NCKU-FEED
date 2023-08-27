@@ -1,7 +1,8 @@
 <script setup>
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { user } from '../class.js'
 import Star from './Star.vue'
+import { textTruncation, isLogining, getJwtFromCookie } from '../eventBus';
 const props = defineProps({
     infor: Object
 })
@@ -9,47 +10,144 @@ const props = defineProps({
 const emit = defineEmits(['addOp', 'open-detail']);
 
 const isCollected = ref(false);
+const alreadyCollect = () => {
+  if(isLogining.value){
+    if(user.restaurant.includes(props.infor._id)){
+      isCollected.value = true;
+    }
+  }
+}
+alreadyCollect();
+const addCollect = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/user", {
+    method: "PUT",
+    headers: {
+    "Authorization": `Bearer ${token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    user.restaurant = result.restaurants_id;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
+const delCollect = async () => {
+  const token = getJwtFromCookie();  
+  await fetch("http://localhost:5000/user", {
+    method: "DELETE",
+    headers: {
+    "Authorization": `Bearer ${token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "restaurant_id": props.infor._id
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    console.log(result);
+    user.restaurant = result.restaurants_id;
+    console.log(user.restaurant);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
 
 const collect = () => {
-    if(isCollected.value){
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                user.restaurant.splice(i, 1);
-            }
-        }
-    }
+    if(!isLogining.value) alert("登入以使用收藏功能");
     else{
-        for(let i = 0; i < user.restaurant.length; i++){
-            if(user.restaurant[i] === props.infor.Name){
-                isCollected.value = !isCollected.value;
-                return;
-            }
+      console.log(user.restaurant);
+      if(user.restaurant.includes(props.infor._id)){
+            delCollect();
+            isCollected.value = false;
         }
-        user.restaurant.push(props.infor.Name);
+      else{
+            addCollect();
+            isCollected.value = true;
+      }
     }
-    isCollected.value = !isCollected.value;
-    console.log(user.restaurant);
 }
+
+const updateStatus = () => {
+  if(!isLogining.value) alert("登入以使用收藏功能");
+    else{
+      console.log(user.restaurant);
+      if(user.restaurant.includes(props.infor._id)){
+            isCollected.value = false;
+        }
+      else{
+            isCollected.value = true;
+      }
+    }
+}
+
 </script>
 
 <template>
-    <div class="mx-4 lg:mx-6 rounded-2xl shadow-md shadow-gray-300 p-4 flex flex-col h-96 justify-between my-6 bg-white box-border relative w-52">
-        <div class="absolute top-6 left-6 text-[#b80c0c] cursor-pointer" @click="collect">
+    <div class="mx-4 rounded-2xl shadow-md shadow-gray-300 p-5 flex flex-col justify-between my-6 bg-white box-border relative w-72 storeCard">
+        <!--<div class="absolute top-6 left-8 text-[#b80c0c] cursor-pointer z-10" @click="collect">
             <i v-show="isCollected === false" class="far fa-bookmark"></i>
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
+        </div>-->
+        <div class="overflow-hidden rounded-2xl w-full">
+            <img src="src/assets/leaf.png" class="w-full h-full rounded-2xl hover:scale-110 transition-transform"/>
         </div>
-        <img :src="infor.img" :alt="infor.alt" class="h-auto w-full rounded-2xl bg-lightOrange "/>
         <div class="flex justify-between items-center">
-            <p class="text-xl">{{ infor.Name }}</p>
+            <p class="hidden lg:flex lg:text-xl">{{ textTruncation(infor.name,8) }}</p>
+            <p class="text-lg lg:hidden">{{ textTruncation(infor.name,9) }}</p>
             <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
         </div>
-        <div>
-            <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-4 py-1 min-w-16 mr-2">{{ tag }}</button>
+        <div class="flex overflow-x-scroll whitespace-nowrap">
+            <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2"># {{ tag }}</button>
         </div>
         <div class="flex justify-between">
-            <button class="bg-Orange text-white p-1 rounded-md" @click="$emit('open-detail')">詳細資料</button>
-            <button class="bg-darkRed text-white p-1 rounded-md AddPnazi" @click="$emit('addOp')">加入轉盤</button>   
+            <button class="bg-Orange text-white p-1 rounded-md hover:bg-orange-600" @click="$emit('open-detail')">詳細資料</button>
+            <button class="bg-darkRed text-white p-1 rounded-md AddPnazi hover:bg-[#ed0000]" @click="$emit('addOp')">加入轉盤</button>   
         </div>
         
     </div>
 </template>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar:hover {
+  background-color: #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 10px;
+  background: #ffe0c9;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.storeCard{
+  height: 27rem;
+}
+.storeCard:hover {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
+  transition: 0.1s ease-in;
+  cursor: pointer;
+}
+</style>

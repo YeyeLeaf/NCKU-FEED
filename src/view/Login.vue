@@ -8,6 +8,7 @@ import { isLogining, changeNavbar, setJwtToCookie, getJwtFromCookie, getUidFromC
 
 const router = useRouter();
 
+
 const signIn = async () => {
     const provider = await new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((result) => {
@@ -16,7 +17,7 @@ const signIn = async () => {
         const isNewUser = additionalUserInfo.isNewUser;
         console.log(isNewUser);
         const userInfo = result.user;
-        console.log(JSON.stringify(userInfo));
+        //console.log(JSON.stringify(userInfo));
         // TODO: send user object to backend api, user's data can be retrieve from user object
         if (isNewUser) {
           // Add to database and go to preference page -> fetch POST api
@@ -28,22 +29,20 @@ const signIn = async () => {
               "profile_photo": userInfo.photoURL
             })
             .then((response) => {
-              console.log(response);
-              router.push('/preference');
-              changeNavbar();
-            })
-            .then((result) => {
-                  console.log(result);
-                  // JWT to Cookie
-                  setJwtToCookie(result.data.access_token, result.data.user_info.uid, 7);
+              console.log(response.data.access_token);
+              // JWT to Cookie
+              setJwtToCookie(response.data.access_token, response.data.user_info.uid, 7);
                   const test = getUidFromCookie();
                   console.log("TEST"+test);
                   //store user's data
-                  user.nickName = result.data.user_info.nick_name;
-                  user.profilePhoto = result.data.user_info.profile_photo;
-                  user.restaurant = result.data.user_info.restaurant_id;
-                  user.selfIntro = result.data.user_info.self_intro;
-                  user.id = result.data.user_info.uid;
+                  user.nickName = response.data.user_info.nick_name;
+                  user.profilePhoto = response.data.user_info.profile_photo;
+                  user.restaurant = response.data.user_info.restaurant_id;
+                  user.selfIntro = response.data.user_info.self_intro;
+                  user.id = response.data.user_info.uid;
+                  user.access_token = response.data.access_token;
+                  router.push('/preference');
+                  changeNavbar();
             })
             .catch((error) => {
               console.error(error);
@@ -74,23 +73,27 @@ const signIn = async () => {
                   user.restaurant = result.user_info.restaurant_id;
                   user.selfIntro = result.user_info.self_intro;
                   user.id = result.user_info.uid;
+                  user.access_token = result.access_token;
+                  
                 })
                 .catch(function (error) {
                   console.log(error);
                 });
             };
-            getUserData();
-            router.push('/');
-            changeNavbar();
+            (async () => {
+              await getUserData();
+              changeNavbar();
+              router.push('/');
+            })();
        }});
 };
+
+
 
 </script>
 
 <template>
-  <div class="absolute w-full lg:top-80 top-96">
-      <img src="../assets/login.svg" class="object-cover no-border">
-   </div>
+  <div class="home"></div>
   <!-- lg:mt-56 lg:mb-40 mt-52 mb-40 -->
   <div class="relative flex justify-center flex-wrap items-center h-screen">  
     <div class="flex flex-col justify-center items-center lg:space-y-10 lg:px-28 space-y-6 px-8">
@@ -109,5 +112,13 @@ const signIn = async () => {
 <style scoped>
 
 @import url('../../paper.css');
+.home{
+  width: 100%;
+  min-height: 100vh;
+  background: url("../assets/login.svg") center center no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+}
+
 </style>
 

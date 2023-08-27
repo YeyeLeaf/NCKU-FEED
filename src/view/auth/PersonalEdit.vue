@@ -1,15 +1,35 @@
 <script setup>
 import RedButton from '../../components/RedButton.vue'
-import { ref, onUpdated, computed } from 'vue'
 import { user } from '../../class.js'
-import { confirmAccess, getJwtFromCookie } from '../../eventBus.js';
+import { confirmAccess, getJwtFromCookie} from '../../eventBus.js';
 import { useRouter } from 'vue-router';
+
+import { storage} from '../../firebase/firebaseConfig';
+import { ref, uploadBytes,getDownloadURL } from 'firebase/storage';
 
 confirmAccess();
 
 const router = useRouter();
 
-const username = user.nickName;
+let imageUpload = null;
+
+const handleFileChange = async (event) => {
+  imageUpload = event.target.files[0];
+  console.log(imageUpload);
+  uploadImageToFirebase();
+}
+
+//and get url of the image
+const uploadImageToFirebase = async () =>{
+  if (imageUpload === null) return;
+  const imageRef = ref(storage,'userIcon/'+user.id);
+  uploadBytes(imageRef,imageUpload).then(()=>{
+    console.log('finished');
+  })
+  getDownloadURL(ref(storage,'userIcon/'+user.id)).then((url) => {
+    user.profilePhoto = url;
+  });
+}
 
 const updateUserInfo = async () => {
   const token = getJwtFromCookie();  
@@ -38,16 +58,17 @@ const updateUserInfo = async () => {
   });
   router.push('/myUserPage');
 };
+
 </script>
 
 <template>
   <div class="h-screen flex flex-wrap justify-center items-center">
-      <div class="border flex flex-col lg:w-1/2 w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
-        <div class="flex justify-start space-x-10">
-          <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border" style="border-radius: 9999px">
+      <div class="border flex flex-col w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
+        <div class="flex justify-start items-center space-x-10">
+         <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border" style="border-radius: 9999px">
           <div class="flex-col flex items-start justify-center space-y-2">
-            <h class="text-3xl">{{ username }}</h>
-            <h class="text-base text-gray-500">點擊可更換頭像</h>
+            <input type="file" @change="handleFileChange"/>
+            <h class="text-base text-gray-500 btn-secondary-outline">點擊以更換頭像</h>
           </div>
         </div>
         <div class="flex w-full flex-col space-y-8">
@@ -69,8 +90,8 @@ const updateUserInfo = async () => {
   
   <style scoped>
   
-  @import url('../../../paper.css');
-  
+  /* @import url('../../../paper.css'); */
+   
   </style>
   
   
