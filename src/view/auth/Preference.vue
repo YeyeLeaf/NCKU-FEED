@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import RedButton from '../../components/RedButton.vue'
 import { user } from '../../class.js'
 import { confirmAccess, getJwtFromCookie } from '../../eventBus.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 confirmAccess();
 const options = ref([
@@ -29,6 +32,7 @@ const updateRecommand = async () => {
   })
   .then((result) => {
     console.log(result);
+    router.push("/")
   })
   .catch(function (error) {
     console.log(error);
@@ -51,7 +55,7 @@ const updateRecommand = async () => {
           <input type="radio" :name="option" :value="5.0" v-model="picked[index]" required>5
         </div>
       </div>
-      <router-link to="/"><RedButton text="送出" class="w-28 mx-auto" @click="updateRecommand" /></router-link>
+      <RedButton text="送出" class="w-28 mx-auto" @click="updateRecommand" />
     </form>
   </div>
   

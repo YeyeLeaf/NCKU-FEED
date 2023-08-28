@@ -14,7 +14,7 @@ const signIn = async () => {
         if (isNewUser) {
             // Add to database and go to preference page -> fetch POST api
         } else {
-            // fetch login api and get jwt token -> fetch GET api
+            
         }
     }).catch((error) => {
         const errorCode = error.code;
@@ -42,7 +42,7 @@ const signIn = async () => {
                     flex-row
                     text-lg
                     lg:text-base
-                    transition-all 
+                    transition-all
                     lg:space-x-32">
                 <h1 class="font-bold pt-6 lg:pt-0 text-base"><a href="#">Feedback</a></h1>
                 <a href="#" class="lg:hidden mx-8">
