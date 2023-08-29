@@ -22,12 +22,17 @@ const add_to_wheel = (item) => {
   }
 }
 
-const openDetail = (item) => {
+const openDetail = async (item) => {
   curr_restaurant.value = item;
+
+  await new Promise(resolve => {
+    $('.store-infor').siblings().css('opacity', '0.5');
+    $('body').css('overflow', 'hidden');
+    resolve();
+  });
+
   $('.store-infor').css("display", "flex");
-  $('.store-infor').siblings().css('opacity', '0.5');
-  $('body').css('overflow', 'hidden');
-}
+};
 
 const getCollect = async () => {
     for(let i = 0; i < user.restaurant.length; i++){
@@ -57,11 +62,16 @@ getCollect();
 
 <template>
   <div>
-    <div class=" bg-[#eff0f3] p-5 lg:m-10 m-5 rounded-3xl list min-h-[400px]">
+    <div class=" bg-[#eff0f3] p-5 lg:m-10 m-5 rounded-3xl list min-h-[600px]">
       <h2 class="list-title text-2xl font-bold text-center mb-5">收藏清單</h2>
       <hr class="border-2 border-[#ff8e3c] text-center">
       <div class="flex justify-center flex-wrap">
         <storeCard v-for="(item, index) in restaurant" :key="index" :infor="item"  @addOp="add_to_wheel(item)" @open-detail="openDetail(item)"/>
+      </div>
+      <!-- 沒有美術能力卡住ＱＱ -->
+      <div v-if="user.restaurant.length==0" class="flex space-y-20 justify-center items-center h-full">
+        <h2 class="text-xl">目前還沒有東西喔</h2>
+        <h2>快去主頁收藏有興趣的餐廳吧！</h2>
       </div>
     </div>
   </div>
