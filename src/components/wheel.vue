@@ -107,18 +107,28 @@ return parseInt(Math.random() * (max - min + 1) + min);
 const deleteOp = (index) => {
   props.List.splice(index, 1);
 }
+
+//產生隨機‘不重複’的數
+function generateRandomNumbers(count, max) {
+  const numbers = new Set();
+  while (numbers.size < count) {
+    const randomNumber = Math.floor(Math.random() * max) + 1;
+    numbers.add(randomNumber);
+  }
+  return Array.from(numbers);
+}
+
+//隨機產生不重複餐廳
 const randomSelectRes = () =>{
   if (selectedNumber.value>10 || selectedNumber.value <2 ){
     alert("請選擇2-10的數！");
     return;
   }
   props.List.splice(0, props.List.length);
-  console.log(props.List);
+  const uniqueNumbers = generateRandomNumbers(selectedNumber.value, props.RecommendList.length);
   for (let i=0;i<selectedNumber.value;i++){
-    let r = random(0, props.RecommendList.length);
-    props.List.push(props.RecommendList[r]);
+    props.List.push(props.RecommendList[uniqueNumbers[i]]);
   }
-
 }
 
 </script>
@@ -144,7 +154,7 @@ const randomSelectRes = () =>{
               <span class="Name">{{index}}</span>
             </div>
           </div>
-          <div class="start-btn" @click="start()">Spin!</div>
+          <div class="start-btn" @click="start()"><p class="text-float">Spin!</p></div>
         </div>
       </div>
       <div class="bg-[#eff0f3] lg:w-1/2 p-10 w-full">
@@ -412,5 +422,21 @@ const randomSelectRes = () =>{
     to {
       transform: rotate(calc(5 * 360deg + 360deg / var(--nums) * 9));
     }
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.text-float {
+  animation: floatAnimation 2s infinite;
 }
 </style>

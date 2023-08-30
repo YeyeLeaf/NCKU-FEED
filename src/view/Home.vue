@@ -21,7 +21,7 @@ const getRecommend = async ()=>{
     })
     .then((result) => {
       recommendList.value = recommendList.value.concat(result.random_recommendation);
-      console.log(recommendList.value[0]);
+      //console.log(recommendList.value[0]);
 
     })
     .catch(function (error) {
@@ -45,7 +45,7 @@ const getRecommend = async ()=>{
     })
     .then((result) => {
       recommendList.value = recommendList.value.concat(result.recommendation);
-      console.log(recommendList.value[0]);
+      //console.log(recommendList.value[0]);
 
     })
     .catch(function (error) {
@@ -99,13 +99,17 @@ const addResult = (item) => {
 const deleteResult = (i) => {
   filterResult.value.splice(i, 1);
 }
-const openDetail = (item) => {
+const openDetail = async (item) => {
   curr_restaurant.value = item;
-  $('.store-infor').css("display", "flex");
-  $('.store-infor').siblings().css('opacity', '0.5');
-  $('body').css('overflow', 'hidden');
-}
 
+  await new Promise(resolve => {
+    $('.store-infor').siblings().css('opacity', '0.5');
+    $('body').css('overflow', 'hidden');
+    resolve();
+  });
+
+  $('.store-infor').css("display", "flex");
+};
 </script>
 
 

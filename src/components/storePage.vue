@@ -28,8 +28,6 @@ const Switch = (index) => {
 
 const isCollected = ref(false);
 const alreadyCollect = () => {
-    console.log(props.infor._id);
-    console.log(user.restaurant);
     if(user.restaurant.includes(props.infor._id)){
       console.log("HI");
       isCollected.value = true;

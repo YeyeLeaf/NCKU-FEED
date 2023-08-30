@@ -23,12 +23,11 @@ const handleFileChange = async (event) => {
 const uploadImageToFirebase = async () =>{
   if (imageUpload === null) return;
   const imageRef = ref(storage,'userIcon/'+user.id);
-  uploadBytes(imageRef,imageUpload).then(()=>{
-    console.log('finished');
-  })
-  getDownloadURL(ref(storage,'userIcon/'+user.id)).then((url) => {
-    user.profilePhoto = url;
-  });
+  await uploadBytes(imageRef, imageUpload); // Wait for the upload to finish
+
+  const url = await getDownloadURL(ref(storage, 'userIcon/' + user.id));
+  user.profilePhoto = url;
+
 }
 
 const updateUserInfo = async () => {
