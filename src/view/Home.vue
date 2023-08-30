@@ -58,7 +58,7 @@ getRecommend();
 window.addEventListener('scroll', async () => {
   if (isScrollingToBottom()) {
     try {
-      if (pages<=11 && isLogining.value){
+      if (pages<11 && isLogining.value){
         getRecommend();
       }
       else{

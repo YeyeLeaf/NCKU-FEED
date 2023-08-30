@@ -32,10 +32,12 @@ const updateRecommand = async () => {
   })
   .then((result) => {
     console.log(result);
-    router.push("/")
+    router.push("/");
   })
   .catch(function (error) {
     console.log(error);
+    alert("上傳失敗，請再試一次");
+    router.push("/preference");
   });
 };
 </script>
