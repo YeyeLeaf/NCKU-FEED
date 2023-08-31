@@ -29,7 +29,7 @@ onMounted(() => {
     });
 });
 
-const emit = defineEmits(['add-result', 'delete-result']);
+const emit = defineEmits(['add-result', 'delete-result', 'search-result']);
 const result = ref([]);
 const editFilter = (item, selected, index) => {
     if (selected === true) {
@@ -44,17 +44,39 @@ const editFilter = (item, selected, index) => {
         emit('add-result', item);
     }
 }
+
+const keyword = ref("");
+const list = ref([]);
+const search = async () => {
+    if(keyword.value !== ""){
+        await fetch("http://localhost:5000/search/" + keyword.value, {
+                method: "GET"
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                }
+            })
+            .then((result) => {
+                console.log(result);
+                list.value = result;
+                emit("search-result", list.value.result);
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("搜尋失敗，請再試一次");
+            });
+    }
+}
 </script>
 
 <template>
     <div class="max-w-sm m-10 mx-auto">
         <div class="rounded-2xl border border-[#ff8e3c]">
-            <form action="">
+            <form>
                 <button class="bg-[#ff8e3c] text-white rounded-l-2xl md:px-6 md:py-4 p-2 filterBtn"><i class="fas fa-sliders-h mr-2" style="color: #ffffff;"></i>篩選</button>
-                <input type="text" class="pl-4 pr-10" placeholder="搜尋">
-                <button type="submit">
-                    <i class="fas fa-search" style="color: #d5d5d6;"></i>
-                </button>
+                <input type="text" class="pl-4 pr-10" placeholder="搜尋" v-model="keyword" @keydown.enter.prevent="search">
+                <i class="fas fa-search cursor-pointer" style="color: #d5d5d6;" @click="search"></i>
             </form>
         </div>
         <ul class="filter-list border border-[#525252] text-[#525252] m-2 rounded-b-2xl flex justify-between">
