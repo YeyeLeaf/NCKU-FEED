@@ -101,6 +101,7 @@ const deleteResult = (i) => {
 }
 const openDetail = async (item) => {
   curr_restaurant.value = item;
+  console.log(item._id);
 
   await new Promise(resolve => {
     $('.store-infor').siblings().css('opacity', '0.5');

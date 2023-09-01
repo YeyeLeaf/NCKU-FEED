@@ -8,6 +8,7 @@ const props = defineProps({
   infor: Object
 });
 
+
 $(document).ready(function () {
   $('.close').click(function (e) { 
     e.preventDefault();
@@ -26,6 +27,7 @@ const Switch = (index) => {
         panziElement.value.style.animationPlayState = 'paused'; 
     }
 
+////////////////////////////////////// Collect ///////////////////////////////////////////////////
 const isCollected = ref(false);
 const alreadyCollect = () => {
     if(user.restaurant.includes(props.infor._id)){
@@ -99,6 +101,161 @@ const collect = () => {
       }
     }
 }
+
+////////////////////////////////////// Commemts ///////////////////////////////////////////////////
+const commentList = ref([]);
+const rating = ["環境整潔", "服務態度", "美味程度", "CP值"];
+const isShow = ref(false);
+const btnToggle = (event) => {
+  event.preventDefault(); 
+  isShow.value = !isShow.value;
+}
+const rated_number = ref([0.0,0.0,0.0,0.0]);
+const tempScore = ref([0.0,0.0,0.0,0.0]);
+const editCommentId = ref('');
+const curr_edit = ref({});
+const calculateAve = () =>{
+  let sum =0.0;
+  for (let i=0;i<4;i++){
+    sum+=rated_number.value[i];
+  }
+  const average = sum / 4.0;
+  rated_number.value.push(average);
+}
+const str = ref('');
+const isEditing = ref(false);
+
+const getComment = async () => {
+  if (!props.infor._id){
+    return
+  }
+  await fetch("http://localhost:5000/comments?target_id="+props.infor._id, {
+    method: "GET",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    }
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    //console.log(result);
+    commentList.value = commentList.value.concat(result.comments);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+
+getComment();
+const addComment = async (event) => {
+  event.preventDefault(); 
+  if (str.value == ''){
+    alert("請為餐廳留下評論喔！");
+    return
+  }
+  if (rated_number.value[0]==0 && rated_number.value[1]==0 && rated_number.value[2]==0 && rated_number.value[3]==0){
+    alert("請為餐廳評分喔！");
+    return
+  }
+  calculateAve();
+  await fetch("http://localhost:5000/comments", {
+    method: "POST",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "target_id": props.infor._id,
+        "content":str.value,
+        "rating":rated_number.value
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  rated_number.value=[0,0,0,0];
+  tempScore.value=[0,0,0,0];
+  str.value='';
+  commentList.value.splice(0, commentList.value.length);
+  getComment();
+};
+
+const deleteComment = () =>{
+  commentList.value.splice(0, commentList.value.length);
+  getComment();
+}
+
+const preEditCommentSetting = (item) =>{
+  if (isEditing.value && curr_edit.value === item){
+    isEditing.value = !isEditing.value;
+    editCommentId.value = '';
+    curr_edit.value=null;
+    str.value = "";
+    tempScore.value = [0,0,0,0];
+    rated_number.value = [0,0,0,0];
+  }
+  else{
+    if(!isEditing.value  && curr_edit.value !== item){
+      isEditing.value = !isEditing.value;
+    }
+    curr_edit.value = item;
+    editCommentId.value = item._id;
+    str.value = item.content;
+    tempScore.value = [item.rating.cleanliness,item.rating.service,item.rating.deliciousness,item.rating.CPR];
+    rated_number.value = [item.rating.cleanliness,item.rating.service,item.rating.deliciousness,item.rating.CPR]; 
+
+  }
+}
+
+const editComment = async (event) =>{
+  event.preventDefault(); 
+  if (str.value == ''){
+    alert("請為餐廳留下評論喔！");
+    return
+  }
+  if (rated_number.value[0]==0 && rated_number.value[1]==0 && rated_number.value[2]==0 && rated_number.value[3]==0){
+    alert("請為餐廳評分喔！");
+    return
+  }
+  calculateAve();
+  await fetch("http://localhost:5000/comments", {
+    method: "PUT",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        "id": editCommentId.value,
+        "content":str.value
+    })
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  rated_number.value=[0,0,0,0];
+  tempScore.value=[0,0,0,0];
+  str.value='';
+  isEditing.value = false;
+  commentList.value.splice(0, commentList.value.length);
+  getComment();
+
+}
+
+
 </script>
 <template>
   <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage">
@@ -134,22 +291,35 @@ const collect = () => {
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
         <div class="box-border">
           <div v-show="num===0" class="max-h-full">
-            <form action="" class="flex z-10 align-top p-4 justify-between">
+            <form action="" class="flex z-10 align-top p-4 justify-between mb-2">
               <div class="flex">
-                <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
-                <textarea name="comment" cols="30" rows="5" maxlength="150" class="resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）"></textarea>
+                <div class="space-y-2">
+                  <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
+                  <p v-if="isEditing" class="text-sm text-red-500">編輯中</p>
+                </div>
+                <textarea name="comment" cols="30" rows="5" maxlength="150" class="border border-gray-300 rounded p-2 resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）" v-model="str"></textarea>
               </div>
               <div>
-                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600">評分選項</button>
-                <button class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]">送出</button>
+                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600" @click="btnToggle">評分選項</button>
+                <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-0 z-10">
+                    <p v-for="(item, index) in rating" :key="index" class="text-black flex justify-between items-center">
+                      <span class="w-6/12">{{ item }}</span>
+                      <span>
+                        <i
+                          v-for="n in 5" :key="n" class="far fa-star text-[#ff8e3c]" :class=" n<=tempScore[index]?'fas fa-star':'far fa-star' "
+                          @mouseenter="tempScore[index]=n"
+                          @mouseleave="tempScore[index]=rated_number[index]"
+                          @click="rated_number[index]=n"
+                        ></i>
+                      </span>
+                    </p>
+                  </div>
+                <button v-if="isEditing==false" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]" @click="addComment">送出</button>
+                <button v-if="isEditing==true" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]" @click="editComment">完編</button>
               </div>
             </form>
-            <div class="mt-2">
-              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-              <Comment img="src/assets/leaf.png" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit." :stars="[1.0, 2.0, 3.0, 4.0, 5.0]" />
-            </div>
+            <div v-if="commentList.length==0">nothing</div>
+            <Comment v-for="(item, index) in commentList" :key="index" :infor="item" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
           </div>
           <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">
