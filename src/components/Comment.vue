@@ -18,11 +18,22 @@ const getUserPic = async () =>{
   if (!props.infor){
     return
   }
-  try {
-    img.value = await getDownloadURL(firebaseRef(storage, 'userIcon/' + props.infor.uid));
-  } catch (error) {
-    console.error(error);
-  }
+  await fetch("http://localhost:5000/user?uid="+props.infor.uid, {
+    method: "GET",
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+      img.value = result.user_info.profile_photo;
+                  
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  
 }
 getUserPic();
 
