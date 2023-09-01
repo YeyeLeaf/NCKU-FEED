@@ -319,7 +319,7 @@ const editComment = async (event) =>{
               </div>
             </form>
             <div v-if="commentList.length==0">nothing</div>
-            <Comment v-for="(item, index) in commentList" :key="index" :infor="item" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
+            <Comment v-for="(item, index) in commentList" :key="index" :infor="item" :nowEdit="editCommentId" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
           </div>
           <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">

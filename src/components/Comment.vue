@@ -7,12 +7,14 @@ import { user } from '../class.js';
 import { textTruncation } from '../eventBus';
 
 const props = defineProps({
-    infor: Object
+    infor: Object,
+    nowEdit:String
 })
 
 const emit = defineEmits(['delete-comment','edit-comment']);
 
 const img = vueRef('');
+const userName = vueRef('');
 //取得使用者大頭貼照片
 const getUserPic = async () =>{
   if (!props.infor){
@@ -28,6 +30,7 @@ const getUserPic = async () =>{
   })
   .then((result) => {
       img.value = result.user_info.profile_photo;
+      userName.value = result.user_info.nick_name;
                   
   })
   .catch(function (error) {
@@ -62,18 +65,18 @@ const deleteComment = async () => {
   });
   emit('delete-comment')
 };
-
 </script>
 <template>
   <div class="flex w-full mb-2 justify-between items-center shadow-md shadow-slate-300 rounded-md p-4 border-2 border-slate-100">
     <div class="flex">
         <img :src="img" class="h-8 rounded-full mr-3">
+        <p class="mr-5 font-bold">{{ userName }}</p>
         <p class="text-md text-left">{{ textTruncation(infor.content,25) }}</p>
     </div>
     <div class="flex space-x-5">
       <div v-if="isMe" class="flex space-x-3 mt-2">
-        <i class="fa fa-pen" @click="$emit('edit-comment')"></i>
-        <i class="fa fa-trash" @click="deleteComment"></i>
+        <i class="fa fa-pen hover:text-red-500" :class=" nowEdit==infor._id?'text-red-500':'text-black-100' " @click="$emit('edit-comment')"></i>
+        <i class="fa fa-trash hover:text-red-500" @click="deleteComment"></i>
       </div>
       <Star :stars="infor.rating"/>
     </div>
