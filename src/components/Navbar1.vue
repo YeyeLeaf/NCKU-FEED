@@ -58,7 +58,7 @@ const logOut = async () => {
 
     <!-- lg留著如果之後有需要讓他們排列在navbar就可以用 -->
     <div :class="{'dropdown-after': isOpen}" class=" w-full lg:flex lg:items-center lg:w-auto lg:hidden dropdown">
-      <div class="text-base lg:flex-grow bg-[#ffbb8a]">
+      <div class="text-base lg:flex-grow bg-[#fca668]">
         <router-link to="/myUserPage" class="block ml-3 p-3 lg:inline-block lg:mt-0 text-white hover:text-gray-300 mr-4">
             個人頁面
         </router-link>

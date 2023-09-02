@@ -301,7 +301,7 @@ const editComment = async (event) =>{
               </div>
               <div>
                 <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600" @click="btnToggle">評分選項</button>
-                <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-0 z-10">
+                <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-10 z-10">
                     <p v-for="(item, index) in rating" :key="index" class="text-black flex justify-between items-center">
                       <span class="w-6/12">{{ item }}</span>
                       <span>
@@ -319,7 +319,7 @@ const editComment = async (event) =>{
               </div>
             </form>
             <div v-if="commentList.length==0">nothing</div>
-            <Comment v-for="(item, index) in commentList" :key="index" :infor="item" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
+            <Comment v-for="(item, index) in commentList" :key="index" :infor="item" :nowEdit="editCommentId" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
           </div>
           <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">
