@@ -71,7 +71,7 @@ const search = async () => {
 </script>
 
 <template>
-    <div class="max-w-sm m-10 mx-auto">
+    <div class="max-w-sm m-10 mx-auto searchBar">
         <div class="rounded-2xl border border-[#ff8e3c]">
             <form>
                 <button class="bg-[#ff8e3c] text-white rounded-l-2xl md:px-6 md:py-4 p-2 filterBtn"><i class="fas fa-sliders-h mr-2" style="color: #ffffff;"></i>篩選</button>
@@ -129,5 +129,12 @@ input[type=checkbox]:checked::after{
 .change {
     background-color: #ffe0c9;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 500px){
+    .searchBar{
+        font-size: 14px;
+        width: 20rem;
+    }
 }
 </style>

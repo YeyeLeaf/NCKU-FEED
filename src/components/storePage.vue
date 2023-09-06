@@ -122,7 +122,7 @@ const calculateAve = () =>{
   const average = sum / 4.0;
   rated_number.value.push(average);
 }
-const str = ref('');
+const commentStr = ref('');
 const isEditing = ref(false);
 
 const getComment = async () => {
@@ -153,7 +153,7 @@ const getComment = async () => {
 getComment();
 const addComment = async (event) => {
   event.preventDefault(); 
-  if (str.value == ''){
+  if (commentStr.value == ''){
     alert("請為餐廳留下評論喔！");
     return
   }
@@ -170,7 +170,7 @@ const addComment = async (event) => {
     },
     body: JSON.stringify({
         "target_id": props.infor._id,
-        "content":str.value,
+        "content":commentStr.value,
         "rating":rated_number.value
     })
   })
@@ -184,7 +184,7 @@ const addComment = async (event) => {
   });
   rated_number.value=[0,0,0,0];
   tempScore.value=[0,0,0,0];
-  str.value='';
+  commentStr.value='';
   commentList.value.splice(0, commentList.value.length);
   getComment();
 };
@@ -199,7 +199,7 @@ const preEditCommentSetting = (item) =>{
     isEditing.value = !isEditing.value;
     editCommentId.value = '';
     curr_edit.value=null;
-    str.value = "";
+    commentStr.value = "";
     tempScore.value = [0,0,0,0];
     rated_number.value = [0,0,0,0];
   }
@@ -209,7 +209,7 @@ const preEditCommentSetting = (item) =>{
     }
     curr_edit.value = item;
     editCommentId.value = item._id;
-    str.value = item.content;
+    commentStr.value = item.content;
     tempScore.value = [item.rating.cleanliness,item.rating.service,item.rating.deliciousness,item.rating.CPR];
     rated_number.value = [item.rating.cleanliness,item.rating.service,item.rating.deliciousness,item.rating.CPR]; 
 
@@ -218,7 +218,7 @@ const preEditCommentSetting = (item) =>{
 
 const editComment = async (event) =>{
   event.preventDefault(); 
-  if (str.value == ''){
+  if (commentStr.value == ''){
     alert("請為餐廳留下評論喔！");
     return
   }
@@ -235,7 +235,7 @@ const editComment = async (event) =>{
     },
     body: JSON.stringify({
         "id": editCommentId.value,
-        "content":str.value
+        "content":commentStr.value,
     })
   })
   .then((response) => {
@@ -246,19 +246,27 @@ const editComment = async (event) =>{
   .catch(function (error) {
     console.log(error);
   });
-  rated_number.value=[0,0,0,0];
-  tempScore.value=[0,0,0,0];
-  str.value='';
-  isEditing.value = false;
+  refresh();
   commentList.value.splice(0, commentList.value.length);
   getComment();
 
 }
 
+////////////////////////////////////// Close tab refresh ////////////////////////////////////////////
+//重設變數等
+const refresh = () =>{
+  rated_number.value=[0,0,0,0];
+  tempScore.value=[0,0,0,0];
+  commentStr.value='';
+  isEditing.value = false;
+  editCommentId.value = ''; 
+}
+
+
 
 </script>
 <template>
-  <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage">
+  <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage border border-gray-300">
       <div class="p-1 leftSide flex items-center">
         <img src="src/assets/leaf.png" class="rounded-2xl mb-2">
         <div class="resInfo">
@@ -282,10 +290,10 @@ const editComment = async (event) =>{
           <div>
             <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change: index === num }" class="cursor-pointer py-2 font-bold text-[#9c9c9c] mr-2">{{ value }}</a>
           </div>
-          <div>
-            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1 hover:bg-[#ed0000]" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
-            <button v-if="isCollected === false" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000]" @click="collect">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
-            <button v-if="isCollected === true" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000]" @click="collect">取消收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+          <div class="redButton">
+            <button class="bg-[#b80c0c] text-white rounded-md w-24 p-1 mr-1 hover:bg-[#ed0000] text-[15px]" @click="$emit('addOp')">加入轉盤&nbsp;<i class="fas fa-plus-circle" style="color: #ffffff;"></i></button>
+            <button v-if="isCollected === false" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000] text-[15px]" @click="collect">收藏&nbsp;<i class="fas fa-bookmark"></i></button>
+            <button v-if="isCollected === true" class="bg-[#b80c0c] text-white rounded-md w-24 p-1 hover:bg-[#ed0000] text-[15px]" @click="collect">取消收藏&nbsp;<i class="fas fa-bookmark"></i></button>
           </div>
         </div>
         <div class="border-y-2 mb-1 border-[#FF8E3C]"></div>
@@ -297,10 +305,10 @@ const editComment = async (event) =>{
                   <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
                   <p v-if="isEditing" class="text-sm text-red-500">編輯中</p>
                 </div>
-                <textarea name="comment" cols="30" rows="5" maxlength="150" class="border border-gray-300 rounded p-2 resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）" v-model="str"></textarea>
+                <textarea name="comment" cols="30" rows="5" maxlength="150" class="border border-gray-300 rounded p-2 resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）" v-model="commentStr"></textarea>
               </div>
-              <div>
-                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600" @click="btnToggle">評分選項</button>
+              <div class="ml-4">
+                <button class="rounded-md bg-[#ff8e3c] text-white p-1 mb-1 w-full hover:bg-orange-600 whitespace-nowrap text-[15px]" @click="btnToggle">評分選項</button>
                 <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-10 z-10">
                     <p v-for="(item, index) in rating" :key="index" class="text-black flex justify-between items-center">
                       <span class="w-6/12">{{ item }}</span>
@@ -314,8 +322,8 @@ const editComment = async (event) =>{
                       </span>
                     </p>
                   </div>
-                <button v-if="isEditing==false" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]" @click="addComment">送出</button>
-                <button v-if="isEditing==true" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]" @click="editComment">完編</button>
+                <button v-if="isEditing==false" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000] text-[15px]" @click="addComment">送出</button>
+                <button v-if="isEditing==true" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000] text-[15px]" @click="editComment">完編</button>
               </div>
             </form>
             <div v-if="commentList.length==0">nothing</div>
@@ -337,7 +345,7 @@ const editComment = async (event) =>{
           </div>
         </div>
       </div>
-      <span class="absolute top-1 right-3 close cursor-pointer text-lg">x</span>
+      <span class="absolute top-1 right-3 close cursor-pointer text-lg" @click="refresh">x</span>
   </div>
 </template>
 
@@ -432,6 +440,9 @@ const editComment = async (event) =>{
   .resInfo{
     overflow-y: visible;
   }
+  button{
+    font-size: 14px;
+  }
 }
 
 @media only screen and (max-width: 500px){
@@ -446,6 +457,15 @@ const editComment = async (event) =>{
   }
   h2{
     font-size:large;
+  }
+  button{
+    font-size: 13px;
+  }
+  button i{
+    display: none;
+  }
+  .redButton button{
+    width:4rem;
   }
 }
 </style>

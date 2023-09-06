@@ -40,45 +40,68 @@ const getUserPic = async () =>{
 }
 getUserPic();
 
-const isMe = vueRef(false);
+const isMe = vueRef(false); 
 if (props.infor.uid == user.id){
   isMe.value = true;
 }
+
 const deleteComment = async () => { 
-  await fetch("http://localhost:5000/comments", {
-    method: "DELETE",
-    headers: {
-    "Authorization": `Bearer ${user.access_token}`,
-    'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        'id':props.infor._id
+  if (confirm("確定要刪除此評論嗎？")){
+    await fetch("http://localhost:5000/comments", {
+      method: "DELETE",
+      headers: {
+      "Authorization": `Bearer ${user.access_token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'id':props.infor._id
+      })
     })
-  })
-  .then((response) => {
-    if (response.status === 200) {
-      return response.json();
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    emit('delete-comment')
     }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  emit('delete-comment')
+  
 };
 </script>
 <template>
-  <div class="flex w-full mb-2 justify-between items-center shadow-md shadow-slate-300 rounded-md p-4 border-2 border-slate-100">
-    <div class="flex">
-        <img :src="img" class="h-8 rounded-full mr-3">
-        <p class="mr-5 font-bold">{{ userName }}</p>
-        <p class="text-md text-left">{{ textTruncation(infor.content,25) }}</p>
-    </div>
-    <div class="flex space-x-5">
-      <div v-if="isMe" class="flex space-x-3 mt-2">
-        <i class="fa fa-pen hover:text-red-500" :class=" nowEdit==infor._id?'text-red-500':'text-black-100' " @click="$emit('edit-comment')"></i>
-        <i class="fa fa-trash hover:text-red-500" @click="deleteComment"></i>
+  <div class="w-full mb-2 shadow-md shadow-slate-300 rounded-md p-4 border-2 border-slate-100">
+    <div class="flex flex-col space-y-3">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <img :src="img" class="h-8 rounded-full mr-3">
+          <p class="mr-5 font-bold whitespace-nowrap">{{ userName }}</p>
+        </div>
+        <div class="flex items-center">
+          <div v-if="isMe" class="flex mr-5 rightSide">
+            <i class="fa fa-pen hover:text-red-500 mr-3" :class=" nowEdit==infor._id?'text-red-500':'text-black-100' " @click="$emit('edit-comment')"></i>
+            <i class="fa fa-trash hover:text-red-500" @click="deleteComment"></i>
+          </div>
+          <Star :stars="infor.rating"/>
+        </div>
       </div>
-      <Star :stars="infor.rating"/>
+      <p class="text-md text-left whitespace-wrap break-words">{{ infor.content }}</p>
     </div>
   </div>
 </template>
+
+<style scoped>
+@media only screen and (max-width: 500px){
+  .rightSide {
+     margin-right: 0.3rem;
+  }
+  .rightSide i{
+    font-size: 9px;
+    margin-right: 0.5rem;
+  }
+
+
+}
+
+</style>
