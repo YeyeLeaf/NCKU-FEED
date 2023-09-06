@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export const isLogining = ref(false);
-
+export const cur_restaurant_id = ref('');
 //change navbar status
 export function changeNavbar() {
   isLogining.value = !isLogining.value;
@@ -56,24 +56,20 @@ export function confirmAccess() {
 }
 
 // truncate text
-export function textTruncation(text,maxLength){
+export function textTruncation(text, maxLength) {
   const pattern = /[^\u4e00-\u9fa5]/g;
-  if (text.length > maxLength){
-    const temp = text.slice(0,maxLength);
+  if (text.length > maxLength) {
+    const temp = text.slice(0, maxLength);
     const matches = temp.match(pattern);
-    if (!matches){
-      return text.slice(0, maxLength) + "...";
-    }
-    else{
-      if (matches.length > Math.round(maxLength/2)){
-        return text.slice(0, maxLength+4) + "...";
+    if (!matches) {
+      return text.slice(0, maxLength) + '...';
+    } else {
+      if (matches.length > Math.round(maxLength / 2)) {
+        return text.slice(0, maxLength + 4) + '...';
+      } else {
+        return text.slice(0, maxLength) + '...';
       }
-      else{
-        return text.slice(0, maxLength) + "...";
-      }
-
     }
-    
   }
   return text;
 }
@@ -83,9 +79,9 @@ export function isScrollingToBottom() {
 }
 
 // page loader (hamburger)
-function loader(){
+function loader() {
   document.querySelector('.loader-container').classList.add('fade-out');
 }
-export function fadeOut(){
-  setInterval(loader,2000);
+export function fadeOut() {
+  setInterval(loader, 2000);
 }

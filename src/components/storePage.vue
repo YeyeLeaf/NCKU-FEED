@@ -3,12 +3,13 @@ import { ref } from 'vue';
 import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
 import { user } from '../class.js';
-import { isLogining } from '../eventBus';
+import { isLogining, cur_restaurant_id } from '../eventBus';
 const props = defineProps({
   infor: Object
 });
 
-
+cur_restaurant_id.value = props.infor.id;
+console.log("hi"+ cur_restaurant_id.value);
 $(document).ready(function () {
   $('.close').click(function (e) { 
     e.preventDefault();
