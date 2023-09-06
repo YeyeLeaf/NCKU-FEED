@@ -5,6 +5,10 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import RedButton from './RedButton.vue';
 import axios from 'axios';
 
+const props = defineProps({
+  id: String
+});
+
 class PostData {
   constructor() {
     this.content = ref("");
@@ -40,7 +44,7 @@ const editorOptions = {
   },
   placeholder: "輸入內容..."
 };
-
+console.log(props.id);
 </script>
 <template>
   <div>

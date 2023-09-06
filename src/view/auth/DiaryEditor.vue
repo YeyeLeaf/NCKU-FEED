@@ -1,7 +1,10 @@
 <script setup>
-import Editor from '../../components/Editor.vue'
-import { confirmAccess } from '../../eventBus.js';
+import Editor from '../../components/Editor.vue';
+import { confirmAccess, cur_restaurant_id } from '../../eventBus.js';
+import { useRoute } from 'vue-router';
 
+const route = useRoute(); 
+const restaurantId = route.params.restaurant_id;
 confirmAccess();
 $(document).ready(function () {
   $(window).scrollTop(0);
@@ -9,8 +12,11 @@ $(document).ready(function () {
   $('.navbar, .footer').css('opacity', '1');
   $('body').css('overflow', 'auto');
 });
+console.log(cur_restaurant_id.value);
 </script>
+
 <template>
-  <Editor/>
+  
+  <Editor :id="cur_restaurant_id"/>
 </template>
 
