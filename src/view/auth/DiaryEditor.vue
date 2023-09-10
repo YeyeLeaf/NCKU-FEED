@@ -12,7 +12,6 @@ $(document).ready(function () {
   $('.navbar, .footer').css('opacity', '1');
   $('body').css('overflow', 'auto');
 });
-console.log(cur_restaurant_id.value);
 </script>
 
 <template>

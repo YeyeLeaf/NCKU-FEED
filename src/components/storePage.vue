@@ -1,15 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onUpdated } from 'vue';
 import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
 import { user } from '../class.js';
-import { isLogining, cur_restaurant_id } from '../eventBus';
+import { isLogining, cur_restaurant_id, cur_post } from '../eventBus';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 const props = defineProps({
   infor: Object
 });
 
-cur_restaurant_id.value = props.infor.id;
-console.log("hi"+ cur_restaurant_id.value);
+
 $(document).ready(function () {
   $('.close').click(function (e) { 
     e.preventDefault();
@@ -17,6 +20,7 @@ $(document).ready(function () {
     $('.store-infor').siblings().css('opacity', '1');
     $('body').css('overflow', 'auto');
   });
+  cur_restaurant_id.value = props.infor._id;
 });
 
 const tab = ['評論', '食記'];
@@ -256,12 +260,43 @@ const editComment = async (event) =>{
 
 }
 
+////////////////////////////////////// Posts ///////////////////////////////////////////////////
+const postList = ref([]);
+const getPost = async () => {
+  await fetch("http://127.0.0.1:5000/posts/restaurant?restaurant_id="+ props.infor._id, {
+          method: "GET",
+    })
+    
+    .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          }
+    })
+    .then((result) => {
+      console.log(result);
+      let temp = result;
+      postList.value = temp;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
+getPost();
+
+const openFeed = (item) => {
+    cur_post.value = item;
+    $(window).scrollTop(0);
+    $('.store-infor').hide();
+    $('.navbar, .footer').css('opacity', '1');
+    $('body').css('overflow', 'auto');
+    router.push('/diaryDisplay');
+}
 </script>
 <template>
   <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage">
       <div class="p-1 leftSide flex items-center">
-        <img src="src/assets/leaf.png" class="rounded-2xl mb-2">
+        <img :src="infor.photos" class="rounded-2xl mb-2">
         <div class="resInfo">
           <div class="flex justify-between items-center mt-2">
             <h2 class="text-xl">{{ infor.name }}</h2>
@@ -319,7 +354,7 @@ const editComment = async (event) =>{
                 <button v-if="isEditing==true" class="rounded-md bg-[#b80c0c] text-white p-1 w-full hover:bg-[#ed0000]" @click="editComment">完編</button>
               </div>
             </form>
-            <div v-if="commentList.length==0">nothing</div>
+            <div v-if="commentList.length==0">尚無評論</div>
             <Comment v-for="(item, index) in commentList" :key="index" :infor="item" :nowEdit="editCommentId" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
           </div>
           <div v-show="num===1" class="max-h-full">
@@ -327,13 +362,8 @@ const editComment = async (event) =>{
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
-            <div class="mt-2">
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
-              <FeedName_sm authorImg="src/assets/user_black.png" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <div class="mt-2" v-if="postList != null">
+              <FeedName_sm v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
             </div>
           </div>
         </div>

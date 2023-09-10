@@ -3,10 +3,41 @@ import About from '../../components/About.vue'
 import FeedName from '../../components/FeedName.vue'
 import PersonalInfo from '../../components/PersonalInfo.vue'
 import { user } from '../../class.js'
-import { confirmAccess } from '../../eventBus.js';
+import { confirmAccess, cur_post } from '../../eventBus.js';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 confirmAccess();
 
+const router = useRouter();
+
+const postList = ref([]);
+const getPost = async () => {
+await fetch("http://127.0.0.1:5000/posts/user?uid="+ user.id, {
+        method: "GET",
+    })
+    
+    .then((response) => {
+        if (response.status === 200) {
+            return response.json();
+        }
+    })
+    .then((result) => {
+        console.log(result);
+        let temp = result;
+        postList.value = temp;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+getPost();
+
+const openFeed = (item) => {
+    cur_post.value = item;
+    router.push('/diaryDisplay');
+}
 </script>
 
 <template>
@@ -17,7 +48,7 @@ confirmAccess();
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 my-16 w-5/6">
             <About :info="user.selfIntro" class="mb-8"/>
-            <FeedName :authorImg="user.profilePhoto" name="標題" :comment="99" :heart="100" class="mt-0"/>
+            <FeedName v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
         </div>
 
         <div class="h-200 hidden lg:flex"> 

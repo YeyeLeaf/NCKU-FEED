@@ -2,15 +2,14 @@
 import PersonalInfo from '../components/PersonalInfo.vue';
 import axios from 'axios';
 import { ref } from 'vue';
-import { cur_restaurant_id } from '../eventBus';
+import { cur_post } from '../eventBus';
 import { user } from '../class.js';
 
-const post = ref({});
 const author = ref({});
 
 const getUserData = async () => {
   const params = new URLSearchParams();
-  params.append("uid", post.value.uid); 
+  params.append("uid", cur_post.value.uid); 
 
   await fetch("http://localhost:5000/user?" + params.toString(), {
     method: "GET"
@@ -29,28 +28,7 @@ const getUserData = async () => {
     });
 }
 
-const getPost = async () => {
-  await fetch("http://127.0.0.1:5000/posts/restaurant?restaurant_id="+ cur_restaurant_id.value, {
-          method: "GET",
-    })
-    
-    .then((response) => {
-          if (response.status === 200) {
-return response.json();
-          }
-    })
-    .then((result) => {
-      console.log(result);
-      let temp = result;
-      post.value = temp[temp.length-1];
-      getUserData();
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-getPost();
-
+getUserData();
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -58,14 +36,14 @@ getPost();
       <div class="flex mb-6">
 <img :src="author.profile_photo" class="w-24 rounded-full mr-4">
 <div class="flex flex-col justify-between">
-  <h1 class="text-3xl font-bold">{{ post.title }}</h1>
+  <h1 class="text-3xl font-bold">{{ cur_post.title }}</h1>
   <div class="flex justify-between text-[#525252]">
-    <p class="mr-10">{{ post.release_time }}</p>
+    <p class="mr-10">{{ cur_post.release_time }}</p>
     <p>作者：{{ author.nick_name }}</p>
   </div>
 </div>
       </div>
-      <div v-html="post.content"></div>
+      <div v-html="cur_post.content"></div>
     </div>
     <div class="h-200 hidden lg:flex"> 
       <div class="w-0.5 h-full bg-gray-100"></div>

@@ -45,7 +45,6 @@ const getRecommend = async ()=>{
     })
     .then((result) => {
       recommendList.value = recommendList.value.concat(result.recommendation);
-      //console.log(recommendList.value[0]);
 
     })
     .catch(function (error) {

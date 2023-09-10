@@ -108,7 +108,7 @@ const updateStatus = () => {
             <i v-show="isCollected === true" class="fas fa-bookmark"></i>
         </div>-->
         <div class="overflow-hidden rounded-2xl w-full">
-            <img src="src/assets/leaf.png" class="w-full h-full rounded-2xl hover:scale-110 transition-transform"/>
+            <img :src="infor.photos[0]" class="w-full h-full rounded-2xl hover:scale-110 transition-transform"/>
         </div>
         <div class="flex justify-between items-center">
             <p class="hidden lg:flex lg:text-xl">{{ textTruncation(infor.name,8) }}</p>

@@ -6,6 +6,7 @@ import PersonalEdit from '../view/auth/PersonalEdit.vue';
 import OtherUserPage from '../view/OtherUserPage.vue';
 import DiaryEditor from '../view/auth/DiaryEditor.vue';
 import Diary from '../view/Diary.vue';
+import DiaryDisplay from '../view/DiaryDisplay.vue';
 import Collect from '../view/auth/Collect.vue';
 import Preference from '../view/auth/Preference.vue';
 
@@ -19,6 +20,7 @@ const router = createRouter({
     { path: '/userPage', component: OtherUserPage },
     { path: '/diaryEditor', component: DiaryEditor },
     { path: '/diary', component: Diary },
+    { path: '/diaryDisplay', component: DiaryDisplay },
     { path: '/collect', component: Collect },
     { path: '/preference', component: Preference },
   ],

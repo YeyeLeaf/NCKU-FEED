@@ -4,11 +4,14 @@ import { QuillEditor } from "@vueup/vue-quill";
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import RedButton from './RedButton.vue';
 import axios from 'axios';
+import { user } from '../class.js';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   id: String
 });
 
+const router = useRouter();
 class PostData {
   constructor() {
     this.content = ref("");
@@ -17,16 +20,25 @@ class PostData {
 
   submit() {
     axios
-      .post('http://localhost:3000/tasks', { //等後端api
-        content: post.content.value,
-        title: post.title.value
+      .post('http://127.0.0.1:5000/posts', { 
+        "uid": user.id,
+        "title": post.title.value,
+        "content": post.content.value,
+        "restaurants_id": props.id
+      }, {
+        headers: {
+          "Authorization": `Bearer ${user.access_token}`,
+          'Content-Type': 'application/json', 
+        }
       })
       .then((response) => {
         console.log(response);
+        router.push('/diary');
       })
       .catch((error) => {
         console.error(error);
-      });
+        alert("發佈失敗，請再試一次！");
+      })
   }
 }
 //https://jsonplaceholder.typicode.com/posts
@@ -51,7 +63,7 @@ console.log(props.id);
     <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full lg:text-3xl text-2xl p-4 focus:outline-none">
     <QuillEditor theme="snow" v-model:content="post.content.value" :options="editorOptions" content-type="html" class="mx-auto my-0 min-h-screen"/>
   </div>
-  <router-link to="/diary"><RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" /></router-link>
+  <RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" />
 </template>
 
 <style scoped src="../post.css">
