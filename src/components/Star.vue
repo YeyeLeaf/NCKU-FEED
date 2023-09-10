@@ -29,8 +29,8 @@ const objectToArray = () =>{
 objectToArray();
 </script>
 <template>
-  <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2 w-24 relative">{{ ave }}&nbsp;<i class="fas fa-star" @click="btnToggle"></i>
-    <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-0 top-full z-10">
+  <button class="bg-[#ff8e3c] text-white rounded-2xl py-1 px-2  w-20 relative whitespace-nowrap starButton">{{ ave }}&nbsp;<i class="fas fa-star" @click="btnToggle"></i>
+    <div v-if="isShow" class="absolute detail bg-white border-2 border-[#ff8e3c] p-4 w-56 right-0 top-full z-10 showbox">
       <p v-for="(item, index) in rating" :key="index" class="text-black flex justify-between items-center">
         <span class="w-6/12">{{ item }}</span>
         <span>
@@ -41,3 +41,22 @@ objectToArray();
     </div>
   </button>
 </template>
+
+<style scoped>
+
+
+@media only screen and (max-width: 500px){
+  .starButton{
+    width: 3.5rem;
+
+  }
+  .starButton i{
+    font-size: 10px;
+  }
+
+  .starButton .showbox{
+    width: 11rem;
+  }
+}
+
+</style>

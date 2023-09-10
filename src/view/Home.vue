@@ -115,7 +115,7 @@ const openDetail = async (item) => {
 
 <template>
   <div>
-    <div class="flex justify-center">
+    <div class="flex justify-center selectBar">
       <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 p-2 text-xl font-bold text-[#525252]">{{ value }}</a>
     </div>
     <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult" @search-result="recommendList = $event"/></div>
@@ -137,5 +137,12 @@ const openDetail = async (item) => {
   border-bottom: 5px solid #ff8e3c;
   color: #ff8e3c;
   font-weight: bold;
+}
+@media only screen and (max-width: 500px){
+
+  .selectBar a{
+    font-size: 17px;
+  }
+
 }
 </style>
