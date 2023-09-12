@@ -80,8 +80,8 @@ const deleteComment = async () => {
         </div>
         <div class="flex items-center">
           <div v-if="isMe" class="flex mr-5 rightSide">
-            <i class="fa fa-pen hover:text-red-500 mr-3" :class=" nowEdit==infor._id?'text-red-500':'text-black-100' " @click="$emit('edit-comment')"></i>
-            <i class="fa fa-trash hover:text-red-500" @click="deleteComment"></i>
+            <i class="fa fa-pen hover:text-red-500 mr-3 cursor-pointer" :class=" nowEdit==infor._id?'text-red-500':'text-black-100' " @click="$emit('edit-comment')"></i>
+            <i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deleteComment"></i>
           </div>
           <Star :stars="infor.rating"/>
         </div>
