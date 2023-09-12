@@ -29,6 +29,33 @@ const getUserData = async () => {
 }
 
 getUserData();
+
+//取得餐廳資訊
+const rest_name = ref("");
+
+const getRestData = async () => {
+  await fetch("http://127.0.0.1:5000/restaurants?restaurant_id=" + cur_post.value.restaurants_id, {
+    method: "GET",
+    headers: {
+    "Authorization": `Bearer ${user.access_token}`,
+    'Content-Type': 'application/json'
+    }
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .then((result) => {
+      console.log(result);
+      rest_name.value = result.name;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+getRestData();
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -38,7 +65,7 @@ getUserData();
 <div class="flex flex-col justify-between">
   <h1 class="text-3xl font-bold">{{ cur_post.title }}</h1>
   <div class="flex justify-between text-[#525252]">
-    <p class="mr-10">{{ cur_post.release_time }}</p>
+    <p class="mr-10">{{ rest_name }}</p>
     <p>作者：{{ author.nick_name }}</p>
   </div>
 </div>

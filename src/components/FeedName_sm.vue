@@ -40,10 +40,12 @@ getUserData();
             <div class="flex flex-col lg:justify-end justify-between">
                 <p class="text-2xl lg:hidden">{{ infor.title }}</p>
                 <div class="flex items-center space-x-1">
-                    <!-- <img src="../assets/comment.png" class="lg:w-6 lg:h-6 w-4 h-4">
+                    <!-- 
+                      暫不開放貼文留言與點讚
+                      <img src="../assets/comment.png" class="lg:w-6 lg:h-6 w-4 h-4">
                     <p class="text-sm">{{ infor.comments.length }}</p> -->
-                    <img src="../assets/heart_empty.png" class="lg:w-6 lg:h-6 w-4 h-4">
-                    <p class="text-sm">{{ infor.like }}</p>
+                    <!-- <img src="../assets/heart_empty.png" class="lg:w-6 lg:h-6 w-4 h-4">
+                    <p class="text-sm">{{ infor.like }}</p> -->
                 </div>
             </div>
     </div>

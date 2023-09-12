@@ -314,11 +314,13 @@ const refresh = () =>{
               <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2 whitespace-nowrap"># {{ tag }}</button>
           </div>
           <ul>
-          <li class="mb-2"><i class="fas fa-clock w-4 break-all" style="color: #525252;"></i>&nbsp;星期一 10:00~22:00</li>
+          <li class="mb-2"><i class="fas fa-clock w-4 break-all" style="color: #525252;"></i>&nbsp;
+            <li v-for="(time, index) in infor.open_hour" :key="index">{{ time }}</li>
+          </li>
           </ul>
-          <a href="" class="my-2 cursor-pointer hover:underline break-all"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
+          <a :href="infor.gmap_url" target="_blank" class="my-2 cursor-pointer hover:underline break-all"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
           <p class="my-2"><i class="fas fa-phone-alt w-4 break-all" style="color: #525252;"></i>&nbsp;{{ infor.phone_number }}</p>
-          <a href="" class="mt-2 cursor-pointer hover:underline break-all"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
+          <p><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：<a :href="infor.website" target="_blank" class="mt-2 cursor-pointer hover:underline break-all">{{ infor.website }}</a></p>
         </div>
       </div>
       <div class="p-1 rightSide">
