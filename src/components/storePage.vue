@@ -303,21 +303,22 @@ const refresh = () =>{
 <template>
   <div class="bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between z-10 rounded-2xl box-border storePage border border-gray-300">
       <div class="p-1 leftSide flex items-center">
-        <img :src="infor.photos" class="rounded-2xl mb-2">
+          <img :src="infor.photos" class="rounded-2xl mb-2 w-full h-full">
+        
         <div class="resInfo">
           <div class="flex justify-between items-center mt-2">
             <h2 class="text-xl">{{ infor.name }}</h2>
             <button class="whitespace-nowrap bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
           </div>
-          <div class="flex overflow-x-scroll whitespace-nowrap mt-2">
-              <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2"># {{ tag }}</button>
+          <div class="flex overflow-x-scroll mt-2">
+              <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2 whitespace-nowrap"># {{ tag }}</button>
           </div>
           <ul>
-          <li class="mb-2"><i class="fas fa-clock w-4" style="color: #525252;"></i>&nbsp;星期一 10:00~22:00</li>
+          <li class="mb-2"><i class="fas fa-clock w-4 break-all" style="color: #525252;"></i>&nbsp;星期一 10:00~22:00</li>
           </ul>
-          <a href="" class="my-2 cursor-pointer hover:underline"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
-          <p class="my-2"><i class="fas fa-phone-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.phone_number }}</p>
-          <a href="" class="mt-2 cursor-pointer hover:underline"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
+          <a href="" class="my-2 cursor-pointer hover:underline break-all"><i class="fas fa-map-marker-alt w-4" style="color: #525252;"></i>&nbsp;{{ infor.address }}</a>
+          <p class="my-2"><i class="fas fa-phone-alt w-4 break-all" style="color: #525252;"></i>&nbsp;{{ infor.phone_number }}</p>
+          <a href="" class="mt-2 cursor-pointer hover:underline break-all"><i class="fas fa-link w-4" style="color: #525252;"></i>&nbsp;網站連結：{{ infor.website }}</a>
         </div>
       </div>
       <div class="p-1 rightSide">
@@ -407,19 +408,20 @@ const refresh = () =>{
     padding: 2rem;
   }
   .storePage .leftSide{
-    width: 55%;
-    padding-right: 2%;
+    width: 42%;
     flex-direction: column;
   }
   .resInfo{
+    width: 100%;
     overflow-y: scroll;
   }
   .storePage .leftSide img{
-    width: 100%;
-    height: 50%;
+    width: 42%px;
+    height: 230px;
+    object-fit: cover;
   }
   .rightSide{
-    width: 100%;
+    width: 56%;
     overflow-y: scroll;
   }
   
@@ -439,12 +441,17 @@ const refresh = () =>{
     padding-right: 1%;
     flex-direction: row;
   }
+  .resInfo{
+    width: 55%;
+  }
   .storePage .leftSide img{
-    width: 50%;
+    width: 45%;
     height: 100%;
+    object-fit: cover;
     margin-right: 3%;
   }
   .rightSide{
+    width: 100%;
     overflow-y: visible;
   }
 }
@@ -468,6 +475,7 @@ const refresh = () =>{
     width: 60%;
   }
   .resInfo{
+    width: 100%;
     overflow-y: visible;
   }
   button{

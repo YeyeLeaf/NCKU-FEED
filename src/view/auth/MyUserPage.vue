@@ -41,7 +41,7 @@ const openFeed = (item) => {
 </script>
 
 <template>
-    <div class="flex-col lg:flex-row flex  lg:justify-evenly justify-center items-center">
+    <div class="flex-col lg:flex-row flex  lg:justify-evenly justify-center min-h-[700px]">
         <div class="lg:hidden mt-16 ">
             <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案"/>
         </div>
@@ -55,7 +55,7 @@ const openFeed = (item) => {
             <div class="w-0.5 h-full bg-gray-100"></div>
         </div>
 
-        <div class="hidden lg:flex w-[15%]">
+        <div class="hidden lg:flex w-[15%] mt-12">
             <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案"/>
         </div>
     </div>

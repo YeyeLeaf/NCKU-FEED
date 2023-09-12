@@ -150,4 +150,10 @@ const updateStatus = () => {
   transition: 0.1s ease-in;
   cursor: pointer;
 }
+
+img{
+  width: 300px;
+  height: 250px;
+  object-fit:cover;
+}
 </style>
