@@ -1,10 +1,15 @@
 <script setup>
+
+import { ref } from 'vue';
+import RedButton from './RedButton.vue'
+
 defineProps({
     myImg: String,
     name: String,
     content:String,
+    isDairyPage:Boolean
 })
-import RedButton from './RedButton.vue'
+
 </script>
 
 <template>
@@ -13,7 +18,13 @@ import RedButton from './RedButton.vue'
     <div class="lg:flex flex-col space-y-8 items-center hidden">
         <img :src="myImg" class="w-36 rounded-full">
         <p class="text-3xl text-center">{{ name }}</p>
-        <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+        <div v-if="!isDairyPage">
+            <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+        </div>
+        <div v-if="isDairyPage">
+            <router-link to="/myUserPage"><RedButton :text="content"/></router-link>
+        </div>
+        
 
     </div>
 
@@ -24,7 +35,12 @@ import RedButton from './RedButton.vue'
         </div>
         <div class="flex flex-col justify-between">
             <p class="text-3xl text-center">{{ name }}</p>
-            <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+            <div v-if="!isDairyPage">
+                <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+            </div>
+            <div v-if="isDairyPage">
+                <router-link to="/myUserPage"><RedButton :text="content"/></router-link>
+            </div>
         </div>
 
     </div>

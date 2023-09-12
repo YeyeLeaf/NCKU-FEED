@@ -310,7 +310,7 @@ const refresh = () =>{
             <h2 class="text-xl">{{ infor.name }}</h2>
             <button class="whitespace-nowrap bg-[#ff8e3c] text-white rounded-2xl py-1 px-2">{{ infor.star }}&nbsp;<i class="fas fa-star"></i></button>
           </div>
-          <div class="flex overflow-x-scroll mt-2">
+          <div class="flex overflow-x-scroll my-2">
               <button v-for="(tag, index) in infor.tags" :key="index" class="bg-[#ffe0c9] rounded-full border border-[#ff8e3c] px-2 lg:py-1 py-0.5 mr-2 whitespace-nowrap"># {{ tag }}</button>
           </div>
           <ul>
@@ -403,7 +403,7 @@ const refresh = () =>{
 @media only screen and (max-width: 1500px) {
   .storePage{
     width: 67%;
-    height: 70%;
+    height: 80%;
     flex-direction: row;
     padding: 2rem;
   }
@@ -417,7 +417,7 @@ const refresh = () =>{
   }
   .storePage .leftSide img{
     width: 42%px;
-    height: 230px;
+    height: 280px;
     object-fit: cover;
   }
   .rightSide{
