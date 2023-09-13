@@ -29,7 +29,7 @@ defineProps({
     </div>
 
     <!-- 小螢幕 -->
-    <div class="flex flex-wrap space-x-8 lg:hidden">
+    <div class="flex flex-wrap space-x-8 lg:hidden justify-center">
         <div>
             <img :src="myImg" class="w-28 rounded-full">
         </div>

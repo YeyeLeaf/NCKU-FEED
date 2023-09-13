@@ -3,9 +3,9 @@ import storeCard from '../components/storeCard.vue'
 import wheel from '../components/wheel.vue'
 import searchBar from '../components/searchBar.vue'
 import storePage from '../components/storePage.vue'
-import { ref, onUpdated, computed } from 'vue'
+import { ref, onUpdated, computed,onMounted } from 'vue'
 import { user } from '../class.js'
-import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
+import { isLogining ,getJwtFromCookie,isScrollingToBottom,isLargeScreen } from '../eventBus'
 
 const recommendList = ref([]);
 let pages=1;
@@ -110,6 +110,17 @@ const openDetail = async (item) => {
 
   $('.store-infor').css("display", "flex");
 };
+
+window.addEventListener('resize', async () => {
+  let screenWidth = document.body.clientWidth;
+  if (screenWidth<500){
+    isLargeScreen.value = false;
+  }
+  else{
+    isLargeScreen.value = true;
+  }
+});
+
 </script>
 
 

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 export const isLogining = ref(false);
 export const cur_restaurant_id = ref('');
 export const cur_post = ref('');
+export const isLargeScreen = ref(true);
 //change navbar status
 export function changeNavbar() {
   isLogining.value = !isLogining.value;
