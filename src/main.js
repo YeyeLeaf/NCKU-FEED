@@ -3,7 +3,7 @@ import router from './router';
 import './style.css';
 import App from './App.vue';
 import { user } from './class.js';
-import { getUidFromCookie, setJwtToCookie, isLogining ,fadeOut} from './eventBus.js';
+import { getUidFromCookie, setJwtToCookie, isLogining ,fadeOut ,isLargeScreen} from './eventBus.js';
 
 const app = createApp(App);
 
@@ -42,8 +42,30 @@ router.beforeEach(async(to, from, next) => {
   }
   next();
 });
+// 螢幕大小改變
+window.addEventListener('resize', async () => {
+  let screenWidth = document.body.clientWidth;
+  if (screenWidth<500){
+    isLargeScreen.value = false;
+  }
+  else{
+    isLargeScreen.value = true;
+  }
+});
+// 頁面重整
+window.addEventListener('load', function() {
+  let screenWidth = document.body.clientWidth;
+  if (screenWidth<500){
+    isLargeScreen.value = false;
+  }
+  else{
+    isLargeScreen.value = true;
+  }
+});
 
 window.onload = fadeOut();
 
 app.use(router);
 app.mount('#app');
+
+

@@ -95,7 +95,7 @@ const signIn = async () => {
 <template>
   <div class="home"></div>
   <!-- lg:mt-56 lg:mb-40 mt-52 mb-40 -->
-  <div class="relative flex justify-center flex-wrap items-center h-screen">  
+  <div class="relative flex justify-center flex-wrap items-center min-h-[700px]">  
     <div class="flex flex-col justify-center items-center lg:space-y-10 lg:px-28 space-y-6 px-8">
       <p class="text-black font-sans text-5xl lg:text-6xl font-semibold">CAN'T WAIT TO EAT!</p>
       <button class="bg-white text-gray-700 items-center flex" @click="signIn">
@@ -114,9 +114,9 @@ const signIn = async () => {
 @import url('../../paper.css');
 .home{
   width: 100%;
-  min-height: 100vh;
+  min-height: 90%;
   background: url("../assets/login.svg") center center no-repeat;
-  background-size: 100% 100%;
+  background-size: 97% 97%;
   position: absolute;
 }
 

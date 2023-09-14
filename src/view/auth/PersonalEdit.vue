@@ -61,7 +61,7 @@ const updateUserInfo = async () => {
 </script>
 
 <template>
-  <div class="h-screen flex flex-wrap justify-center items-center">
+  <div class="h-screen flex flex-col justify-center items-center">
       <div class="border flex flex-col w-3/4 py-10 lg:space-y-10 lg:px-12 space-y-6 px-8">
         <div class="flex justify-start items-center space-x-10">
          <img :src="user.profilePhoto" class="lg:w-32 w-24 no-border" style="border-radius: 9999px">
@@ -80,9 +80,9 @@ const updateUserInfo = async () => {
             <textarea placeholder="blablabla" class="border border-gray-300 px-4 py-2 rounded focus:outline-none focus:border-blue-500 lg:w-4/5 w-2/3 lg:h-40 h-60" v-model="user.selfIntro"></textarea>
           </div>
         </div>
-      <router-link to="/personalEdit"><RedButton text="save" class="w-full" :onclick="updateUserInfo"/></router-link> 
      
-  </div>
+      </div>
+      <router-link to="/personalEdit"><RedButton text="save" class="w-[10%] flex items-center justify-center mt-3" :onclick="updateUserInfo"/></router-link> 
 
   </div>
 </template>

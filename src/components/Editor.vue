@@ -8,7 +8,8 @@ import { user } from '../class.js';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
-  id: String
+  id: String,
+  resName:String
 });
 
 const router = useRouter();
@@ -60,6 +61,10 @@ console.log(props.id);
 </script>
 <template>
   <div>
+    <div class="flex mx-4 mt-3 items-center justify-center">
+      <i class="fas fa-seedling text-green-400 lg:text-4xl text-2xl mr-2"></i>
+      <p class="lg:text-2xl text-xl">{{ resName }}</p>
+    </div>
     <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full lg:text-3xl text-2xl p-4 focus:outline-none">
     <QuillEditor theme="snow" v-model:content="post.content.value" :options="editorOptions" content-type="html" class="mx-auto my-0 min-h-screen"/>
   </div>

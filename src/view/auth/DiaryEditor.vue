@@ -1,6 +1,6 @@
 <script setup>
 import Editor from '../../components/Editor.vue';
-import { confirmAccess, cur_restaurant_id } from '../../eventBus.js';
+import { confirmAccess, cur_restaurant_id ,cur_restaurant_name } from '../../eventBus.js';
 import { useRoute } from 'vue-router';
 
 const route = useRoute(); 
@@ -16,6 +16,6 @@ $(document).ready(function () {
 
 <template>
   
-  <Editor :id="cur_restaurant_id"/>
+  <Editor :id="cur_restaurant_id" :resName="cur_restaurant_name"/>
 </template>
 
