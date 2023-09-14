@@ -414,7 +414,10 @@ const refresh = () =>{
     </div>
     <div v-show="topnum===0" class="max-h-full">
         <div class="p-1 flex items-center flex-col">
-            <img :src="infor.photos" class="rounded-2xl mb-2 w-full h-full">
+          <div class="overflow-hidden w-full">
+            <img :src="infor.photos" class="rounded-2xl mb-2 w-[300px] h-[220px]">
+          </div>
+            
             <div class="resInfo">
                 <div class="flex justify-between items-center mt-2">
                     <h2 class="text-xl">{{ infor.name }}</h2>
@@ -520,7 +523,7 @@ const refresh = () =>{
 /* 電腦 */
 @media only screen and (max-width: 1500px) {
   .storePage{
-    width: 67%;
+    width: 63%;
     height: 80%;
     padding: 2rem;
   }
@@ -635,8 +638,7 @@ const refresh = () =>{
     font-size: 10px;
   }
   .smStorePage .resInfo img{
-    width: 100%;
-    height: 50%;
+    object-fit: cover;
   }
   .smStorePage .resInfo{
     width: 100%;
