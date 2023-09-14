@@ -3,7 +3,7 @@ import { ref, onUpdated } from 'vue';
 import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
 import { user } from '../class.js';
-import { isLogining, cur_restaurant_id, cur_post ,isLargeScreen} from '../eventBus';
+import { isLogining, cur_restaurant_id, cur_post ,isLargeScreen , cur_restaurant_name} from '../eventBus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -21,15 +21,19 @@ $(document).ready(function () {
     $('body').css('overflow', 'auto');
   });
   cur_restaurant_id.value = props.infor._id;
+  cur_restaurant_name.value = props.infor.name;
 });
 
 const tab = ['評論', '食記'];
 const num = ref(0);
 
+//手機的排版
 const toptab = ['餐廳資訊', '評論','食記'];
 const topnum = ref(0);
 
+//營業時間
 const timeIsOpen = ref(false);
+
 const Switch = (index) => {
         num.value = index;
         let panziElement = ref(null);
@@ -208,6 +212,7 @@ const addComment = async (event) => {
 const deleteComment = () =>{
   commentList.value.splice(0, commentList.value.length);
   getComment();
+  refresh();
 }
 
 const preEditCommentSetting = (item) =>{
@@ -362,7 +367,7 @@ const refresh = () =>{
               <div class="flex">
                 <div class="space-y-2">
                   <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
-                  <p v-if="isEditing" class="text-sm text-red-500">編輯中</p>
+                  <p v-if="isEditing" class="text-sm text-red-500">編輯</p>
                 </div>
                 <textarea name="comment" cols="30" rows="5" maxlength="150" class="border border-gray-300 rounded p-2 resize-none outline-none h-16 w-full" placeholder="撰寫評論...（上限150字）" v-model="commentStr"></textarea>
               </div>
@@ -393,6 +398,7 @@ const refresh = () =>{
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
+            <div class='mt-2' v-if="postList == null">尚無食記</div>
             <div class="mt-2" v-if="postList != null">
               <FeedName_sm v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
             </div>
@@ -486,6 +492,7 @@ const refresh = () =>{
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
               <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
+            <div class='mt-2' v-if="postList == null">尚無食記</div>
             <div class="mt-2" v-if="postList != null">
               <FeedName_sm v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
             </div>
@@ -555,7 +562,7 @@ const refresh = () =>{
 @media only screen and (max-width: 1050px) {
   .storePage{
     width: 75%;
-    height: 70%;
+    height: 75%;
   }
   .lgStorePage{
     flex-direction: column;
@@ -563,7 +570,7 @@ const refresh = () =>{
   }
   .lgStorePage .leftSide{
     width: 100%;
-    height: 60%;
+    height: 70%;
     flex-direction: row;
   }
   .lgStorePage .resInfo{
