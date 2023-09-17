@@ -49,7 +49,7 @@ const keyword = ref("");
 const list = ref([]);
 const search = async () => {
     if(keyword.value !== ""){
-        await fetch("http://localhost:5000/search/" + keyword.value, {
+        await fetch("http://localhost:5000/search?search_name=" + keyword.value+'&search_region='+'&search_time=', {
                 method: "GET"
         })
             .then((response) => {

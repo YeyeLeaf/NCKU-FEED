@@ -8,6 +8,7 @@ import {
   setJwtToCookie,
   isLogining,
   fadeOut,
+  isLargeScreen,
 } from './eventBus.js';
 
 const app = createApp(App);
@@ -46,6 +47,24 @@ router.beforeEach(async (to, from, next) => {
     isLogining.value = true;
   }
   next();
+});
+// 螢幕大小改變
+window.addEventListener('resize', async () => {
+  let screenWidth = document.body.clientWidth;
+  if (screenWidth < 500) {
+    isLargeScreen.value = false;
+  } else {
+    isLargeScreen.value = true;
+  }
+});
+// 頁面重整
+window.addEventListener('load', function () {
+  let screenWidth = document.body.clientWidth;
+  if (screenWidth < 500) {
+    isLargeScreen.value = false;
+  } else {
+    isLargeScreen.value = true;
+  }
 });
 
 window.onload = fadeOut();

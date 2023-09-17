@@ -4,7 +4,7 @@ import wheel from '../components/wheel.vue'
 import searchBar from '../components/searchBar.vue'
 import storePage from '../components/storePage.vue'
 import GoToTop from '../components/GoToTop.vue'
-import { ref, onUpdated, computed } from 'vue'
+import { ref, onUpdated, computed, onMounted } from 'vue'
 import { user } from '../class.js'
 import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
 
@@ -111,6 +111,8 @@ const openDetail = async (item) => {
 
   $('.store-infor').css("display", "flex");
 };
+
+
 </script>
 
 

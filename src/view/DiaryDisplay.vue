@@ -76,7 +76,7 @@ getRestData();
       <div class="w-0.5 h-full bg-gray-100"></div>
     </div>
     <div class="hidden lg:flex mt-16">
-      <PersonalInfo :myImg="author.profile_photo" :name="author.nick_name" content="查看個人檔案"/>
+      <PersonalInfo :myImg="author.profile_photo" :name="author.nick_name" content="查看個人檔案" :isDairyPage="true"/>
   </div>
   </div>
 </template>
