@@ -82,8 +82,11 @@ const updateUserInfo = async () => {
         </div>
      
       </div>
-      <router-link to="/personalEdit"><RedButton text="save" class="w-[10%] flex items-center justify-center mt-3" :onclick="updateUserInfo"/></router-link> 
-
+      <div class="flex">
+        <router-link to="/personalEdit"><RedButton text="儲存" class="w-[10%] flex items-center justify-center mt-3" :onclick="updateUserInfo"/></router-link> 
+      <router-link to="/myUserPage"><RedButton text="取消" class="w-[10%] flex items-center justify-center mt-3" :onclick="updateUserInfo"/></router-link> 
+      </div>
+      
   </div>
 </template>
   

@@ -20,6 +20,14 @@ class PostData {
   }
 
   submit() {
+    if(post.title.value==''){
+      alert("請為食記輸入標題喔") ;
+      return;
+    }
+    if(post.content.value==''){
+      alert("請為食記輸入內容喔") ;
+      return;
+    }
     axios
       .post('http://127.0.0.1:5000/posts', { 
         "uid": user.id,
@@ -68,7 +76,12 @@ console.log(props.id);
     <input type="text" v-model="post.title.value" placeholder="請輸入標題..." class="w-full lg:text-3xl text-2xl p-4 focus:outline-none">
     <QuillEditor theme="snow" v-model:content="post.content.value" :options="editorOptions" content-type="html" class="mx-auto my-0 min-h-screen"/>
   </div>
-  <RedButton text="送出" class="w-28 my-3 mx-auto" @click="post.submit" />
+  <div class="flex items-center justify-center my-3 space-x-3">
+    <RedButton text="送出" class="" @click="post.submit" />
+    <router-link to="/"><RedButton text="取消" class="" :onclick="updateUserInfo"/></router-link> 
+
+  </div>
+  
 </template>
 
 <style scoped src="../post.css">

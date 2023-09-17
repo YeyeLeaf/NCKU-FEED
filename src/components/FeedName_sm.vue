@@ -33,8 +33,9 @@ getUserData();
 
 <template>
     <div class="flex lg:w-full mb-2 justify-between shadow-md shadow-slate-300 rounded-md p-4 border-2 border-slate-100 cursor-pointer">
-            <div class="flex space-x-2 items-center">
-                <img :src="author.profile_photo" class="w-8 rounded-full">
+            <div class="flex items-center">
+                <img :src="author.profile_photo" class="w-8 rounded-full mr-3">
+                <p class="font-bold mr-6">{{ author.nick_name }}</p>
                 <p class="text-md hidden lg:flex">{{ infor.title }}</p>
             </div>
             <div class="flex flex-col lg:justify-end justify-between">

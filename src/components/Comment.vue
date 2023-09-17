@@ -1,8 +1,7 @@
 <script setup>
 import Star from './Star.vue';
 import { storage} from '../firebase/firebaseConfig';
-import {  ref as firebaseRef,getDownloadURL } from 'firebase/storage';
-import { ref as vueRef } from 'vue';
+import { ref  } from 'vue';
 import { user } from '../class.js';
 import { textTruncation } from '../eventBus';
 
@@ -13,8 +12,8 @@ const props = defineProps({
 
 const emit = defineEmits(['delete-comment','edit-comment']);
 
-const img = vueRef('');
-const userName = vueRef('');
+const img = ref('');
+const userName = ref('');
 //取得使用者大頭貼照片
 const getUserPic = async () =>{
   if (!props.infor){
@@ -40,7 +39,7 @@ const getUserPic = async () =>{
 }
 getUserPic();
 
-const isMe = vueRef(false); 
+const isMe = ref(false); 
 if (props.infor.uid == user.id){
   isMe.value = true;
 }

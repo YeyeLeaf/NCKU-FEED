@@ -173,6 +173,10 @@ const getComment = async () => {
 getComment();
 const addComment = async (event) => {
   event.preventDefault(); 
+  if(!isLogining.value){
+    alert("登入以使用留言功能");
+    return;
+  } 
   if (commentStr.value == ''){
     alert("請為餐廳留下評論喔！");
     return
@@ -305,6 +309,13 @@ const openFeed = (item) => {
     router.push('/diaryDisplay');
 }
 
+const showAlert = () =>{
+  if(!isLogining.value){
+    alert("登入以使用貼文功能");
+    return;
+  } 
+}
+
 ////////////////////////////////////// Close tab refresh ////////////////////////////////////////////
 //重設變數等
 const refresh = () =>{
@@ -396,7 +407,8 @@ const refresh = () =>{
           <div v-show="num===1" class="max-h-full">
             <div class="flex p-4">
               <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
-              <router-link to="/diaryEditor" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
+              <button v-if="isLogining==false" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]" @click="showAlert">撰寫食記</button>
+              <router-link to="/diaryEditor" v-if="isLogining==true" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
             </div>
             <div class='mt-2' v-if="postList == null">尚無食記</div>
             <div class="mt-2" v-if="postList != null">
