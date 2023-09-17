@@ -70,8 +70,7 @@ getCollect();
       </div>
       <!-- 沒有美術能力卡住ＱＱ -->
       <div v-if="user.restaurant.length==0" class="flex space-y-20 justify-center items-center h-full">
-        <h2 class="text-xl">目前還沒有東西喔</h2>
-        <h2>快去主頁收藏有興趣的餐廳吧！</h2>
+        <h2 class="my-2">啪！什麼都沒有</h2>
       </div>
     </div>
   </div>

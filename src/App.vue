@@ -9,6 +9,7 @@ import Loader from './components/loader.vue';
 
 
 <template>
+  <div id="top"></div>
   <Navbar1 v-if="isLogining" :myImg="user.profilePhoto"/>
   <Navbar2 v-else />
   <Loader />

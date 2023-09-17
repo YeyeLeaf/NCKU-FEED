@@ -3,6 +3,7 @@ import storeCard from '../components/storeCard.vue'
 import wheel from '../components/wheel.vue'
 import searchBar from '../components/searchBar.vue'
 import storePage from '../components/storePage.vue'
+import GoToTop from '../components/GoToTop.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../class.js'
 import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
@@ -130,6 +131,7 @@ const openDetail = async (item) => {
     </div>
   </div>
   <storePage :infor="curr_restaurant" class="store-infor hidden" @addOp="add_to_wheel(curr_restaurant)" :key="curr_restaurant._id"/>
+  <GoToTop />
 </template>
 
 <style scoped>
