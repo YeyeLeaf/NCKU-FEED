@@ -2,7 +2,7 @@
 import PersonalInfo from '../components/PersonalInfo.vue';
 import axios from 'axios';
 import { ref } from 'vue';
-import { cur_restaurant_id } from '../eventBus';
+import { cur_restaurant } from '../eventBus';
 import { user } from '../class.js';
 
 const post = ref({});
@@ -30,7 +30,7 @@ const getUserData = async () => {
 }
 
 const getPost = async () => {
-  await fetch("http://127.0.0.1:5000/posts/restaurant?restaurant_id="+ cur_restaurant_id.value, {
+  await fetch("http://127.0.0.1:5000/posts/restaurant?restaurant_id="+ cur_restaurant.value._id, {
           method: "GET",
     })
     

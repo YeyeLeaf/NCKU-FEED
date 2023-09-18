@@ -3,19 +3,18 @@ import storeCard from '../../components/storeCard.vue'
 import storePage from '../../components/storePage.vue'
 import { ref, onUpdated, computed } from 'vue'
 import { user } from '../../class.js'
-import { confirmAccess} from '../../eventBus.js';
+import { confirmAccess ,wheelList} from '../../eventBus.js';
 
 confirmAccess();
-const listData = ref([]);
 const curr_restaurant = ref({});
 const restaurant = ref([]);
 
 const add_to_wheel = (item) => {
-  if(listData.value.length < 10){
-    for(let i = 0; i < listData.value.length; i++){
-      if(listData.value[i] === item) return;
+  if(wheelList.value.length < 10){
+    for(let i = 0; i < wheelList.value.length; i++){
+      if(wheelList.value[i].name === item.name) return;
     }
-    listData.value.push(item);
+    wheelList.value.push(item);
   }
   else{
     alert("Lucky wheel is already full");
@@ -49,7 +48,6 @@ const getCollect = async () => {
         }
       })
       .then((result) => {
-        console.log(result);
         restaurant.value.push(result);
       })
       .catch(function (error) {
