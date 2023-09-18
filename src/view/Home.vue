@@ -6,7 +6,7 @@ import storePage from '../components/storePage.vue'
 import GoToTop from '../components/GoToTop.vue'
 import { ref, onUpdated, computed, onMounted } from 'vue'
 import { user } from '../class.js'
-import { isLogining ,getJwtFromCookie,isScrollingToBottom } from '../eventBus'
+import { isLogining ,getJwtFromCookie,isScrollingToBottom ,cur_restaurant,wheelList } from '../eventBus'
 
 const recommendList = ref([]);
 let pages=1;
@@ -69,15 +69,14 @@ window.addEventListener('scroll', async () => {
     }
   }
 });
-const listData = ref([]);
 const curr_restaurant = ref({});
 
 const add_to_wheel = (item) => {
-  if(listData.value.length < 10){
-    for(let i = 0; i < listData.value.length; i++){
-      if(listData.value[i] === item) return;
+  if(wheelList.value.length < 10){
+    for(let i = 0; i < wheelList.value.length; i++){
+      if(wheelList.value[i].name === item.name) return;
     }
-   listData.value.push(item);
+    wheelList.value.push(item);
   }
   else{
     alert("Lucky wheel is already full");
@@ -101,8 +100,6 @@ const deleteResult = (i) => {
 }
 const openDetail = async (item) => {
   curr_restaurant.value = item;
-  console.log(item._id);
-
   await new Promise(resolve => {
     $('.store-infor').siblings().css('opacity', '0.5');
     $('body').css('overflow', 'hidden');
@@ -122,7 +119,7 @@ const openDetail = async (item) => {
       <a v-for="(value, index) in tab" :key="index" @click.prevent="Switch(index)" :class="{ change : index === num }" class="cursor-pointer px-5 p-2 text-xl font-bold text-[#525252]">{{ value }}</a>
     </div>
     <div v-show="num===0"><searchBar @add-result="addResult" @delete-result="deleteResult" @search-result="recommendList = $event"/></div>
-    <div v-show="num===1"><wheel :List="listData" :RecommendList="recommendList"/></div>
+    <div v-show="num===1"><wheel :RecommendList="recommendList" @open-detail="openDetail(cur_restaurant)"/></div>
     <div class=" bg-[#eff0f3] py-5 px-2 lg:m-10 m-6 rounded-3xl list">
       <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5">所有商家</h2>
       <p class="text-lg lg:text-xl font-bold text-center mb-5">搜尋結果：<span v-for="item in filterResult">{{ item }}&nbsp;</span></p>

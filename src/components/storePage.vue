@@ -3,7 +3,7 @@ import { ref, onUpdated } from 'vue';
 import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
 import { user } from '../class.js';
-import { isLogining, cur_restaurant_id, cur_post ,isLargeScreen , cur_restaurant_name} from '../eventBus';
+import { isLogining, cur_post ,isLargeScreen ,cur_restaurant} from '../eventBus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -20,8 +20,7 @@ $(document).ready(function () {
     $('.store-infor').siblings().css('opacity', '1');
     $('body').css('overflow', 'auto');
   });
-  cur_restaurant_id.value = props.infor._id;
-  cur_restaurant_name.value = props.infor.name;
+  cur_restaurant.value = props.infor;
 });
 
 const tab = ['評論', '食記'];
@@ -405,10 +404,13 @@ const refresh = () =>{
             <Comment v-for="(item, index) in commentList" :key="index" :infor="item" :nowEdit="editCommentId" @delete-comment="deleteComment" @edit-comment="preEditCommentSetting(item)"/>
           </div>
           <div v-show="num===1" class="max-h-full">
-            <div class="flex p-4">
-              <img :src="user.profilePhoto" class="h-8 rounded-full mr-3">
+            <div class="flex pl-4 pr-8 py-3 justify-between items-center">
+              <img :src="user.profilePhoto" class="h-8 rounded-full">
               <button v-if="isLogining==false" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]" @click="showAlert">撰寫食記</button>
               <router-link to="/diaryEditor" v-if="isLogining==true" class="rounded-md bg-[#b80c0c] text-white py-1 px-2 hover:bg-[#ed0000]">撰寫食記</router-link>
+              <div class="flex p-4 h-10">
+                <textarea  class="outline-none opacity-0" ></textarea>
+              </div>
             </div>
             <div class='mt-2' v-if="postList == null">尚無食記</div>
             <div class="mt-2" v-if="postList != null">
