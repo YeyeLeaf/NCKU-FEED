@@ -1,5 +1,6 @@
 <script setup>
 import { textTruncation } from '../eventBus'
+import { cur_restaurant ,wheelList} from '../eventBus';
 
 $(document).ready(function () {
   $('.list-title').click(function (e) { 
@@ -11,10 +12,11 @@ $(document).ready(function () {
 import { ref, onMounted, computed, onUpdated } from 'vue';
 import RedButton from './RedButton.vue'
 
-const props = defineProps(['List','RecommendList']);
+const props = defineProps(['RecommendList']);
+
+const emit = defineEmits(['open-detail']);
 
 // computed property that auto-updates when the prop changes
-const list = computed(() => props.List);
 const winner = ref(0); // 指定获奖下标 specified 为 true 时生效
 const loading = ref(false); // 抽奖执行状态，防止用户多次点击
 let panziElement = ref(null);
@@ -26,12 +28,12 @@ onMounted(() => {
   // 通过获取奖品个数，来改变 CSS 样式中每个奖品动画的旋转角度
 // var(--nums) 实现 CSS 动画根据奖品个数，动态改变
    let root = document.querySelector(':root');
-   root.style.setProperty('--nums', list.value.length);
+   root.style.setProperty('--nums', wheelList.value.length);
 });
 onUpdated(() => {
   let root = document.querySelector(':root');
 
-  root.style.setProperty('--nums', list.value.length);
+  root.style.setProperty('--nums', wheelList.value.length);
   let bck = $(".bck-box .bck");
     if(bck.length == 1){
       bck.eq(0).css({transform: `translate(-174px, 174px) rotate(0deg) skew(0deg)`});
@@ -78,7 +80,7 @@ function start() {
 if (!loading.value) {
   panziElement.value = document.querySelector('.panzi');
   panziElement.value.classList.remove(animationClass());
-  winner.value = random(0, list.value.length - 1);
+  winner.value = random(0, wheelList.value.length - 1);
   winCallback();
   loading.value = true;
 }
@@ -95,8 +97,11 @@ setTimeout(() => {
 // 因为动画时间为 3s ，所以这里3s后获取结果，其实结果早就定下了，只是何时显示，告诉用户
 setTimeout(() => {
   loading.value = false;
-  alert("選中 "+list.value[winner.value].name+" !");
+  alert("選中 "+wheelList.value[winner.value].name+" !");
+  cur_restaurant.value = wheelList.value[winner.value];
+  emit('open-detail');
 }, 3000);
+
 }
 
 // 随机一个整数的方法
@@ -105,7 +110,7 @@ return parseInt(Math.random() * (max - min + 1) + min);
 }
 
 const deleteOp = (index) => {
-  props.List.splice(index, 1);
+  wheelList.value.splice(index, 1);
 }
 
 //產生隨機‘不重複’的數
@@ -124,10 +129,10 @@ const randomSelectRes = () =>{
     alert("請選擇2-10的數！");
     return;
   }
-  props.List.splice(0, props.List.length);
+  wheelList.value.splice(0, wheelList.value.length);
   const uniqueNumbers = generateRandomNumbers(selectedNumber.value, props.RecommendList.length);
   for (let i=0;i<selectedNumber.value;i++){
-    props.List.push(props.RecommendList[uniqueNumbers[i]]);
+    wheelList.value.push(props.RecommendList[uniqueNumbers[i]]);
   }
 }
 
@@ -138,17 +143,17 @@ const randomSelectRes = () =>{
       <div class="overall">
         <div class="zp-box">
           <div class="panzi">
-            <div class="bck-box" :style="` transform: rotate(${-90+180/list.length}deg)`">
+            <div class="bck-box" :style="` transform: rotate(${-90+180/wheelList.length}deg)`">
               <div
                 class="bck"
-                v-for="(i,index) in list"
+                v-for="(i,index) in wheelList"
                 :key="index"
               ></div>
             </div>
             <div
               class="jiang"
-              :style="`transform: rotate(${-index*360/list.length}deg) translateY(-7.5rem);`"
-              v-for="(i,index) in list"
+              :style="`transform: rotate(${-index*360/wheelList.length}deg) translateY(-7.5rem);`"
+              v-for="(i,index) in wheelList"
               :key="index"
             >
               <span class="Name">{{index}}</span>
@@ -161,7 +166,7 @@ const randomSelectRes = () =>{
         <h2 class="list-title lg:text-2xl text-xl font-bold text-center mb-5 cursor-pointer hover:bg-slate-300 transition-all duration-500">餐廳列表</h2>
         <hr class="border-2 border-[#ff8e3c]">
           <ul class="toggle-list h-72 overflow-y-scroll">
-            <li v-for="(item, index) in list" :key="index" class="flex items-center justify-between my-4 z-10">
+            <li v-for="(item, index) in wheelList" :key="index" class="flex items-center justify-between my-4 z-10">
               <p class="text-lg">{{ index }}</p>
               <p class="text-lg hidden lg:flex">{{ textTruncation(item.name,14) }}</p>
               <p class="text-base flex lg:hidden">{{ textTruncation(item.name,10) }}</p>

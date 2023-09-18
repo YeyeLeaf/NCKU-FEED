@@ -2,10 +2,11 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export const isLogining = ref(false);
-export const cur_restaurant_id = ref('');
-export const cur_restaurant_name = ref('');
+export const cur_restaurant = ref({});
 export const cur_post = ref('');
 export const isLargeScreen = ref(true);
+
+export const wheelList = ref([]);
 
 //change navbar status
 export function changeNavbar() {

@@ -3,7 +3,7 @@ import About from '../../components/About.vue'
 import FeedName from '../../components/FeedName.vue'
 import PersonalInfo from '../../components/PersonalInfo.vue'
 import { user } from '../../class.js'
-import { confirmAccess, cur_post } from '../../eventBus.js';
+import { confirmAccess, cur_post} from '../../eventBus.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -33,6 +33,8 @@ await fetch("http://127.0.0.1:5000/posts/user?uid="+ user.id, {
 }
 
 getPost();
+
+
 
 const openFeed = (item) => {
     cur_post.value = item;
