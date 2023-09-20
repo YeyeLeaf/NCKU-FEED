@@ -2,12 +2,17 @@
 import PersonalInfo from '../components/PersonalInfo.vue';
 import axios from 'axios';
 import { ref } from 'vue';
-import { cur_restaurant } from '../eventBus';
+import { cur_post, saveRestToLocalStorage, getRestFromLocalStorage, cur_restaurant}  from '../eventBus';
 import { user } from '../class.js';
+
 
 const post = ref({});
 const author = ref({});
 
+if(cur_restaurant.value) {
+  saveRestToLocalStorage(cur_restaurant.value);
+}
+else cur_restaurant.value = getRestFromLocalStorage();
 const getUserData = async () => {
   const params = new URLSearchParams();
   params.append("uid", post.value.uid); 
@@ -43,6 +48,7 @@ return response.json();
       console.log(result);
       let temp = result;
       post.value = temp[temp.length-1];
+      saveRestToLocalStorage(cur_restaurant.value);
       getUserData();
     })
     .catch(function (error) {

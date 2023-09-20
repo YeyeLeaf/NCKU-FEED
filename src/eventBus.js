@@ -1,8 +1,9 @@
+import { post } from 'jquery';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export const isLogining = ref(false);
-export const cur_restaurant = ref({});
+export const cur_restaurant = ref('');
 export const cur_post = ref('');
 export const isLargeScreen = ref(true);
 
@@ -89,4 +90,26 @@ function loader() {
 }
 export function fadeOut() {
   setInterval(loader, 2000);
+}
+
+// store post to localStorage
+export function saveDataToLocalStorage(data) {
+  localStorage.setItem('postData', JSON.stringify(data));
+}
+
+// get post from localStorage
+export function getDataFromLocalStorage() {
+  const storedData = localStorage.getItem('postData');
+  return storedData ? JSON.parse(storedData) : null;
+}
+
+// store cur_restaurant to localStorage
+export function saveRestToLocalStorage(data) {
+  localStorage.setItem('cur_restaurant', JSON.stringify(data));
+}
+
+// get cur_restaurant from localStorage
+export function getRestFromLocalStorage() {
+  const storedData = localStorage.getItem('cur_restaurant');
+  return storedData ? JSON.parse(storedData) : null;
 }

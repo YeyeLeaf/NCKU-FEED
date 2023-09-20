@@ -3,8 +3,13 @@ import PersonalInfo from '../components/PersonalInfo.vue';
 import storePage from '../components/storePage.vue'
 import axios from 'axios';
 import { ref } from 'vue';
-import { cur_post,wheelList } from '../eventBus';
+import { cur_post,wheelList, saveDataToLocalStorage, getDataFromLocalStorage} from '../eventBus';
 import { user } from '../class.js';
+
+if(cur_post.value) {
+  saveDataToLocalStorage(cur_post.value);
+}
+else cur_post.value = getDataFromLocalStorage();
 
 const author = ref({});
 
