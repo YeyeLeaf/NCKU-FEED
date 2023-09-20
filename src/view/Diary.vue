@@ -2,8 +2,9 @@
 import PersonalInfo from '../components/PersonalInfo.vue';
 import axios from 'axios';
 import { ref } from 'vue';
-import { cur_restaurant } from '../eventBus';
+import { cur_restaurant,cur_post,wheelList } from '../eventBus';
 import { user } from '../class.js';
+import storePage from '../components/storePage.vue';
 
 const post = ref({});
 const author = ref({});
@@ -52,7 +53,7 @@ return response.json();
 getPost();
 
 //取得餐廳資訊
-const rest_name = ref("");
+const rest = ref({});
 
 const getRestData = async () => {
   await fetch("http://127.0.0.1:5000/restaurants?restaurant_id=" + cur_post.value.restaurants_id, {
@@ -68,8 +69,7 @@ const getRestData = async () => {
       }
     })
     .then((result) => {
-      console.log(result);
-      rest_name.value = result.name;
+      rest.value = result;
     })
     .catch(function (error) {
       console.log(error);
@@ -77,19 +77,42 @@ const getRestData = async () => {
 }
 
 getRestData();
+
+const openDetail = async () => {
+  await new Promise(resolve => {
+    $('.store-infor').siblings().css('opacity', '0.5');
+    $('body').css('overflow', 'hidden');
+    resolve();
+  });
+
+  $('.store-infor').css("display", "flex");
+};
+
+const add_to_wheel = (item) => {
+  if(wheelList.value.length < 10){
+    for(let i = 0; i < wheelList.value.length; i++){
+      if(wheelList.value[i].name === item.name) return;
+    }
+    wheelList.value.push(item);
+  }
+  else{
+    alert("Lucky wheel is already full");
+  }
+}
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
     <div class="lg:w-3/5 m-12 lg:mr-0 lg:ml-0 mb-12 mt-12">
       <div class="flex mb-6">
-<img :src="author.profile_photo" class="w-24 rounded-full mr-4">
-<div class="flex flex-col justify-between">
-  <h1 class="text-3xl font-bold">{{ post.title }}</h1>
-  <div class="flex justify-between text-[#525252]">
-    <p class="mr-10">{{ rest_name }}</p>
-    <p>作者：{{ author.nick_name }}</p>
-  </div>
-</div>
+        <img :src="author.profile_photo" class="w-24 rounded-full mr-4">
+        <div class="flex flex-col justify-between">
+          <h1 class="text-3xl font-bold">{{ post.title }}</h1>
+          <div class="flex justify-between text-[#525252]">
+            <p class="mr-10">{{ rest.name }}</p>
+            <p>作者：{{ author.nick_name }}</p>
+          </div>
+        </div>
+        <button class="bg-[#b80c0c] text-white rounded-md w-32 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>
       </div>
       <div v-html="post.content"></div>
     </div>
@@ -99,5 +122,6 @@ getRestData();
     <div class="hidden lg:flex mt-16">
       <PersonalInfo :myImg="author.profile_photo" :name="author.nick_name" content="查看個人檔案"/>
   </div>
+  <storePage :infor="rest" class="store-infor hidden" @addOp="add_to_wheel(rest)" :key="rest._id"/>
   </div>
 </template>
