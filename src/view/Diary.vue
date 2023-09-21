@@ -1,14 +1,20 @@
 <script setup>
 import PersonalInfo from '../components/PersonalInfo.vue';
-import axios from 'axios';
 import { ref } from 'vue';
-import { cur_restaurant,cur_post,wheelList } from '../eventBus';
 import { user } from '../class.js';
 import storePage from '../components/storePage.vue';
+import { cur_post, saveRestToLocalStorage, getRestFromLocalStorage, cur_restaurant,wheelList}  from '../eventBus';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const post = ref({});
 const author = ref({});
 
+if(cur_restaurant.value) {
+  saveRestToLocalStorage(cur_restaurant.value);
+}
+else cur_restaurant.value = getRestFromLocalStorage();
 const getUserData = async () => {
   const params = new URLSearchParams();
   params.append("uid", post.value.uid); 
@@ -44,6 +50,7 @@ return response.json();
       console.log(result);
       let temp = result;
       post.value = temp[temp.length-1];
+      saveRestToLocalStorage(cur_restaurant.value);
       getUserData();
     })
     .catch(function (error) {
@@ -99,6 +106,31 @@ const add_to_wheel = (item) => {
     alert("Lucky wheel is already full");
   }
 }
+//delete post
+const deletePost = async () => { 
+  if (confirm("確定要刪除此食記嗎？")){
+    await fetch("http://127.0.0.1:5000/posts", {
+      method: "DELETE",
+      headers: {
+      "Authorization": `Bearer ${user.access_token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'id':post.value._id
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        router.push('/myUserpage');
+        return response.json();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    }
+  
+}; 
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -113,6 +145,9 @@ const add_to_wheel = (item) => {
           </div>
         </div>
         <button class="bg-[#b80c0c] text-white rounded-md w-32 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>
+        <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
+
+
       </div>
       <div v-html="post.content"></div>
     </div>

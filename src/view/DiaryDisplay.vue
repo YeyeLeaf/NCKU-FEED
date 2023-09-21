@@ -2,9 +2,42 @@
 import PersonalInfo from '../components/PersonalInfo.vue';
 import storePage from '../components/storePage.vue'
 import {  ref } from 'vue';
-import { cur_post,wheelList , cur_author ,isMyPost} from '../eventBus';
 import { user } from '../class.js';
+import { cur_post,wheelList, saveDataToLocalStorage, getDataFromLocalStorage,cur_author ,isMyPost} from '../eventBus';
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter();
+
+if(cur_post.value) {
+  saveDataToLocalStorage(cur_post.value);
+}
+else cur_post.value = getDataFromLocalStorage();
+
+const author = ref({});
+
+const getUserData = async () => {
+  const params = new URLSearchParams();
+  params.append("uid", cur_post.value.uid); 
+
+  await fetch("http://localhost:5000/user?" + params.toString(), {
+    method: "GET"
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .then((result) => {
+      console.log(result);
+      author.value = result.user_info;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+getUserData();
 
 //取得餐廳資訊
 const rest = ref({});
@@ -54,6 +87,31 @@ const openDetail = async () => {
   $('.store-infor').css("display", "flex");
 };
 
+//delete post
+const deletePost = async () => { 
+  if (confirm("確定要刪除此食記嗎？")){
+    await fetch("http://127.0.0.1:5000/posts", {
+      method: "DELETE",
+      headers: {
+      "Authorization": `Bearer ${user.access_token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'id':cur_post.value._id
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    router.push('/myUserpage');
+    }
+  
+}; 
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -64,7 +122,8 @@ const openDetail = async () => {
           <h1 class="text-3xl font-bold">{{ cur_post.title }}</h1>
           <div class="flex justify-between text-[#525252]">
             <p class="mr-10">{{ rest.name }}</p>
-            <p>作者：{{ cur_author.nick_name }}</p>
+            <p>作者：{{ author.nick_name }}</p>
+            <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
           </div>
         </div>
         <button class="bg-[#b80c0c] text-white rounded-md w-32 ml-8 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>
