@@ -3,7 +3,7 @@ import About from '../../components/About.vue'
 import FeedName from '../../components/FeedName.vue'
 import PersonalInfo from '../../components/PersonalInfo.vue'
 import { user } from '../../class.js'
-import { confirmAccess, cur_post} from '../../eventBus.js';
+import { confirmAccess, cur_post,cur_author} from '../../eventBus.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -34,10 +34,29 @@ await fetch("http://127.0.0.1:5000/posts/user?uid="+ user.id, {
 
 getPost();
 
+const getUserData = async () => {
+
+await fetch("http://localhost:5000/user?uid=" + cur_post.value.uid, {
+  method: "GET"
+})
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    cur_author.value = result.user_info;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
 
 
 const openFeed = (item) => {
     cur_post.value = item;
+    getUserData();
     router.push('/diaryDisplay');
 }
 </script>
@@ -45,7 +64,7 @@ const openFeed = (item) => {
 <template>
     <div class="flex-col lg:flex-row flex  lg:justify-evenly justify-center min-h-[700px] myUserPage">
         <div class="lg:hidden mt-16 ">
-            <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案" :isDairyPage="false"/>
+            <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案" :isDairyPage="false" :isMe="true"/>
         </div>
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 my-16 w-[80%]">
@@ -58,7 +77,7 @@ const openFeed = (item) => {
         </div>
 
         <div class="hidden lg:flex w-[15%] mt-12 justify-center">
-            <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案" :isDairyPage="false"/>
+            <PersonalInfo :myImg="user.profilePhoto" :name="user.nickName" content="編輯個人檔案" :isDairyPage="false" :isMe="true"/>
         </div>
     </div>
 

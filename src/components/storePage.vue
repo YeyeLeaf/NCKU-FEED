@@ -3,7 +3,7 @@ import { ref, onUpdated } from 'vue';
 import FeedName_sm from './FeedName_sm.vue';
 import Comment  from './Comment.vue';
 import { user } from '../class.js';
-import { isLogining, cur_post ,isLargeScreen ,cur_restaurant} from '../eventBus';
+import { isLogining, cur_post ,isLargeScreen ,cur_restaurant,cur_author,isMyPost,otherUser} from '../eventBus';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -50,7 +50,6 @@ const Switch = (index) => {
 const isCollected = ref(false);
 const alreadyCollect = () => {
     if(user.restaurant.includes(props.infor._id)){
-      console.log("HI");
       isCollected.value = true;
       console.log(isCollected.value);
     }
@@ -279,6 +278,9 @@ const editComment = async (event) =>{
 ////////////////////////////////////// Posts ///////////////////////////////////////////////////
 const postList = ref([]);
 const getPost = async () => {
+  if (!props.infor._id){
+    return
+  }
   await fetch("http://127.0.0.1:5000/posts/restaurant?restaurant_id="+ props.infor._id, {
           method: "GET",
     })
@@ -299,13 +301,47 @@ const getPost = async () => {
 }
 getPost();
 
-const openFeed = (item) => {
+const getUserData = async () => {
+
+await fetch("http://localhost:5000/user?uid=" + cur_post.value.uid, {
+  method: "GET"
+})
+  .then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+  })
+  .then((result) => {
+    cur_author.value = result.user_info;
+    checkIfIsMe();
+    if (!isMyPost.value){
+      otherUser.value = cur_author.value;
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+const checkIfIsMe = async() =>{
+  if (cur_post.value.uid == user.id){
+    isMyPost.value = true;
+  }
+  else{
+    isMyPost.value = false;
+  }
+}
+
+const openFeed = async (item) => {
+    
     cur_post.value = item;
+    getUserData();
     $(window).scrollTop(0);
     $('.store-infor').hide();
     $('.navbar, .footer').css('opacity', '1');
+    $('.store-infor').siblings().css('opacity', '1');
     $('body').css('overflow', 'auto');
     router.push('/diaryDisplay');
+
 }
 
 const showAlert = () =>{
