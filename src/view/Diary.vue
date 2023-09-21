@@ -142,12 +142,10 @@ const deletePost = async () => {
           <div class="flex justify-between text-[#525252]">
             <p class="mr-10">{{ rest.name }}</p>
             <p>作者：{{ author.nick_name }}</p>
+            <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
           </div>
         </div>
         <button class="bg-[#b80c0c] text-white rounded-md w-32 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>
-        <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
-
-
       </div>
       <div v-html="post.content"></div>
     </div>

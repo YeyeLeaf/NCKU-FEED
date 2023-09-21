@@ -14,30 +14,6 @@ if(cur_post.value) {
 }
 else cur_post.value = getDataFromLocalStorage();
 
-const author = ref({});
-
-const getUserData = async () => {
-  const params = new URLSearchParams();
-  params.append("uid", cur_post.value.uid); 
-
-  await fetch("http://localhost:5000/user?" + params.toString(), {
-    method: "GET"
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      }
-    })
-    .then((result) => {
-      console.log(result);
-      author.value = result.user_info;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-getUserData();
 
 //取得餐廳資訊
 const rest = ref({});
@@ -122,8 +98,8 @@ const deletePost = async () => {
           <h1 class="text-3xl font-bold">{{ cur_post.title }}</h1>
           <div class="flex justify-between text-[#525252]">
             <p class="mr-10">{{ rest.name }}</p>
-            <p>作者：{{ author.nick_name }}</p>
-            <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
+            <p>作者：{{ cur_author.nick_name }}</p>
+            <p v-if="user.id === cur_author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
           </div>
         </div>
         <button class="bg-[#b80c0c] text-white rounded-md w-32 ml-8 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>
