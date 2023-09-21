@@ -4,7 +4,10 @@ import storePage from '../components/storePage.vue'
 import axios from 'axios';
 import { ref } from 'vue';
 import { cur_post,wheelList, saveDataToLocalStorage, getDataFromLocalStorage} from '../eventBus';
+import { useRouter } from 'vue-router';
 import { user } from '../class.js';
+
+const router = useRouter();
 
 if(cur_post.value) {
   saveDataToLocalStorage(cur_post.value);
@@ -84,6 +87,31 @@ const openDetail = async () => {
   $('.store-infor').css("display", "flex");
 };
 
+//delete post
+const deletePost = async () => { 
+  if (confirm("確定要刪除此食記嗎？")){
+    await fetch("http://127.0.0.1:5000/posts", {
+      method: "DELETE",
+      headers: {
+      "Authorization": `Bearer ${user.access_token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'id':cur_post.value._id
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    router.push('/myUserpage');
+    }
+  
+}; 
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -95,6 +123,7 @@ const openDetail = async () => {
           <div class="flex justify-between text-[#525252]">
             <p class="mr-10">{{ rest.name }}</p>
             <p>作者：{{ author.nick_name }}</p>
+            <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
           </div>
         </div>
         <button class="bg-[#b80c0c] text-white rounded-md w-32 p-1 hover:bg-[#ed0000] text-[15px] h-10" @click="openDetail">查看餐廳資訊</button>

@@ -4,7 +4,9 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { cur_post, saveRestToLocalStorage, getRestFromLocalStorage, cur_restaurant}  from '../eventBus';
 import { user } from '../class.js';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
 const post = ref({});
 const author = ref({});
@@ -83,6 +85,32 @@ const getRestData = async () => {
 }
 
 getRestData();
+
+//delete post
+const deletePost = async () => { 
+  if (confirm("確定要刪除此食記嗎？")){
+    await fetch("http://127.0.0.1:5000/posts", {
+      method: "DELETE",
+      headers: {
+      "Authorization": `Bearer ${user.access_token}`,
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          'id':post.value._id
+      })
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        router.push('/myUserpage');
+        return response.json();
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    }
+  
+}; 
 </script>
 <template>
   <div class="flex justify-evenly min-h-screen">
@@ -94,6 +122,7 @@ getRestData();
   <div class="flex justify-between text-[#525252]">
     <p class="mr-10">{{ rest_name }}</p>
     <p>作者：{{ author.nick_name }}</p>
+    <p v-if="user.id === author.uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-trash hover:text-red-500 cursor-pointer" @click="deletePost"></i></p>
   </div>
 </div>
       </div>

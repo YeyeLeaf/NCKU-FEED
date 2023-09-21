@@ -20,7 +20,7 @@ const getUserData = async () => {
       }
     })
     .then((result) => {
-      console.log(result);
+      //console.log(result);
       author.value = result.user_info;
     })
     .catch(function (error) {
