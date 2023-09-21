@@ -19,8 +19,11 @@ defineProps({
     <div class="lg:flex flex-col space-y-8 items-center hidden">
         <img :src="myImg" class="w-36 rounded-full">
         <p class="text-3xl text-center">{{ name }}</p>
-        <div v-if="!isDairyPage">
+        <div v-if="!isDairyPage&&isMe">
             <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+        </div>
+        <div v-if="!isDairyPage&&!isMe">
+            <router-link to="/userPage"><RedButton :text="content"/></router-link>
         </div>
         <div v-if="isDairyPage&&isMe">
             <router-link to="/myUserPage"><RedButton :text="content"/></router-link>
@@ -39,8 +42,11 @@ defineProps({
         </div>
         <div class="flex flex-col justify-between">
             <p class="text-3xl text-center">{{ name }}</p>
-            <div v-if="!isDairyPage">
+            <div v-if="!isDairyPage&&isMe">
                 <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
+            </div>
+            <div v-if="!isDairyPage&&!isMe">
+                <router-link to="/userPage"><RedButton :text="content"/></router-link>
             </div>
             <div v-if="isDairyPage&&isMe">
                 <router-link to="/myUserPage"><RedButton :text="content"/></router-link>

@@ -3,7 +3,7 @@ import About from '../components/About.vue';
 import FeedName from '../components/FeedName.vue';
 import PersonalInfo from '../components/PersonalInfo.vue';
 import { cur_post,confirmAccess,otherUser} from '../eventBus';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 confirmAccess();
@@ -41,13 +41,14 @@ const openFeed = (item) => {
 </script>
 
 <template>
-    <div class="flex-col lg:flex-row flex  lg:justify-evenly justify-center min-h-[700px] userPage">
+    <div >
+        <div class="flex-col lg:flex-row flex  lg:justify-evenly justify-center min-h-[700px] userPage">
         <div class="lg:hidden mt-16 ">
-            <PersonalInfo :myImg="otherUser.profilePhoto" :name="otherUser.nickName" content="編輯個人檔案" :isDairyPage="false" :isMe="false"/>
+            <PersonalInfo :myImg="otherUser.profile_photo" :name="otherUser.nick_name" content="編輯個人檔案" :isDairyPage="false" :isMe="false"/>
         </div>
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 my-16 w-[80%]">
-            <About :info="otherUser.selfIntro" class="mb-8"/>
+            <About :info="otherUser.self_intro" class="mb-8"/>
             <FeedName v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
         </div>
 
@@ -56,9 +57,12 @@ const openFeed = (item) => {
         </div>
 
         <div class="hidden lg:flex w-[15%] mt-12 justify-center">
-            <PersonalInfo :myImg="otherUser.profilePhoto" :name="otherUser.nickName" content="編輯個人檔案" :isDairyPage="false" :isMe="false"/>
+            <PersonalInfo :myImg="otherUser.profile_photo" :name="otherUser.nick_name" content="編輯個人檔案" :isDairyPage="false" :isMe="false"/>
         </div>
     </div>
+
+    </div>
+    
 
 </template>
 

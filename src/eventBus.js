@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router';
 
 export const isLogining = ref(false);
 export const cur_restaurant = ref({});
-export const cur_post = ref({}); 
+export const cur_post = ref(""); 
 export const cur_author = ref({}); //for post
 export const isLargeScreen = ref(true);
 export const otherUser = ref({}); // other user page show 
