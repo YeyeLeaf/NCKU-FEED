@@ -9,6 +9,13 @@ import { useRouter } from 'vue-router';
 confirmAccess();
 
 const router = useRouter();
+const showLoader = ref(true);
+
+onMounted(() => {
+    setTimeout(() => {
+      showLoader.value = false;
+    }, 3500);
+});
 
 const postList = ref([]);
 const getPost = async () => {
@@ -49,7 +56,10 @@ const openFeed = (item) => {
 
         <div class="flex flex-col lg:w-3/5 m-12 lg:mr-0 lg:ml-0 my-16 w-[80%]">
             <About :info="otherUser.self_intro" class="mb-8"/>
-            <FeedName v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
+            <div v-if="showLoader" class="loader"></div>
+            <div v-else>
+                <FeedName v-for="(item, index) in postList" :key="index" :infor="item" class="mt-0" @click="openFeed(item)"/>
+            </div>        
         </div>
 
         <div class="h-200 hidden lg:flex"> 
@@ -72,5 +82,21 @@ const openFeed = (item) => {
         align-items: center;
     }
 
+}
+.loader {   
+        display: inline-block;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db; 
+        border-radius: 50%; 
+        width: 40px; 
+        height: 40px; 
+        animation: spin 2s linear infinite; 
+        margin: 0 auto;
+
+    }
+
+@keyframes spin {
+  0% { transform: rotate(0deg); } 
+  100% { transform: rotate(360deg); } 
 }
 </style>
