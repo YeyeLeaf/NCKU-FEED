@@ -22,9 +22,7 @@ defineProps({
         <div v-if="!isDairyPage&&isMe">
             <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
         </div>
-        <div v-if="!isDairyPage&&!isMe">
-            <router-link to="/userPage"><RedButton :text="content"/></router-link>
-        </div>
+        
         <div v-if="isDairyPage&&isMe">
             <router-link to="/myUserPage"><RedButton :text="content"/></router-link>
         </div>
@@ -45,9 +43,7 @@ defineProps({
             <div v-if="!isDairyPage&&isMe">
                 <router-link to="/personalEdit"><RedButton :text="content"/></router-link>
             </div>
-            <div v-if="!isDairyPage&&!isMe">
-                <router-link to="/userPage"><RedButton :text="content"/></router-link>
-            </div>
+        
             <div v-if="isDairyPage&&isMe">
                 <router-link to="/myUserPage"><RedButton :text="content"/></router-link>
             </div>
